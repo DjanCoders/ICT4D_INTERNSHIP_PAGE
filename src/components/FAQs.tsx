@@ -1,13 +1,10 @@
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
+import {Disclosure,DisclosureButton,DisclosurePanel,} from "@headlessui/react";
 import { FaChevronUp } from "react-icons/fa";
 
 export const FAQ = ({
   faqs,
-}: {
+}
+  : {
   faqs: {
     question: string;
     answer: string;
