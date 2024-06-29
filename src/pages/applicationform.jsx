@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 
 const ApplicationForm = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fname: '',
+    lname: '',
     email: '',
     phone: '',
     address: '',
@@ -48,14 +49,14 @@ const ApplicationForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label className='block text-sm font-medium text-gray-1000'> First Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required
+          <input type="text" name="fname" value={formData.fname} onChange={handleChange} required
           className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
         </div>
         <div>
         <label className='block text-sm font-medium text-gray-1000'> Last Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required
+          <input type="text" name="lname" value={formData.lname} onChange={handleChange} required
           className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
