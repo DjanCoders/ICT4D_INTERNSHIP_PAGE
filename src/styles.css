@@ -2,7 +2,15 @@
 form {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width:fit-content;
+    margin: auto;
+    background-color:#e9e0e0b9 ;
+  }
+  .full-name,.school-info,.contact-address{
+    margin: 10px;
+  }
+ 
+  span{
     margin: auto;
   }
   
@@ -13,19 +21,24 @@ form {
   label {
     margin-bottom: 0.5rem;
   }
-  
+  .adress-input{
+    width: 75%;
+  }
   input {
     padding: 0.5rem;
     font-size: 1rem;
   }
   
-  button {
+  .form-button {
     padding: 0.75rem;
     font-size: 1rem;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
+    width: 30%;
+    align-self: center;
+    margin-bottom: 20px;
   }
   
   button:hover {
