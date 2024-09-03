@@ -5,6 +5,8 @@ import Services from "../components/Services";
 import { faqData } from "../data/faqs";
 
 const Home = () => {
+  
+
   return (
     <section className="mx-auto">
       <main className="main w-9/10 mx-auto">

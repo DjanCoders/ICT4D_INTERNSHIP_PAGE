@@ -1,3 +1,8 @@
+import { useState, useEffect } from 'react';
+import { login } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 const SignInModal = ({
   isOpen,
   onClose,
@@ -14,6 +19,26 @@ const SignInModal = ({
   //     onClose(false);
   //   }
   // };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setToken, setRefreshToken } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await login({ email, password });
+      const { access, refresh } = response.data;
+      localStorage.setItem('accessToken', access);
+      localStorage.setItem('refreshToken', refresh);
+      setToken(access);
+      setRefreshToken(refresh);
+        navigate('/profile')
+    } catch (error) {
+        console.error('Error logging in:', error);
+    }
+};
 
   return (
     <>
@@ -80,11 +105,12 @@ const SignInModal = ({
                     Sign In
                   </h3>
                   <div className="mt-2">
-                    <form action="#" method="POST" className="">
+                    <form onSubmit={handleLogin} method="POST" className="">
                       <div>
                         <label
                           htmlFor="email"
                           className="block text-sm font-medium text-gray-700"
+                          
                         >
                           Email address
                         </label>
@@ -97,6 +123,8 @@ const SignInModal = ({
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="you@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
                       </div>
@@ -117,6 +145,8 @@ const SignInModal = ({
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
                       </div>
