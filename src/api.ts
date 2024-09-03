@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useAuth } from './contexts/AuthContext';
 
 const URL = 'http://localhost:8000/api';
 
@@ -10,9 +9,10 @@ const api = axios.create({
     },
 });
 
+// Request interceptor to attach the token
 api.interceptors.request.use(
     config => {
-        const { token } = useAuth();
+        const token = localStorage.getItem('token');
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
@@ -21,6 +21,7 @@ api.interceptors.request.use(
     error => Promise.reject(error)
 );
 
+// Response interceptor for handling token refresh
 api.interceptors.response.use(
     response => response,
     async error => {
@@ -31,16 +32,23 @@ api.interceptors.response.use(
             originalRequest._retry = true;
 
             try {
-                const { refreshAccessToken } = useAuth();
-                await refreshAccessToken();
-                const newToken = localStorage.getItem('token');
-
-                if (newToken) {
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-                    return api(originalRequest);
+                // Refresh token logic
+                const refreshToken = localStorage.getItem('refreshToken');
+                if (!refreshToken) {
+                    throw new Error('No refresh token available');
                 }
+
+                // Refresh token request
+                const refreshResponse = await axios.post('http://localhost:8000/api/token/refresh/', { refresh: refreshToken });
+                const { access } = refreshResponse.data;
+
+                // Save new token and retry original request
+                localStorage.setItem('token', access);
+                api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+                return api(originalRequest);
             } catch (refreshError) {
                 console.error('Error refreshing token:', refreshError);
+                // Optionally: redirect to login or clear authentication state
             }
         }
 
@@ -48,8 +56,16 @@ api.interceptors.response.use(
     }
 );
 
+export const login = async (data: { email: string, password: string }) => {
+    const response = await api.post('/token/', data);
+    const { refresh, access } = response.data;
+    // Store tokens in localStorage
+    localStorage.setItem('token', access);
+    localStorage.setItem('refreshToken', refresh);
+    return response;
+};
+
 export const register = (data: any) => api.post('/accounts/register/', data);
-export const login = (data: any) => api.post('/token/', data);
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
 export const applyForInternship = (id: number, data: any, token: string) => {
@@ -59,3 +75,5 @@ export const applyForInternship = (id: number, data: any, token: string) => {
         }
     });
 };
+
+export default api;

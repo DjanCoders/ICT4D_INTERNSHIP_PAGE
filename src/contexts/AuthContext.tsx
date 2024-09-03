@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import { login, refreshToken } from '../api';
+import api from '../api';
 
 interface AuthContextType {
     token: string | null;
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const refreshAccessToken = async () => {
         if (refreshTokenState) {
             try {
-                const response = await refreshToken(refreshTokenState);
+                const response = await api.post('/token/refresh/', { refresh: refreshTokenState });
                 setToken(response.data.access);
                 setRefreshToken(response.data.refresh); // Optionally update the refresh token
             } catch (error) {

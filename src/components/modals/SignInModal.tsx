@@ -34,7 +34,8 @@ const SignInModal = ({
       localStorage.setItem('refreshToken', refresh);
       setToken(access);
       setRefreshToken(refresh);
-        navigate('/profile')
+      navigate('/profile')
+      onClose(false);
     } catch (error) {
         console.error('Error logging in:', error);
     }
