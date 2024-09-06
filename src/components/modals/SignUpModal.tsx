@@ -1,3 +1,8 @@
+import { useState, useEffect } from 'react';
+import { register } from '../../api';
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 const SignUpModal = ({
   isOpen,
   onClose,
@@ -14,6 +19,23 @@ const SignUpModal = ({
   //     onClose(false);
   //   }
   // };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await register({ email, password, first_name, last_name });
+      navigate('/profile')
+      onClose(false);
+    } catch (error) {
+        console.error('Error signin up:', error);
+    }
+};
 
   return (
     <>
@@ -80,13 +102,13 @@ const SignUpModal = ({
                     Sign Up
                   </h3>
                   <div className="mt-2">
-                    <form action="#" method="POST" className="">
+                    <form onSubmit={handleSignup} method="POST" className="">
                       <div>
                         <label
                           htmlFor="name"
                           className="block text-sm font-medium text-gray-700"
                         >
-                          Full Name
+                          First Name
                         </label>
                         <div className="mt-1">
                           <input
@@ -96,7 +118,31 @@ const SignUpModal = ({
                             autoComplete="name"
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                            placeholder="John Doe"
+                            placeholder="John"
+                            value={first_name}
+                            onChange={(e) => setFirstName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Last Name
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            autoComplete="name"
+                            required
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                            placeholder="Doe"
+                            value={last_name}
+                            onChange={(e) => setLastName(e.target.value)}
                           />
                         </div>
                       </div>
@@ -117,6 +163,8 @@ const SignUpModal = ({
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="you@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
                       </div>
@@ -137,6 +185,8 @@ const SignUpModal = ({
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="********"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
                       </div>
