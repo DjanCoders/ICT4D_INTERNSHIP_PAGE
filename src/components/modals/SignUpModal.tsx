@@ -22,6 +22,7 @@ const SignUpModal = ({
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const SignUpModal = ({
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await register({ email, password, first_name, last_name });
+      const response = await register({ email, password, username, first_name, last_name });
       navigate('/profile')
       onClose(false);
     } catch (error) {
@@ -105,17 +106,17 @@ const SignUpModal = ({
                     <form onSubmit={handleSignup} method="POST" className="">
                       <div>
                         <label
-                          htmlFor="name"
+                          htmlFor="firstname"
                           className="block text-sm font-medium text-gray-700"
                         >
                           First Name
                         </label>
                         <div className="mt-1">
                           <input
-                            id="name"
-                            name="name"
+                            id="firstname"
+                            name="firstname"
                             type="text"
-                            autoComplete="name"
+                            autoComplete="firstname"
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="John"
@@ -127,22 +128,44 @@ const SignUpModal = ({
 
                       <div>
                         <label
-                          htmlFor="name"
+                          htmlFor="lastname"
                           className="block text-sm font-medium text-gray-700"
                         >
                           Last Name
                         </label>
                         <div className="mt-1">
                           <input
-                            id="name"
-                            name="name"
+                            id="lastname"
+                            name="lastname"
                             type="text"
-                            autoComplete="name"
+                            autoComplete="lastname"
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                             placeholder="Doe"
                             value={last_name}
                             onChange={(e) => setLastName(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="username"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Username
+                        </label>
+                        <div className="mt-1">
+                          <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            autoComplete="username"
+                            required
+                            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                            placeholder="jdoe"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                           />
                         </div>
                       </div>
