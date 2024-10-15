@@ -1,22 +1,22 @@
 .card {
-  transition: transform 0.3s ease-in-out;
+	transition: transform 0.13s ease-in-out;
 }
 
 .card:hover {
-  transform: scale(1.05);
+	transform: scale(1.05);
 }
 
 .iconContainer {
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+	transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .card:hover .iconContainer {
-  transform: scale(1.25); /* Scale up on hover */
+	transform: scale(1.05);
 }
 .icon {
-  font-size: 5rem; /* Adjust icon size as needed */
-  filter: invert(0.5) blur(1px); /* Invert icon color on hover */
+	font-size: 5rem;
+	filter: invert(0.5) blur(1px);
 }
 .card:hover .iconContainer svg {
-  filter: invert(0) blur(0); /* Invert icon color on hover */
+	filter: invert(0) blur(0);
 }
