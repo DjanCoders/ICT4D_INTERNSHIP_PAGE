@@ -1,10 +1,23 @@
-import { internships } from "../data/sample";
+import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import { getInternships } from "../api";
 
 const Services = () => {
-  const internService = internships.map((service) => (
-    <ServiceCard service={service} />
+  const [internships, setInternships] = useState<{ title: string; description: string; }[]>([]);
+
+  useEffect(() => {
+    const fetchInternships = async () => {
+      const response = await getInternships();
+      setInternships(response.data);
+    };
+
+    fetchInternships();
+  }, []);
+
+  const internService = internships.map((internship, index) => (
+    <ServiceCard key={index} service={internship} />
   ));
+
   return <div className='flex flex-col md:flex-row gap-8'>{internService}</div>;
 };
 
