@@ -68,6 +68,7 @@ export const login = async (data: { email: string, password: string }) => {
 export const register = (data: { email: string, password:string,username: string, first_name: string, last_name: string }) => api.post('/accounts/register/', data);
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
+export const getProfile = () => api.get('/accounts/profiles/');
 export const applyForInternship = (id: number, data: any, token: string) => {
     return api.post(`/internships/${id}/apply/`, data, {
         headers: {

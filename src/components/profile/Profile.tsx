@@ -1,10 +1,20 @@
 import { useState, useEffect } from "react";
 import EditProfileModal from "./EditProfileModal";
-import { User } from "../../types";
+import { userProfile } from "../../types";
+import { getProfile } from "../../api";
 
-const Profile = ({ user }: { user: User }) => {
+const Profile = ({ user }: { user: userProfile }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [profile, setProfile] = useState(user);
+
+	useEffect(() => {
+		const fetchProfiles = async () => {
+			const response = await getProfile();
+			setProfile(response.data[0])
+		}
+
+		fetchProfiles();
+	}, [])
 
 	const handleEditClick = () => {
 		setIsModalOpen(true);
@@ -14,7 +24,7 @@ const Profile = ({ user }: { user: User }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleSaveProfile = (updatedProfile: User) => {
+	const handleSaveProfile = (updatedProfile: userProfile) => {
 		setProfile(updatedProfile);
 	};
 
@@ -23,21 +33,21 @@ const Profile = ({ user }: { user: User }) => {
 			<h2 className="text-2xl font-bold mb-4">Profile Information</h2>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					Username
+					{profile.user?.username}
 				</label>
-				<p className="text-gray-900">{profile.username}</p>
+				<p className="text-gray-900">{}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					Email
+					{profile.user?.email}
 				</label>
-				<p className="text-gray-900">{profile.email}</p>
+				<p className="text-gray-900">{}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					Area of Department
+					{profile.user?.first_name} {profile.user?.last_name}
 				</label>
-				<p className="text-gray-900">{profile.department}</p>
+				<p className="text-gray-900">{}</p>
 			</div>
 			<div>
 				<button
