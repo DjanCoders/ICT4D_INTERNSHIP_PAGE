@@ -141,8 +141,7 @@ function TableList() {
                 <TableHead className='table_head'>
                     <TableRow>
                         <TableCell className="table_cell">Tracking Id</TableCell>
-                        <TableCell className="table_cell">First Name</TableCell>
-                        <TableCell className="table_cell">Last Name</TableCell>
+                        <TableCell className="table_cell">Name</TableCell>
                         <TableCell className="table_cell">Email</TableCell>
                         <TableCell className="table_cell">Application Date</TableCell>
                         <TableCell className="table_cell">Start Date</TableCell>
@@ -162,8 +161,7 @@ function TableList() {
                                     {row._id}
                                 </div>
                             </TableCell>
-                            <TableCell className="table_cell">{row.first_name}</TableCell>
-                            <TableCell className="table_cell">{row.last_name}</TableCell>
+                            <TableCell className="table_cell">{row.first_name} {row.last_name}</TableCell>
                             <TableCell className="table_cell">{row.email}</TableCell>
                             <TableCell className="table_cell">{row.application_date}</TableCell>
                             <TableCell className="table_cell">{row.start_date}</TableCell>

@@ -21,10 +21,10 @@ function AdminHome() {
                 <div className="bg_color" />
 
                 <div className="home_items">
-                    <ItemLists type="user" />
-                    <ItemLists type="orders" />
-                    <ItemLists type="products" />
-                    <ItemLists type="balance" />
+                    <ItemLists type="totalApplicants" />
+                    <ItemLists type="approvedApplicants" />
+                    <ItemLists type="pendingApplicants" />
+                    <ItemLists type="rejectedApplicants" />
                 </div>
 
                 

@@ -1,8 +1,11 @@
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
-import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+// import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
+// import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './itemlists.scss';
@@ -12,77 +15,72 @@ function ItemLists({ type }) {
 
     // Dynamicaly change the ui content
     switch (type) {
-        case 'user':
+        case 'totalApplicants':
             data = {
-                title: 'USERS',
-                isMoney: false,
-                count: 232,
+                title: 'TOTAL APPLICANTS',
+                count: 200,
                 icon: (
                     <PermIdentityIcon
                         style={{
-                            color: '#FF74B1',
-                            backgroundColor: '#FFD6EC',
+                            color: '#4E9F3D',
+                            backgroundColor: '#E9F5DB',
                         }}
                         className="icon"
                     />
                 ),
-                link: 'See all users',
-                linkto: '/users',
+                link: 'See all applicants',
+                linkto: '/applicants',
             };
             break;
-        case 'orders':
+        case 'approvedApplicants':
             data = {
-                title: 'ORDERS',
-                isMoney: false,
-                count: 34,
-
+                title: 'APPROVED APPLICANTS',
+                count: 50,
                 icon: (
-                    <LocalGroceryStoreOutlinedIcon
+                    <HowToRegOutlinedIcon
                         style={{
-                            color: '#AC7088',
-                            backgroundColor: '#FFF38C',
+                            color: '#1E5128',
+                            backgroundColor: '#D8E9A8',
                         }}
                         className="icon"
                     />
                 ),
-                link: 'View all orders',
-                linkto: '/orders',
+                link: 'View approved applicants',
+                linkto: '/applicants/approved',
             };
             break;
-        case 'products':
+        case 'pendingApplicants':
             data = {
-                title: 'PRODUCTS',
-                isMoney: true,
-                count: 107,
+                title: 'PENDING APPLICATIONS',
+                count: 120,
                 icon: (
-                    <AttachMoneyOutlinedIcon
+                    <PendingActionsOutlinedIcon
                         style={{
-                            color: '#367E18',
-                            backgroundColor: '#A7FFE4',
+                            color: '#FCA652',
+                            backgroundColor: '#FFF5E4',
                         }}
                         className="icon"
                     />
                 ),
-                link: 'See all products',
-                linkto: '/products',
+                link: 'View pending applications',
+                linkto: '/applicants/pending',
             };
             break;
-        case 'balance':
+        case 'rejectedApplicants':
             data = {
-                title: 'BALANCE',
-                count: 444,
-                isMoney: true,
+                title: 'REJECTED APPLICANTS',
+                count: 30,
                 icon: (
-                    <PaidOutlinedIcon
+                    <HighlightOffOutlinedIcon
                         style={{
-                            color: '#AC7088',
-                            backgroundColor: '#B1B2FF',
+                            color: '#B91646',
+                            backgroundColor: '#FFEBEB',
                         }}
                         className="icon"
                     />
                 ),
-                link: 'See all details',
-                linkto: '/',
+                link: 'View rejected applicants',
+                linkto: '/applicants/rejected',
             };
             break;
         default:
