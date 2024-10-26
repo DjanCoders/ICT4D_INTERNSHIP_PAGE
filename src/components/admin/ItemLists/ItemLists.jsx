@@ -29,7 +29,7 @@ function ItemLists({ type }) {
                     />
                 ),
                 link: 'See all applicants',
-                linkto: '/applicants',
+                linkto: '/admin',
             };
             break;
         case 'approvedApplicants':

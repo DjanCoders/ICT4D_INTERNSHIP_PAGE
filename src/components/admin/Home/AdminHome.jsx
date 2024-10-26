@@ -16,7 +16,7 @@ function AdminHome() {
 
         <>
             <div className="table">
-                <div className="title">Latest Transactions</div>
+                <div className="title">Latest Applications</div>
                 <TableList />
             </div>
         </>
