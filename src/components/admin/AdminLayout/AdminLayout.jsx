@@ -4,6 +4,7 @@ import Navbar from '../NavBar/NavBar';
 // import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../SideBar/Sidebar';
 import { Outlet } from 'react-router-dom';
+import ItemLists from '../ItemLists/ItemLists';
 import './adminlayout.scss';
 
 function AdminLayout() {
@@ -18,10 +19,15 @@ function AdminLayout() {
                 <Navbar />
 
                 <div className="bg_color" />
-               
+                <div className="home_items">
+                <ItemLists type="totalApplicants" />
+                <ItemLists type="approvedApplicants" />
+                <ItemLists type="pendingApplicants" />
+                <ItemLists type="rejectedApplicants" />
+            </div>
                 <main>
                 <Outlet /> {/* Renders child routes */}
-        </main>
+               </main>
 
             </div>
         </div>

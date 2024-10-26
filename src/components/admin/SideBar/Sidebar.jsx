@@ -25,7 +25,7 @@ function Sidebar() {
     return (
         <div className="sidebar">
             <div className="logo">
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/admin" style={{ textDecoration: 'none' }}>
                     <h3 className="text_none">AdminDashboard</h3>
                 </Link>
             </div>
@@ -33,14 +33,14 @@ function Sidebar() {
             <div className="links">
                 <ul>
                     <p className="spann">Main</p>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin" style={{ textDecoration: 'none' }}>
                         <li>
                             <DashboardIcon className="icon" /> Dashboard
                         </li>
                     </Link>
 
                     <p className="spann">lists</p>
-                    <Link to="/applicants" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin" style={{ textDecoration: 'none' }}>
                         <li>
                             <GroupIcon className="icon" /> All Applicants
                         </li>
@@ -57,19 +57,19 @@ function Sidebar() {
                         </li>
                     </Link>
                     <p className="spann">Exams</p>
-                    <Link to="/admin/exam-editor" style={{ textDecoration: 'none' }}>
+                    <Link to="admin/exam-editor" style={{ textDecoration: 'none' }}>
                         <li>
                             <EditIcon className="icon" /> Exam Editor
                         </li>
                     </Link>
 
-                    <Link to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/exam-settings" style={{ textDecoration: 'none' }}>
                         <li>
                             <SettingsApplicationsIcon className="icon" /> Exam Settings
                         </li>
                     </Link>
 
-                    <Link to="/exam/review" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
                         <li>
                             <RateReviewIcon className="icon" /> Review 
                         </li>
