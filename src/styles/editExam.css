@@ -1,0 +1,25 @@
+.edit-exam{
+    gap:5px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(233, 150, 122,0.3);
+}
+.question-text, .option{
+    height: 30px;
+    border: 1px solid rgba(0, 0, 255,0.3);
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.question-text {
+    width:50%;
+
+}
+.option{
+    width: 40%;
+    margin-right: 5px;
+}
+.question-text:focus, .option:focuS{
+    outline: none;
+}
