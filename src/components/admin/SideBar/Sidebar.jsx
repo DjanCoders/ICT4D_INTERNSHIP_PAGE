@@ -10,6 +10,9 @@ import GroupIcon from '@mui/icons-material/Group';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import EditIcon from '@mui/icons-material/Edit';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/darkContext';
@@ -53,6 +56,25 @@ function Sidebar() {
                             <PendingActionsIcon className="icon" /> Pending 
                         </li>
                     </Link>
+                    <p className="spann">Exams</p>
+                    <Link to="/exam/edit" style={{ textDecoration: 'none' }}>
+                        <li>
+                            <EditIcon className="icon" /> Exam Editor
+                        </li>
+                    </Link>
+
+                    <Link to="/exam/settings" style={{ textDecoration: 'none' }}>
+                        <li>
+                            <SettingsApplicationsIcon className="icon" /> Exam Settings
+                        </li>
+                    </Link>
+
+                    <Link to="/exam/review" style={{ textDecoration: 'none' }}>
+                        <li>
+                            <RateReviewIcon className="icon" /> Review 
+                        </li>
+                    </Link>                    
+
                     <p className="spann">Reports</p>
                     <Link to="/reports" style={{ textDecoration: 'none' }}>
                         <li>
