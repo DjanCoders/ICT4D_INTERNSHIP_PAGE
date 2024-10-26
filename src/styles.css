@@ -7,9 +7,19 @@ form {
     background-color:#e9e0e0b9 ;
   }
   .full-name,.school-info,.contact-address{
-    margin: 10px;
+    margin-bottom: 10px;
   }
- 
+  .school-info .school-info-child,.contact-address div{
+    display: grid;
+    gap:10px;
+    grid-template:40px 40px/auto auto auto auto;
+  }
+  .contact-address input:last-child{
+    grid-column-start: 2;
+    grid-column-end: 4;
+
+
+  }
   span{
     margin: auto;
   }
@@ -39,6 +49,7 @@ form {
     width: 30%;
     align-self: center;
     margin-bottom: 20px;
+    border-radius: 5px;
   }
   
   button:hover {
@@ -47,3 +58,8 @@ form {
 h1{
     text-align: center;
 }  
+.Apply-form{
+  text-align: center;
+  margin-top: 80px;
+
+}

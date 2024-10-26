@@ -43,7 +43,7 @@ const ApplicationForm = () => {
   };
 
   return (
-    <div className="App">
+    <div className="Apply-form">
       <h1>Internship Application </h1>
       <h2>Please complete the form below to apply for Internship with us.</h2>
 
@@ -65,58 +65,64 @@ const ApplicationForm = () => {
       </div>
         <div className='contact-address'>
         <span> Contact Address</span>
-        <br/>
+          <br />
+         <div>
         <label className='text-sm font-medium text-gray-1000'>Email:</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} required
-                   className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
-
-
-          />
+              className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+                   placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 
+                   sm:text-sm'
+                  />
       
         <label className='text-sm font-medium text-gray-1000'>Phone:</label>
         <input type="tel" name="phone" value={formData.phone} onChange={handleChange} 
-                  className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
+              className='appearance-none  px-3 py-2 border border-gray-300 rounded-md 
+                  shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 
+                  focus:border-green-500 sm:text-sm'
 
            />
-      </div>
-      <div className='address'>
+      
         <label className='text-sm font-medium text-gray-1000' >Address:</label>
           <input type="text" name="address" value={formData.address} onChange={handleChange}
-                 className='appearance-none adress-input  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
+              className='appearance-none adress-input  px-3 py-2 border border-gray-300
+                  rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 
+                  focus:border-green-500 sm:text-sm'
 
 
           />
-        </div>
+          </div>
+          </div>
         <div className='school-info'> 
           <span> School Information</span>
+          <div className='school-info-child'>
+              
+                <label className='text-sm font-medium text-gray-1000' >School/University:</label>
+                <input type="text" name="school" value={formData.school} onChange={handleChange} 
+              className='appearance-none  px-3 py-2 border border-gray-300 rounded-md
+                           shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 
+                           focus:border-green-500 sm:text-sm'
 
-      <div>
-        <label className='text-sm font-medium text-gray-1000' >School/University:</label>
-        <input type="text" name="school" value={formData.school} onChange={handleChange} 
-                  className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
+                  />
+          
+                <label className='text-sm font-medium text-gray-1000'>Degree:</label>
+                <input type="text" name="degree" value={formData.degree} onChange={handleChange} 
+                          className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
-           />
-      
-        <label className='text-sm font-medium text-gray-1000'>Degree:</label>
-        <input type="text" name="degree" value={formData.degree} onChange={handleChange} 
-                  className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
+                  />
+                <label className='text-sm font-medium text-gray-1000'>Major:</label>
+                <input type="text" name="major" value={formData.major} onChange={handleChange} 
+                          className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
-           />
-      </div>
-      <div>
-        <label className='text-sm font-medium text-gray-1000'>Major:</label>
-        <input type="text" name="major" value={formData.major} onChange={handleChange} 
-                  className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
-
-           />
-      
-        <label className='text-sm font-medium text-gray-1000'>CGPA:</label>
-          <input type="text" name="gpa" value={formData.gpa} onChange={handleChange}
-                 className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
+                  />
+              
+                <label className='text-sm font-medium text-gray-1000'>CGPA:</label>
+                  <input type="text" name="gpa" value={formData.gpa} onChange={handleChange}
+                        className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
 
-          />
-      </div>
+                  />
+            
+          </div>
       </div>
         <div className='date-info'>
           <span>Date Information</span>
