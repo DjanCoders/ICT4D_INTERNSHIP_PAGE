@@ -1,13 +1,13 @@
 import React from 'react';
-import Chart from '../Chart/Chart';
+// import Chart from '../Chart/Chart';
 import ItemLists from '../ItemLists/ItemLists';
 import Navbar from '../NavBar/NavBar';
-import ProgressBar from '../ProgressBar/ProgressBar';
+// import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../SideBar/Sidebar';
 import TableList from '../TableList/TableList';
 import './Home.scss';
 
-function Home() {
+function AdminHome() {
     //
     return (
         <div className="home">
@@ -27,10 +27,7 @@ function Home() {
                     <ItemLists type="balance" />
                 </div>
 
-                <div className="chart_sec">
-                    <ProgressBar />
-                    <Chart height={450} title="Revenue" />
-                </div>
+                
 
                 <div className="table">
                     <div className="title">Latest Transactions</div>
@@ -41,4 +38,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default AdminHome;

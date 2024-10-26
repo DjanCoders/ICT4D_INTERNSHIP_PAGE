@@ -66,7 +66,7 @@ function Chart({ height, title }) {
                     <p>{title} (Last 1 year)</p>
                 </div>
 
-                <div style={{ width: '100%', height: 300 }}>
+                <div style={{ width: '100%', height: 300}}>
                     {/* <ResponsiveContainer> */}
                     <AreaChart
                         width={850}

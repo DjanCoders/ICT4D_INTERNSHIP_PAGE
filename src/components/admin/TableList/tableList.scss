@@ -1,6 +1,5 @@
 .table_list {
     //   box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-  
     .product_idd {
       display: flex;
       align-items: center;
@@ -11,6 +10,12 @@
         border-radius: 50%;
         margin-right: 10px;
       }
+    }
+    .table_head{
+      background-color: rgba(255, 116, 177,0.5);
+    }
+    .table_row:nth-child(odd){
+  background-color:rgba(128, 128, 128,0.3);
     }
   
     .status {

@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+
 import ApplicationForm from "./pages/applicationform";
 import { Route, Routes } from "react-router-dom";
 import "./styles.css";
@@ -10,6 +10,7 @@ import ReviewSubmissions from "./components/admin/ReviewSubmissions.jsx";
 import ExamStart from "./components/applicant/ExamStart.jsx";
 import ExamQuestion from "./components/applicant/ExamQuestion.jsx";
 import ExamSubmission from "./components/applicant/ExamSubmission.jsx";
+import AdminHome from "./components/admin/Home/AdminHome.jsx";
 
 const App = () => {
 	const user = {
@@ -21,7 +22,7 @@ const App = () => {
 		<div className="my-8 text-center">
 			<Layout>
 				<Routes>
-					<Route path="/" element={<Home />} />
+					<Route path="/" element={<AdminHome />} />
 					<Route path="/profile" element={<Profile user={user} />} />
 					<Route path="/apply" element={<ApplicationForm />} />
 					<Route path="/admin/exam-editor" element={<ExamEditor />} />
