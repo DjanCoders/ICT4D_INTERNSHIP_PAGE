@@ -39,7 +39,8 @@ function ExamEditor() {
       
       {/* Option Inputs */}
       <h3>Options:</h3>
-      {options.map((option, index) => (
+      {
+        options.map((option, index) => (
         <div key={index}>
           <input className="option"
             type="text"

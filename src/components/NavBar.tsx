@@ -47,6 +47,9 @@ const Navbar = () => {
 						<div className="flex-shrink-0 text-white">
 						<Link to="/admin/exam-editor">Edit Exam</Link>
 						</div>
+						<div className="flex-shrink-0 text-white">
+						<Link to="/admin/exam-settings"> Exam Setting</Link>
+						</div>
 					</div>
 					<div className="absolute hidden sm:flex inset-y-0 right-0 my-3 gap-5 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 						<div>

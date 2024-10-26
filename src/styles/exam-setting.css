@@ -1,0 +1,38 @@
+.exam-setting{
+   background-color: antiquewhite;
+    width: 50%;
+    margin-left:auto ;
+    margin-right: auto;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+.exam-setting .exam-setting-inputs{
+    display: grid;
+    grid-template:40px 40px/auto auto;
+    gap:5px;
+    align-items: center;
+    justify-content: center;
+}
+.exam-setting h2 {
+    margin-bottom: 10px;
+}
+
+.exam-setting input{
+  border: 1px solid rgba(0, 0, 255,0.4);
+  border-radius: 5px;
+
+}
+.exam-setting input:focus{
+    outline: none;
+    background-color: antiquewhite;
+}
+.exam-setting button{
+    background-color: blue;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    width:20%;
+
+}
