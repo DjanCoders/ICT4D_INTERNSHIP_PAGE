@@ -1,11 +1,15 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
+// import BarChartIcon from '@mui/icons-material/BarChart';
+// import CreditCardIcon from '@mui/icons-material/CreditCard';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import PersonIcon from '@mui/icons-material/Person';
+// import PersonIcon from '@mui/icons-material/Person';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import TableChartIcon from '@mui/icons-material/TableChart';
+// import TableChartIcon from '@mui/icons-material/TableChart';
+import GroupIcon from '@mui/icons-material/Group';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/darkContext';
@@ -33,28 +37,29 @@ function Sidebar() {
                     </Link>
 
                     <p className="spann">lists</p>
-                    <Link to="/users" style={{ textDecoration: 'none' }}>
+                    <Link to="/applicants" style={{ textDecoration: 'none' }}>
                         <li>
-                            <PersonIcon className="icon" /> Users
+                            <GroupIcon className="icon" /> All Applicants
                         </li>
                     </Link>
 
-                    <Link to="/products" style={{ textDecoration: 'none' }}>
+                    <Link to="/applicants/approved" style={{ textDecoration: 'none' }}>
                         <li>
-                            <TableChartIcon className="icon" /> Products
+                            <HowToRegIcon className="icon" /> Approved 
                         </li>
                     </Link>
-                    <Link to="/orders" style={{ textDecoration: 'none' }}>
+                    <Link to="/applicants/pending" style={{ textDecoration: 'none' }}>
                         <li>
-                            <CreditCardIcon className="icon" /> Orders
+                            <PendingActionsIcon className="icon" /> Pending 
                         </li>
                     </Link>
-                    <li>
-                        <CreditCardIcon className="icon" /> Balance
-                    </li>
-                    <li>
-                        <BarChartIcon className="icon" /> Status
-                    </li>
+                    <p className="spann">Reports</p>
+                    <Link to="/reports" style={{ textDecoration: 'none' }}>
+                        <li>
+                            <AssessmentIcon className="icon" /> Reports
+                        </li>
+                    </Link>
+                   
 
                     <p className="spann">Seetings</p>
                     <li>

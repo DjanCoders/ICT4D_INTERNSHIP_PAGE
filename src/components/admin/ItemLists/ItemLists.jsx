@@ -93,7 +93,7 @@ function ItemLists({ type }) {
                 <p>{data.title}</p>
                 <span className="persentage positive">
                     <KeyboardArrowUpIcon />
-                    20 %
+                   {(data.count/200)*100} %
                 </span>
             </div>
 
