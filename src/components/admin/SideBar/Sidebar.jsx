@@ -57,13 +57,13 @@ function Sidebar() {
                         </li>
                     </Link>
                     <p className="spann">Exams</p>
-                    <Link to="/exam/edit" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/exam-editor" style={{ textDecoration: 'none' }}>
                         <li>
                             <EditIcon className="icon" /> Exam Editor
                         </li>
                     </Link>
 
-                    <Link to="/exam/settings" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
                         <li>
                             <SettingsApplicationsIcon className="icon" /> Exam Settings
                         </li>
