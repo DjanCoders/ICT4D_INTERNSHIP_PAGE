@@ -12,6 +12,10 @@
         border-bottom-left-radius: 20px;
         background-color: #536def;
       }
+      main{
+        overflow: auto;
+        max-width:  100%;
+      }
       }
       .home_items {
         border: 1px solid blue;
@@ -43,7 +47,7 @@
           // border-bottom-left-radius: 20px;
           // background-color: #536def;
         }
-        
+       
   
        
       }

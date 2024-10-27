@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/editExam.css";
+import "./editExam.css";
 
 function ExamEditor() {
   const [questions, setQuestions] = useState([]);

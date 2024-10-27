@@ -24,7 +24,7 @@ function AdminLayout() {
                 <ItemLists type="approvedApplicants" />
                 <ItemLists type="pendingApplicants" />
                 <ItemLists type="rejectedApplicants" />
-            </div>
+               </div>
                 <main>
                 <Outlet /> {/* Renders child routes */}
                </main>
