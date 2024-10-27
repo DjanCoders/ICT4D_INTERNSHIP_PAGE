@@ -32,6 +32,8 @@ function AdminLayout() {
                 <ItemLists type="rejectedApplicants" />
                </div>
                 <main>
+                  {/* Outlet is used as a placeholder for rendering child 
+                  routes within a parent route. */}  
                 <Outlet /> {/* Renders child routes */}
                </main>
 

@@ -15,8 +15,7 @@ export function ColorContextProvider({ children }) {
             value={{
                 darkMode: state.darkMode,
                 dispatch,
-            }}
-        >
+            }}>
             {children}
         </ColorContext.Provider>
     );

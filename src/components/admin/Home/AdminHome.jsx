@@ -11,7 +11,7 @@ import TableList from '../TableList/TableList';
 import './Home.scss';
 
 function AdminHome() {
-    const { darkMode } = useContext(ColorContext);
+    const {darkMode } = useContext(ColorContext);
     const colorStyle={
         color: darkMode ? '#fff' : '#000'
         }
