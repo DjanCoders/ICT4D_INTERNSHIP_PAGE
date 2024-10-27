@@ -1,6 +1,6 @@
 // ExamSettings.js
 import React, { useState } from "react";
-import "./exam-setting.css";
+import "./exam-setting.scss";
 
 function ExamSettings() {
   const [startTime, setStartTime] = useState("");
