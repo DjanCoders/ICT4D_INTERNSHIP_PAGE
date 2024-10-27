@@ -11,15 +11,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-// import dummy image
-// import book1 from '../../Images/book1.jpg';
-// import book2 from '../../Images/book2.jpg';
-// import book3 from '../../Images/book3.jpg';
-// import book4 from '../../Images/book4.jpg';
-// import book5 from '../../Images/book5.jpg';
+
+
 
 function TableList() {
-    // Replace this data with your own
+   
     const applicants = [
         {
             _id: 12345,

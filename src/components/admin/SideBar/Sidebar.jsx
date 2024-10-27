@@ -15,82 +15,85 @@ import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { ColorContext } from '../../ColorContext/darkContext';
+import { ColorContext } from '../../ColorContext/DarkContext';
 import './Sidebar.scss';
 
 function Sidebar() {
     // color state management using react context
-    const { darkMode, dispatch } = useContext(ColorContext);
-
+    //destruct the object and get only darkMode object
+    const {darkMode} = useContext(ColorContext);
+    const colorStyle={
+          color: darkMode ? '#fff' : '#000'
+          }
     return (
-        <div className="sidebar">
+        <div className="sidebar" style={colorStyle}>
             <div className="logo">
                 <Link to="/admin" style={{ textDecoration: 'none' }}>
-                    <h3 className="text_none">AdminDashboard</h3>
+                    <h3 style={colorStyle} className="text_none">AdminDashboard</h3>
                 </Link>
             </div>
 
-            <div className="links">
+            <div className="links" style={colorStyle} >
                 <ul>
-                    <p className="spann">Main</p>
+                    <p className="spann" style={colorStyle} >Main</p>
                     <Link to="/admin" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <DashboardIcon className="icon" /> Dashboard
                         </li>
                     </Link>
 
-                    <p className="spann">lists</p>
+                    <p className="spann" style={colorStyle} >lists</p>
                     <Link to="/admin" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <GroupIcon className="icon" /> All Applicants
                         </li>
                     </Link>
 
                     <Link to="/applicants/approved" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <HowToRegIcon className="icon" /> Approved 
                         </li>
                     </Link>
                     <Link to="/applicants/pending" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <PendingActionsIcon className="icon" /> Pending 
                         </li>
                     </Link>
-                    <p className="spann">Exams</p>
+                    <p className="spann" style={colorStyle} >Exams</p>
                     <Link to="admin/exam-editor" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <EditIcon className="icon" /> Exam Editor
                         </li>
                     </Link>
 
                     <Link to="/admin/exam-settings" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <SettingsApplicationsIcon className="icon" /> Exam Settings
                         </li>
                     </Link>
 
                     <Link to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <RateReviewIcon className="icon" /> Review 
                         </li>
                     </Link>                    
 
-                    <p className="spann">Reports</p>
+                    <p className="spann" style={colorStyle} >Reports</p>
                     <Link to="/reports" style={{ textDecoration: 'none' }}>
-                        <li>
+                        <li style={colorStyle} >
                             <AssessmentIcon className="icon" /> Reports
                         </li>
                     </Link>
                    
 
-                    <p className="spann">Seetings</p>
-                    <li>
+                    <p className="spann" style={colorStyle} >Seetings</p>
+                    <li style={colorStyle} >
                         <AccountCircleIcon className="icon" /> Profile
                     </li>
-                    <li>
+                    <li style={colorStyle} >
                         <SettingsRoundedIcon className="icon" /> Setting
                     </li>
-                    <li>
+                    <li style={colorStyle} >
                         <LogoutIcon className="icon" /> Log Out
                     </li>
                 </ul>

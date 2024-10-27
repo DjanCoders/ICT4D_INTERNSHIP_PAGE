@@ -6,11 +6,17 @@ import Sidebar from '../SideBar/Sidebar';
 import { Outlet } from 'react-router-dom';
 import ItemLists from '../ItemLists/ItemLists';
 import './adminlayout.scss';
+import { useContext } from 'react';
+import { ColorContext } from '../../ColorContext/DarkContext';
 
 function AdminLayout() {
     //
+    const { darkMode } = useContext(ColorContext);
     return (
-        <div className="home">
+        <div className="home" style={{
+                    background: darkMode ? '#333' : '#fff',
+                    color: darkMode ? '#fff' : '#000'
+        }}>
             <div className="home_sidebar">
                 <Sidebar />
             </div>
