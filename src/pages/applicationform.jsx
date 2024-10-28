@@ -41,12 +41,7 @@ const ApplicationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-  
-    // Append all form fields to FormData
-    for (const [key, value] of Object.entries(formData)) {
-      data.append(key, value);
-    }
+   
   
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/internship-application/", data, {
@@ -54,10 +49,15 @@ const ApplicationForm = () => {
           'Content-Type': 'multipart/form-data', // Set content type for file upload
         },
       });
-      setSubmissinMessage('Application Created: ' + response.data);
+      setSubmissinMessage(response.data.message);
     } catch (error) {
-      console.error('Error Creating:', error.response.data); // Log the error response for debugging
-      setSubmissinMessage('Error Creating: ' + error.response.data);
+      console.error('Error Creating:', error.response); // Log the error response for debugging
+      if (error.response && error.response.data) {
+        const errorMessage = JSON.stringify(error.response.data); // Convert error response to string
+        setSubmissinMessage('Error Creating: ' + errorMessage);
+      } else {
+        setSubmissinMessage('Error Creating: Unknown error'); // Fallback if no response data is available
+      }
       setHasError(true);
     }
   };
