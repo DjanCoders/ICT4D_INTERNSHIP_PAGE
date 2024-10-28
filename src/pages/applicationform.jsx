@@ -5,8 +5,10 @@ import axios from 'axios';
 import coderLogo from '../components/Images/coder-logo.jpg';
 
 const ApplicationForm = () => {
+  const [submissionMessage, setSubmissinMessage] = useState(" ");
+  const [hasError, setHasError] = useState(false);
   const [formData, setFormData] = useState({
-    firt_name: '',
+    first_name: '',
     last_name: '',
     email: '',
     phone: '',
@@ -15,11 +17,11 @@ const ApplicationForm = () => {
     degree: '',
     major: '',
     gpa: '',
-    startDate: '',
+    start_date: '',
     duration: '',
     department: '',
     resume: null,
-    coverLetter: null,
+    cover_letter: null,
   });
 
   const handleChange = (e) => {
@@ -37,20 +39,29 @@ const ApplicationForm = () => {
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const data = new FormData();
+  
+    // Append all form fields to FormData
+    for (const [key, value] of Object.entries(formData)) {
+      data.append(key, value);
+    }
+  
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/internship-application/",
-        formData
-      );
-      alert('Aplication Created'+response.data)
+      const response = await axios.post("http://127.0.0.1:8000/api/internship-application/", data, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type for file upload
+        },
+      });
+      setSubmissinMessage('Application Created: ' + response.data);
     } catch (error) {
-      alert('Error Creating!'+error);
-
-   }
-    
+      console.error('Error Creating:', error.response.data); // Log the error response for debugging
+      setSubmissinMessage('Error Creating: ' + error.response.data);
+      setHasError(true);
+    }
   };
-
+  
   return (
     <div className='form-wrapper'>
     <div className='left-bar'>
@@ -71,7 +82,7 @@ const ApplicationForm = () => {
 
     <h3 className="font-bold text-lg mt-4">Key Dates</h3>
     <ul>
-      <li><strong>Application Start:</strong> [Date]</li>
+      <li><strong>Application Start:</strong> {formData.start_date}</li>
       <li><strong>Application Deadline:</strong> [Date]</li>
     </ul>
 
@@ -90,13 +101,13 @@ const ApplicationForm = () => {
           <span> Full Name</span>
           <br/>
         <label className='text-sm font-medium text-gray-1000'> First Name:</label>
-          <input type="text" name="fname" value={formData.fist_name} onChange={handleChange} required
+          <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} required
           className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
        
          <label className=' text-sm font-medium text-gray-1000'> Last Name:</label>
-          <input type="text" name="lname" value={formData.last_name} onChange={handleChange} required
+          <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} required
         className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
@@ -167,10 +178,10 @@ const ApplicationForm = () => {
           <br />
           
         <label className='text-sm font-medium text-gray-1000'>Start Date:</label>
-        <input type="date" name="startDate" value={formData.startDate} onChange={handleChange}  
+        <input type="date" name="start_date" value={formData.start_date} onChange={handleChange}  
                   className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
-     
+        required
           />
       
         <label className='text-sm font-medium text-gray-1000'>Duration (months):</label>
@@ -197,13 +208,14 @@ const ApplicationForm = () => {
       </div>
       <div>
         <label className='text-sm font-medium text-gray-1000'>Cover Letter:</label>
-          <input type="file" name="coverLetter" onChange={handleChange}
+          <input type="file" name="cover_letter" onChange={handleChange}
           className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
            />
       </div>
       <button className='form-button' type="submit">Submit</button>
-    </form>
+        </form>
+        <h2 style={{color:hasError? "red":"green"}}>{ submissionMessage}</h2>
       </div>
     </div>   
   );
