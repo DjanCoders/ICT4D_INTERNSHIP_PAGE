@@ -12,6 +12,7 @@ import ExamSubmission from "./components/applicant/ExamSubmission";
 import AdminHome from "./components/admin/Home/AdminHome";
 import AdminLayout from "./components/admin/AdminLayout/AdminLayout";
 import Home from "./pages/Home";
+import InternshipForm from "./components/admin/Internship/InternshipAreaForm";
 
 const App = () => {
   const user = {
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/admin/exam-editor" element={<ExamEditor />} />
           <Route path="/admin/exam-settings" element={<ExamSettings />} />
           <Route path="/admin/review-submissions" element={<ReviewSubmissions />} />
+          <Route path="/admin/internship-form" element={<InternshipForm/>}/>
         </Route>
       </Routes>
     </div>

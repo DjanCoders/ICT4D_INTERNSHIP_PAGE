@@ -1,6 +1,6 @@
 // src/ApplicationForm.js
 import React, { useState } from 'react';
-
+import './styles.css'
 const ApplicationForm = () => {
   const [formData, setFormData] = useState({
     fname: '',
@@ -12,7 +12,6 @@ const ApplicationForm = () => {
     degree: '',
     major: '',
     gpa: '',
-    graduationDate: '',
     startDate: '',
     duration: '',
     department: '',
@@ -43,6 +42,35 @@ const ApplicationForm = () => {
   };
 
   return (
+    <div className='form-wrapper'>
+    <div className='left-bar'>
+  {/* Coder Image */}
+  <img 
+    src="https://example.com/coder-image.jpg" 
+    alt="Coder" 
+    className="w-full h-auto rounded-lg mb-4" 
+  />
+  
+  {/* Basic Info */}
+  <div className="info-section">
+    <h3 className="font-bold text-lg">Eligibility Criteria</h3>
+    <p>Open to students currently enrolled in a degree program.</p>
+
+    <h3 className="font-bold text-lg mt-4">Company Overview</h3>
+    <p>We are an innovative tech firm offering internships to aspiring developers.</p>
+
+    <h3 className="font-bold text-lg mt-4">Key Dates</h3>
+    <ul>
+      <li><strong>Application Start:</strong> [Date]</li>
+      <li><strong>Application Deadline:</strong> [Date]</li>
+    </ul>
+
+    <h3 className="font-bold text-lg mt-4">FAQs</h3>
+    <p>Check our FAQ section for any questions related to the application process.</p>
+  </div>
+</div>
+
+
     <div className="Apply-form">
       <h1>Internship Application </h1>
       <h2>Please complete the form below to apply for Internship with us.</h2>
@@ -166,7 +194,8 @@ const ApplicationForm = () => {
       </div>
       <button className='form-button' type="submit">Submit</button>
     </form>
-    </div>
+      </div>
+    </div>   
   );
 };
 

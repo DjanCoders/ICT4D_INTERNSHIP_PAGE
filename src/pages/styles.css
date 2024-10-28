@@ -1,10 +1,28 @@
 /* src/styles.css */
+.form-wrapper{
+  display: flex;
+  gap:10px;
+}
+.left-bar{
+  width:40%;
+  margin: 20px 5px 10px 50px;
+  padding: 10px;
+  border:1px solid blue
+}
+.Apply-form{
+  text-align: center;
+  width:60%;
+  margin-top: 20px;
+  border: 1px solid red;
+
+
+}
 form {
+  max-width: fit-content;
     display: flex;
     flex-direction: column;
-    max-width:fit-content;
-    margin: auto;
     background-color:#e9e0e0b9 ;
+    padding: 5px;
   }
   .full-name,.school-info,.contact-address{
     margin-bottom: 10px;
@@ -58,8 +76,4 @@ form {
 h1{
     text-align: center;
 }  
-.Apply-form{
-  text-align: center;
-  margin-top: 80px;
 
-}
