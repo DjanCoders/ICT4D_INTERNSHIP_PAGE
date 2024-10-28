@@ -9,6 +9,13 @@
   padding: 10px;
   border:1px solid blue
 }
+.left-bar .coder-image{
+  width: 300px;       /* Equivalent to w-full */
+  height: 300px;    /* Equivalent to h-10 */
+  border-radius: 0.5rem; /* Equivalent to rounded-lg */
+  margin: 1rem auto;
+}
+
 .Apply-form{
   text-align: center;
   width:60%;

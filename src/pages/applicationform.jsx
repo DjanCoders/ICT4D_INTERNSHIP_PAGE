@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import './styles.css'
 import axios from 'axios';
+import coderLogo from '../components/Images/coder-logo.jpg';
+
 const ApplicationForm = () => {
   const [formData, setFormData] = useState({
     fname: '',
@@ -54,9 +56,9 @@ const ApplicationForm = () => {
     <div className='left-bar'>
   {/* Coder Image */}
   <img 
-    src="https://example.com/coder-image.jpg" 
+    src={coderLogo}
     alt="Coder" 
-    className="w-full h-auto rounded-lg mb-4" 
+    className="coder-image" 
   />
   
   {/* Basic Info */}
