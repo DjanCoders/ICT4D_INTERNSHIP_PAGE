@@ -6,8 +6,8 @@ import coderLogo from '../components/Images/coder-logo.jpg';
 
 const ApplicationForm = () => {
   const [formData, setFormData] = useState({
-    fname: '',
-    lname: '',
+    firt_name: '',
+    last_name: '',
     email: '',
     phone: '',
     address: '',
@@ -40,7 +40,7 @@ const ApplicationForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/applications/",
+      const response = await axios.post("http://127.0.0.1:8000/api/internship-application/",
         formData
       );
       alert('Aplication Created'+response.data)
@@ -90,13 +90,13 @@ const ApplicationForm = () => {
           <span> Full Name</span>
           <br/>
         <label className='text-sm font-medium text-gray-1000'> First Name:</label>
-          <input type="text" name="fname" value={formData.fname} onChange={handleChange} required
+          <input type="text" name="fname" value={formData.fist_name} onChange={handleChange} required
           className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
        
          <label className=' text-sm font-medium text-gray-1000'> Last Name:</label>
-          <input type="text" name="lname" value={formData.lname} onChange={handleChange} required
+          <input type="text" name="lname" value={formData.last_name} onChange={handleChange} required
         className='appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm'
 
           />
