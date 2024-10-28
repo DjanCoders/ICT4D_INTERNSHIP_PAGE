@@ -1,6 +1,7 @@
 // src/ApplicationForm.js
 import React, { useState } from 'react';
 import './styles.css'
+import axios from 'axios';
 const ApplicationForm = () => {
   const [formData, setFormData] = useState({
     fname: '',
@@ -34,11 +35,18 @@ const ApplicationForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Here, you would typically send formData to your server
-    console.log(formData);
-    alert('Form submitted!');
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/applications/",
+        formData
+      );
+      alert('Aplication Created'+response.data)
+    } catch (error) {
+      alert('Error Creating!'+error);
+
+   }
+    
   };
 
   return (
