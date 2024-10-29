@@ -1,0 +1,54 @@
+.internship-form-continear{
+ width: 80%;
+   margin: 10px auto;
+
+.internship-form {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  width: 100%;
+  gap: 10px;
+  padding: 10px;
+  input {
+    border: 1px solid blue;
+    padding: 6px;
+    border-radius: 6px;
+  }
+  input:focus {
+  outline: none;
+  background-color: rgba(211, 211, 211,0.7);
+
+  }
+  div:nth-child(1) {
+    height: 40px;
+  }
+  .textarea-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    textarea {
+      border: 1px solid blue;
+      width: 100%;
+      padding: 8px;
+    }
+    textarea:focus {
+    outline: none;
+    background-color: rgba(211, 211, 211,0.7);
+    }
+  }
+  div {
+    display: flex;
+    gap: 1rem;
+  }
+  button {
+    display: block;
+    border: 2px solid;
+    grid-column-start: 2;
+    width: fit-content;
+    padding: 6px 16px;
+    border-radius: 18px;
+    background-color: rgba(0, 0, 255,0.6);
+  }
+}
+}

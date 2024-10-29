@@ -18,7 +18,6 @@ const Home = () => {
 			<article>
 				<FAQ faqs={faqData} />
 			</article>
-			<footer></footer>
 		</section>
 	);
 };

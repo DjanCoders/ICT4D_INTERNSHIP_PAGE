@@ -49,6 +49,12 @@ const Profile = ({ user }: { user: userProfile }) => {
 				</label>
 				<p className="text-gray-900">{}</p>
 			</div>
+			<div className="mb-4">
+				<label className="block text-gray-700 text-sm font-bold mb-2">
+				</label>
+				<p className="text-gray-900">{}</p>
+				<img src={profile.avatar}></img>
+			</div>
 			<div>
 				<button
 					className="border-2 hover:bg-transparent hover:border-slate-400 hover:border-[2px] px-5 py-2 rounded-xl transition-all duration-300"

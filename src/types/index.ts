@@ -1,5 +1,6 @@
 export type userProfile = {
   id: number;
+  avatar: string; // URL to the avatar image
   user: {
     username: string;
     first_name: string;
