@@ -15,7 +15,8 @@ const InternshipForm = () => {
     location: "",
     is_active: true,
   });
-
+  const [message, setMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setInternship({
@@ -26,15 +27,18 @@ const InternshipForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasError(false);
+    setMessage("");
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/internships/",
         internship
       );
-      alert("Internship created:"+ response.data);
+     setMessage("Internship vObject is created successfully ",+ response.data) ;
       // Reset the form or redirect as needed
     } catch (error) {
-      alert("Error creating internship:"+ error);
+      setMessage("Error: " + (error.response?.data || error.message));
+      setHasError(true);
     }
   };
 
@@ -104,7 +108,8 @@ const InternshipForm = () => {
         />
       </div>
       <button type="submit">Add Internship</button>
-    </form>
+        </form>
+        <h2 style={{ color: hasError ? "red" : "green" }}>{ message}</h2>
           </div>
   );
 };
