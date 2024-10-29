@@ -89,9 +89,9 @@ const ApplicationForm = () => {
     <h3 className="font-bold text-lg mt-4">Key Dates</h3>
     <ul>
       <li><strong>Application Start:</strong> {formData.start_date}</li>
-      <li><strong>Application Deadline:</strong> </li>
+      <li><strong>Duration:</strong> {formData.duration} </li>
     </ul>
-
+     
     <h3 className="font-bold text-lg mt-4">FAQs</h3>
     <p>Check our FAQ section for any questions related to the application process.</p>
   </div>

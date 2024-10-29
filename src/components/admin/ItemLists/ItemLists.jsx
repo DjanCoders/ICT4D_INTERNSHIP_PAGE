@@ -10,15 +10,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './itemlists.scss';
 
-function ItemLists({ type }) {
+function ItemLists({ total,count,type }) {
     let data;
-
     // Dynamicaly change the ui content
     switch (type) {
         case 'totalApplicants':
             data = {
                 title: 'TOTAL APPLICANTS',
-                count: 200,
+                count: count,
                 icon: (
                     <PermIdentityIcon
                         style={{
@@ -35,7 +34,7 @@ function ItemLists({ type }) {
         case 'approvedApplicants':
             data = {
                 title: 'APPROVED APPLICANTS',
-                count: 50,
+                count: count,
                 icon: (
                     <HowToRegOutlinedIcon
                         style={{
@@ -50,9 +49,10 @@ function ItemLists({ type }) {
             };
             break;
         case 'pendingApplicants':
+            
             data = {
                 title: 'PENDING APPLICATIONS',
-                count: 120,
+                count: count,
                 icon: (
                     <PendingActionsOutlinedIcon
                         style={{
@@ -69,7 +69,7 @@ function ItemLists({ type }) {
         case 'rejectedApplicants':
             data = {
                 title: 'REJECTED APPLICANTS',
-                count: 30,
+                count: count,
                 icon: (
                     <HighlightOffOutlinedIcon
                         style={{
@@ -93,7 +93,7 @@ function ItemLists({ type }) {
                 <p>{data.title}</p>
                 <span className="persentage positive">
                     <KeyboardArrowUpIcon />
-                   {(data.count/200)*100} %
+                   {(data.count/total)*100} %
                 </span>
             </div>
 
