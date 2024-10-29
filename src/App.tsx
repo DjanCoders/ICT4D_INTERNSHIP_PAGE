@@ -36,7 +36,11 @@ const App = () => {
 
         {/* Admin Routes */}
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin" element={<AdminHome status="all"/>} />
+          <Route path="/admin/applicants/approved" element={<AdminHome status="Approved"  />} />
+          <Route path="/admin/applicants/pending" element={<AdminHome status="Pending"/>} />
+          <Route path="/admin/applicants/rejected" element={<AdminHome status="Rejected"/>} />
+
           <Route path="/admin/exam-editor" element={<ExamEditor />} />
           <Route path="/admin/exam-settings" element={<ExamSettings />} />
           <Route path="/admin/review-submissions" element={<ReviewSubmissions />} />

@@ -10,7 +10,7 @@ import TableList from '../TableList/TableList';
 // import { Outlet } from 'react-router-dom';
 import './Home.scss';
 
-function AdminHome() {
+function AdminHome({status}) {
     const {darkMode } = useContext(ColorContext);
     const colorStyle={
         color: darkMode ? '#fff' : '#000'
@@ -22,7 +22,7 @@ function AdminHome() {
         <>
             <div className="table">
                 <div className="title" style={colorStyle}>Latest Applications</div>
-                <TableList />
+                <TableList status={status} />
             </div>
         </>
     );

@@ -14,7 +14,7 @@ import TableRow from '@mui/material/TableRow';
 
 
 
-function TableList() {
+function TableList({status}) {
    
 
     const [applicant, setApplicant] = useState([])
@@ -22,7 +22,10 @@ function TableList() {
     const getData = async () => {
         const url = "http://127.0.0.1:8000/api/internship-application/";
         try {
-            const response = await axios.get(url);
+            const response = await axios.get(url,{
+                params: status !== 'all' ? { status } : {},
+
+              });
             const applicantData = response.data
             setApplicant(applicantData)
             setLoading(false)
@@ -34,7 +37,7 @@ function TableList() {
     }
     useEffect(() => {
         getData()
-    }, [])
+    }, [status])
     
     
     //     const applicants = [

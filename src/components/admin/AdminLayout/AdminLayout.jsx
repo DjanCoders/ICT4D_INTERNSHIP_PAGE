@@ -10,8 +10,6 @@ import { ColorContext } from '../../ColorContext/DarkContext';
 import axios from 'axios';
 
 function AdminLayout() {
-    //
-    const [applicant, setApplicant] = useState([])
 
     const [loading, setLoading] = useState(true)
     const [numberOfApplicants, setNumberOfApplicants] = useState(0);
@@ -21,28 +19,18 @@ function AdminLayout() {
 
 
     const getData = async () => {
-        const url = "http://127.0.0.1:8000/api/internship-application/";
+        const url = "http://127.0.0.1:8000/api/applicant_counts/";
         try {
             const response = await axios.get(url);
-            const applicantData = response.data
-            setApplicant(applicantData)
-            setNumberOfApplicants(applicantData.length)
+            const data = response.data
+            setNumberOfApplicants(data.totalApplicants)
             setLoading(false)
-            const approvedApplicants = applicant.filter((element) => {
-                element.status = "approved";
-            })
-            const pendingApplicants = applicant.filter((element) =>{
-                element.status = "Pending";
-            })
-            const rejectedgApplicants = applicant.filter((element) => {
-                element.status = "rejected";
-            })
-            setPendingApplicants(pendingApplicants.length)
-            setRejetedApplicants(rejectedgApplicants.length)
-            setApprovedApplicants(approvedApplicants.length)
+            setPendingApplicants(data.pendingApplicants)
+            setRejetedApplicants(data.rejectedApplicants)
+            setApprovedApplicants(data.approvedApplicants)
           
         } catch (error) {
-            console.error("Error fetching  data", error);
+            console.error("Error fetching applicant counts:", error);
             setLoading(false);
         }
         
