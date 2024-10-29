@@ -13,6 +13,7 @@ import AdminHome from "./components/admin/Home/AdminHome";
 import AdminLayout from "./components/admin/AdminLayout/AdminLayout";
 import Home from "./pages/Home";
 import InternshipForm from "./components/admin/Internship/InternshipAreaForm";
+import WorkAreaDetails from "./components/admin/Internship/WorkAreaDetial";
 
 const App = () => {
   const user = {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/admin/applicants/approved" element={<AdminHome status="Approved"  />} />
           <Route path="/admin/applicants/pending" element={<AdminHome status="Pending"/>} />
           <Route path="/admin/applicants/rejected" element={<AdminHome status="Rejected"/>} />
+          <Route path="/admin/work-area-details" element={<WorkAreaDetails/>} />
 
           <Route path="/admin/exam-editor" element={<ExamEditor />} />
           <Route path="/admin/exam-settings" element={<ExamSettings />} />

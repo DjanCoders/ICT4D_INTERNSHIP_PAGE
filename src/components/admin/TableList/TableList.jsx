@@ -43,6 +43,8 @@ function TableList({ status }) {
           applicant.id === applicationId ? { ...applicant, status: newStatus } : applicant
         )
       );
+      // Reload the entire page after a successful update
+       window.location.reload();
     } catch (error) {
       console.error("Error updating status:", error);
     }

@@ -9,11 +9,14 @@ import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import GroupIcon from '@mui/icons-material/Group';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import CreateIcon from '@mui/icons-material/Create';
+import DetailsIcon from '@mui/icons-material/Info';
 
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -51,14 +54,19 @@ function Sidebar() {
                         </li>
                     </Link>
 
-                    <Link to="/applicants/approved" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/applicants/approved" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <HowToRegIcon className="icon" /> Approved 
                         </li>
                     </Link>
-                    <Link to="/applicants/pending" style={{ textDecoration: 'none' }}>
+                    <Link to="/admin/applicants/pending" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <PendingActionsIcon className="icon" /> Pending 
+                        </li>
+                    </Link>
+                    <Link to="/admin/applicants/rejected" style={{ textDecoration: 'none' }}>
+                        <li style={colorStyle} >
+                            <HighlightOffIcon className="icon" /> Rejected 
                         </li>
                     </Link>
                     <p className="spann" style={colorStyle} >Exams</p>
@@ -84,6 +92,11 @@ function Sidebar() {
                     <Link to="admin/internship-form" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <CreateIcon className="icon" /> Add Work Area
+                        </li>
+                    </Link>
+                    <Link to="admin/work-area-details" style={{ textDecoration: 'none' }}>
+                        <li style={colorStyle} >
+                            <DetailsIcon className="icon" />  Work Area Detial
                         </li>
                     </Link>
                     
