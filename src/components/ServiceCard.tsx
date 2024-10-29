@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const ServiceCard = ({
 	service,
 }: {
-	service: { name: string; services: string[] };
+	service: { title: string; description: string };
 }) => {
 	const navigate = useNavigate();
 
@@ -11,13 +11,14 @@ const ServiceCard = ({
 		navigate("/apply");
 	};
 	return (
-		<div className="flex-1 z-20 py-4 relative border-[2px] hover:scale-105 border-gray-400 rounded-lg  p-6 bg-white transition-all transform hover:-translate-y-2">
-			<h2 className="text-3xl font-bold my-4 text-gray-800">{service.name}</h2>
-			<ul className="list-disc my-6 mb-12 list-inside space-y-2 text-gray-600 text-left mx-3">
+		<div className="flex-1 py-4 relative cursor-pointer border-[2px] border-gray-400 rounded-lg  p-6 bg-white transition-all transform hover:-translate-y-2">
+			<h2 className="text-3xl font-bold my-4 text-gray-800">{service.title}</h2>
+			{/* <ul className="list-disc my-6 mb-12 list-inside space-y-2 text-gray-600 text-left mx-3">
 				{service.services.map((serv, index) => {
 					return <li key={index}>{serv}</li>;
 				})}
-			</ul>
+			</ul> */}
+			{service.description}
 			<button
 				onClick={navigateToApplyForm}
 				type="button"
