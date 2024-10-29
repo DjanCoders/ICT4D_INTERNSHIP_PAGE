@@ -1,20 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
-import { userProfile } from "../../types";
-import { getProfile } from "../../api";
+import { User } from "../../types";
 
-const Profile = ({ user }: { user: userProfile }) => {
+const Profile = ({ user }: { user: User }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [profile, setProfile] = useState(user);
-
-	useEffect(() => {
-		const fetchProfiles = async () => {
-			const response = await getProfile();
-			setProfile(response.data[0])
-		}
-
-		fetchProfiles();
-	}, [])
 
 	const handleEditClick = () => {
 		setIsModalOpen(true);
@@ -24,7 +14,7 @@ const Profile = ({ user }: { user: userProfile }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleSaveProfile = (updatedProfile: userProfile) => {
+	const handleSaveProfile = (updatedProfile: User) => {
 		setProfile(updatedProfile);
 	};
 
@@ -33,27 +23,21 @@ const Profile = ({ user }: { user: userProfile }) => {
 			<h2 className="text-2xl font-bold mb-4">Profile Information</h2>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					{profile.user?.username}
+					Username
 				</label>
-				<p className="text-gray-900">{}</p>
+				<p className="text-gray-900">{profile.username}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					{profile.user?.email}
+					Email
 				</label>
-				<p className="text-gray-900">{}</p>
+				<p className="text-gray-900">{profile.email}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					{profile.user?.first_name} {profile.user?.last_name}
+					Area of Department
 				</label>
-				<p className="text-gray-900">{}</p>
-			</div>
-			<div className="mb-4">
-				<label className="block text-gray-700 text-sm font-bold mb-2">
-				</label>
-				<p className="text-gray-900">{}</p>
-				<img src={profile.avatar}></img>
+				<p className="text-gray-900">{profile.department}</p>
 			</div>
 			<div>
 				<button
