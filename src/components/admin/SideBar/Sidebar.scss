@@ -55,7 +55,7 @@ $text_color: #3d3c42;
 
 				&:hover {
 					background-color: $icon_color;
-					color: white;
+					color: white !important;
 				}
 				&:hover .icon {
 					color: white;
