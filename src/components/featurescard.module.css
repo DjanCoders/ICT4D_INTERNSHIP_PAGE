@@ -1,10 +1,8 @@
 .card {
 	transition: transform 0.13s ease-in-out;
-	z-index: -500;
 }
 
 .card:hover {
-	z-index: -500;
 	transform: scale(1.05);
 }
 

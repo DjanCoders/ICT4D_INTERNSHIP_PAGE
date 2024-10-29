@@ -5,7 +5,7 @@ import Footer from "./Footer";
 const Layout = () => {
 	return (
 		<div>
-			<header className="fixed w-full top-0 right-0">
+			<header className="fixed w-full z-50 top-0 right-0">
 				<Navbar />
 			</header>
 			<main style={{ paddingTop: "70px" }}>
