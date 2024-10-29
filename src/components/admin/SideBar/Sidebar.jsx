@@ -13,6 +13,8 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import CreateIcon from '@mui/icons-material/Create';
+
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/DarkContext';
@@ -78,6 +80,13 @@ function Sidebar() {
                         </li>
                     </Link>                    
 
+                    <p className="spann" style={colorStyle} >Internship Area</p>
+                    <Link to="admin/internship-form" style={{ textDecoration: 'none' }}>
+                        <li style={colorStyle} >
+                            <CreateIcon className="icon" /> Add Work Area
+                        </li>
+                    </Link>
+                    
                     <p className="spann" style={colorStyle} >Reports</p>
                     <Link to="/reports" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
