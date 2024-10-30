@@ -12,7 +12,7 @@ const Reports = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/api/monthly-application-count/');
-                const { monthlyData } = response.data; // Assume monthlyData is structured with monthly counts
+                const  monthlyData  = response.data; 
                 setApplicantData(monthlyData);
                 setLoading(false);
             } catch (error) {
@@ -37,7 +37,6 @@ const Reports = () => {
               <Chart
                   
                 data={applicantData}
-                height={300}
                 title="Internship Application Counts"
             />
         </div>

@@ -1,5 +1,4 @@
 .chart {
-    border:2px solid black;
     display: grid;
     grid-template-columns: 100%;
     box-sizing: border-box;
@@ -10,6 +9,7 @@
     }
   
     .strokee {
-      stroke: rgb(228, 225, 225);
+      stroke: #b4aaaa;
     }
+   
   }
