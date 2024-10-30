@@ -23,22 +23,20 @@ const ApplicationForm = () => {
 	const onSubmit = async (data) => {
 		setIsSubmitting(true);
 		const formData = new FormData();
+		const duration = Number(data.duration);
+		const gpa = Number(data.gpa);
 
 		// Check if files exist
 		if (data.resume && data.resume.length > 0) {
 			formData.append("resume", data.resume[0]);
-		} else {
-			console.error("No resume file selected");
 		}
 
 		if (data.cover_letter && data.cover_letter.length > 0) {
 			formData.append("cover_letter", data.cover_letter[0]);
-		} else {
-			console.error("No cover letter file selected");
 		}
 
-		formData.append("duration", Number(data.duration));
-		formData.append("gpa", Number(data.gpa));
+		formData.append("duration", duration);
+		formData.append("gpa", gpa);
 		for (const [key, value] of Object.entries(data)) {
 			if (key !== "resume" && key !== "cover_letter") {
 				formData.append(key, value);

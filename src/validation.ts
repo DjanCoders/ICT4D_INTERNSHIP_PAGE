@@ -30,9 +30,13 @@ const formSchema = z.object({
 	major: z.string().optional(),
 
 	gpa: z
-		.string({ invalid_type_error: "A valid number is required." })
-		.min(0, { message: "GPA cannot be negative." })
-		.max(4, { message: "GPA must be between 0 and 4." }),
+		.string()
+		.refine((val) => !isNaN(Number(val)), {
+			message: "GPA must be a number.",
+		})
+		.refine((val) => Number(val) >= 0 && Number(val) <= 4, {
+			message: "GPA must be between 0 and 4.",
+		}),
 
 	start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
 		message: "Invalid date format (YYYY-MM-DD).",
@@ -40,7 +44,10 @@ const formSchema = z.object({
 
 	duration: z
 		.string()
-		.min(1, { message: "Duration must be at least 1 month." })
+		.refine((val) => parseInt(val, 10) >= 1, {
+			message: "Duration must be at least 1 month.",
+		})
+		.transform((val) => parseInt(val, 10))
 		.optional(),
 
 	department: z.string().optional(),
