@@ -42,9 +42,11 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
   const handleAddOption = () => {
     setOptions([...options, { text: "", is_answer: false }]);
   };
-    const handleRemoveOption = () => {
-    
-}
+
+  const handleRemoveOption = (index) => {
+    setOptions(options.filter((_, idx) => idx !== index));
+  };
+
   const handleOptionChange = (index, field, value) => {
     const updatedOptions = [...options];
     if (field === "is_answer") {
