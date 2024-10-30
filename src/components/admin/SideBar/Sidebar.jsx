@@ -41,9 +41,9 @@ function Sidebar() {
             <div className="links" style={colorStyle} >
                 <ul>
                     <p className="spann" style={colorStyle} >Main</p>
-                    <Link to="/admin" style={{ textDecoration: 'none' }}>
+                    <Link to="/" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
-                            <DashboardIcon className="icon" /> Dashboard
+                            <DashboardIcon className="icon" /> Home
                         </li>
                     </Link>
 

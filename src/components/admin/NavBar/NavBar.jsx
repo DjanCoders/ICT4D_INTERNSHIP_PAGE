@@ -34,8 +34,9 @@ function Navbar() {
       const fetchNotifications = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/notifications/');
-            setUnreadNotifications(0);
             setNotificationList(response.data);
+            setUnreadNotifications(response.data.length);
+
         } catch (error) {
             console.error("Error fetching notifications:", error);
         }
@@ -56,7 +57,7 @@ function Navbar() {
         }
     }
     useEffect(() => {
-        fetchNotifications(); // Fetch notifications count on initial load
+        fetchNotifications(); 
     }, []);
 
     return (
