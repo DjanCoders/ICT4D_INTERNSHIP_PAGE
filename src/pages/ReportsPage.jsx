@@ -10,7 +10,7 @@ const Reports = () => {
     const [loading, setLoading] = useState(true);
     const {darkMode} = useContext(ColorContext);
     const colorStyle={
-          color: darkMode ? 'green' : '#000'
+          color: darkMode ? 'white' : '#000'
           }
     useEffect(() => {
         const fetchData = async () => {
