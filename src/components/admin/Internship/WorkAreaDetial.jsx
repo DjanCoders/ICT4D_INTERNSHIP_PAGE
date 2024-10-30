@@ -127,10 +127,10 @@ const WorkAreaDetails = () => {
           <p id="confirmation-modal-description">
             Are you sure you want to delete this item? This action cannot be undone.
           </p>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary">
+          <Button onClick={handleDelete} style={{color:"red"}} color="secondary">
             Delete
           </Button>
         </div>
