@@ -70,9 +70,9 @@ function Sidebar() {
                         </li>
                     </Link>
                     <p className="spann" style={colorStyle} >Exams</p>
-                    <Link to="admin/exam-editor" style={{ textDecoration: 'none' }}>
+                    <Link to="admin/exam-create" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
-                            <EditIcon className="icon" /> Exam Editor
+                            <EditIcon className="icon" /> Create Exam
                         </li>
                     </Link>
 
