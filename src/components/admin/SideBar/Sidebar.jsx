@@ -101,7 +101,7 @@ function Sidebar() {
                     </Link>
                     
                     <p className="spann" style={colorStyle} >Reports</p>
-                    <Link to="/reports" style={{ textDecoration: 'none' }}>
+                    <Link to="admin/reports" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <AssessmentIcon className="icon" /> Reports
                         </li>

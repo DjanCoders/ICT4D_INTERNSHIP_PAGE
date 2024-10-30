@@ -14,6 +14,8 @@ import AdminLayout from "./components/admin/AdminLayout/AdminLayout";
 import Home from "./pages/Home";
 import InternshipForm from "./components/admin/Internship/InternshipAreaForm";
 import WorkAreaDetails from "./components/admin/Internship/WorkAreaDetial";
+import Reports from "./pages/ReportsPage";
+import { ApplicantContextProvider } from "./components/ApplicantContext/ApplicantContext";
 
 const App = () => {
   const user = {
@@ -36,13 +38,13 @@ const App = () => {
         </Route>
 
         {/* Admin Routes */}
-        <Route element={<AdminLayout />}>
+        <Route element={<ApplicantContextProvider><AdminLayout /></ApplicantContextProvider>}>
           <Route path="/admin" element={<AdminHome status="all"/>} />
           <Route path="/admin/applicants/approved" element={<AdminHome status="Approved"  />} />
           <Route path="/admin/applicants/pending" element={<AdminHome status="Pending"/>} />
           <Route path="/admin/applicants/rejected" element={<AdminHome status="Rejected"/>} />
           <Route path="/admin/work-area-details" element={<WorkAreaDetails/>} />
-
+          <Route path="/admin/reports" element={<Reports />} />
           <Route path="/admin/exam-editor" element={<ExamEditor />} />
           <Route path="/admin/exam-settings" element={<ExamSettings />} />
           <Route path="/admin/review-submissions" element={<ReviewSubmissions />} />

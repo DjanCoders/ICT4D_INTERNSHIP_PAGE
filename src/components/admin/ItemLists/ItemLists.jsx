@@ -9,15 +9,23 @@ import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./itemlists.scss";
-
-function ItemLists({ total, count, type }) {
+import { useApplicantData } from "../../ApplicantContext/ApplicantContext";
+function ItemLists({ type }) {
+  const {
+    numberOfApplicants,
+    pendingApplicants,
+    rejectedApplicants,
+    approvedApplicants,
+    loading,
+} = useApplicantData();
+   
   let data;
   // Dynamicaly change the ui content
   switch (type) {
     case "totalApplicants":
       data = {
         title: "TOTAL APPLICANTS",
-        count: count,
+        count: numberOfApplicants,
         icon: (
           <PermIdentityIcon
             style={{
@@ -34,7 +42,7 @@ function ItemLists({ total, count, type }) {
     case "approvedApplicants":
       data = {
         title: "APPROVED APPLICANTS",
-        count: count,
+        count: approvedApplicants,
         icon: (
           <HowToRegOutlinedIcon
             style={{
@@ -51,7 +59,7 @@ function ItemLists({ total, count, type }) {
     case "pendingApplicants":
       data = {
         title: "PENDING APPLICATIONS",
-        count: count,
+        count: pendingApplicants,
         icon: (
           <PendingActionsOutlinedIcon
             style={{
@@ -68,7 +76,7 @@ function ItemLists({ total, count, type }) {
     case "rejectedApplicants":
       data = {
         title: "REJECTED APPLICANTS",
-        count: count,
+        count: rejectedApplicants,
         icon: (
           <HighlightOffOutlinedIcon
             style={{
@@ -85,14 +93,16 @@ function ItemLists({ total, count, type }) {
     default:
       break;
   }
-
+  if (loading) {
+   return<p><strong>Loading...</strong></p>
+ }
   return (
     <div className="item_listss">
       <div className="name">
         <p>{data.title}</p>
         <span className="persentage positive">
           <KeyboardArrowUpIcon />
-          {((data.count / total) * 100).toFixed(2)} %
+          {((data.count / numberOfApplicants) * 100).toFixed(2)} %
         </span>
       </div>
 

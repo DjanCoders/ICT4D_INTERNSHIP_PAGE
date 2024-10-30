@@ -7,8 +7,19 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Modal, Button } from '@mui/material'; 
 const WorkAreaDetails = () => {
     const [workAreaInfo, setWorkAreaInfo] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+    const handleDeleteClick = (id) => {
+        setDeleteId(id);
+        setOpen(true); // Open the confirmation modal
+    };
+    const handleClose = () => {
+        setOpen(false); // Close the modal without deleting
+      };
 
     useEffect(() => {
         const fetchWorkAreaInfo = async () => {
@@ -23,9 +34,23 @@ const WorkAreaDetails = () => {
         fetchWorkAreaInfo();
     }, []);
     
+
+    const handleDelete = async () => {
+        try {
+          await axios.delete(`http://127.0.0.1:8000/api/internships/${deleteId}/`);
+          
+          // Update local state to remove the deleted item
+          setWorkAreaInfo(workAreaInfo.filter(item => item.id !== deleteId));
+        } catch (error) {
+          console.error("Error deleting work area:", error);
+        }
+        finally {
+            setOpen(false); // Close the modal after the operation
+          }
+      };
     const handleUpdateStatus = async (id, isActive) => {
       try {
-        const response = await axios.patch(`http://127.0.0.1:8000/api/internships/${id}/status/`,
+         await axios.patch(`http://127.0.0.1:8000/api/internships/${id}/status/`,
                                            { is_active: isActive }); 
           // Update local state to reflect the change
           setWorkAreaInfo(prev => 
@@ -52,7 +77,9 @@ const WorkAreaDetails = () => {
                   <TableCell className="table_cell">Start Date</TableCell>
                   <TableCell className="table_cell">End Date</TableCell>
                   <TableCell className="table_cell">Location</TableCell>
-                  <TableCell className="table_cell">Is Active</TableCell>
+                <TableCell className="table_cell">Is Active</TableCell>
+                <TableCell className="table_cell">Delete</TableCell>
+
               </TableRow>
           </TableHead>
           <TableBody>
@@ -78,12 +105,36 @@ const WorkAreaDetails = () => {
                             {row.is_active ? 'Deactivate' : 'Activate'}
                           </button>
                         </TableCell>
+                      <TableCell className="table_cell">
+                    <button title='delete' onClick={() => handleDeleteClick(row.id)} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+                    <DeleteIcon style={{ color: 'red' }} />
+                  </button>
+                        </TableCell>
 
                   </TableRow>
               ))}
           </TableBody>
       </Table>
-      </TableContainer>
+          </TableContainer>
+        <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="confirmation-modal-title"
+        aria-describedby="confirmation-modal-description"
+      >
+        <div style={{ padding: '20px', background: 'white', borderRadius: '8px', maxWidth: '400px', margin: '100px auto' }}>
+          <h2 id="confirmation-modal-title">Confirm Deletion</h2>
+          <p id="confirmation-modal-description">
+            Are you sure you want to delete this item? This action cannot be undone.
+          </p>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} style={{color:"red"}} color="secondary">
+            Delete
+          </Button>
+        </div>
+      </Modal>
       </>
     );
 };

@@ -19,7 +19,9 @@ const Services = () => {
   const internService = internships.map((internship, index) => (
     <ServiceCard key={index} service={internship} />
   ));
-
+  if (internships.length===0) {
+   return <p>Loading....</p>
+ }
   return <div className="flex flex-col md:flex-row gap-8">{internService}</div>;
 };
 
