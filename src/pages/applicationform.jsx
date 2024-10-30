@@ -45,10 +45,15 @@ const ApplicationForm = () => {
 
     const data = new FormData();
     for (const [key, value] of Object.entries(formData)) {
-      data.append(key, value);
-    }
-   
-  
+      // Only append file fields if they are not null
+      if (key === 'resume' || key === 'cover_letter') {
+          if (value) { // Check if the file input is not null
+              data.append(key, value);
+          }
+      } else {
+          data.append(key, value); // For other fields, append normally
+      }
+  }
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/internship-application/", data, {
         headers: {
@@ -57,7 +62,6 @@ const ApplicationForm = () => {
       });
       setSubmissinMessage(response.data.message);
     } catch (error) {
-      console.error('Error Creating:', error.response); // Log the error response for debugging
       if (error.response && error.response.data) {
         const errorMessage = JSON.stringify(error.response.data); // Convert error response to string
         setSubmissinMessage('Error Creating: ' + errorMessage);
