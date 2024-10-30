@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import {
   updateMCQQuestion,
   createMCQQuestion,
@@ -6,8 +6,13 @@ import {
   createShortAnswerQuestion,
 } from "../../../api";
 import "./editExam.scss";
+import { ColorContext } from "../../ColorContext/DarkContext";
 
 const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
+    const {darkMode} = useContext(ColorContext);
+    const colorStyle={
+          color: darkMode ? 'green' : '#000'
+          }
   const [text, setText] = useState(question?.text || "");
   const [questionType, setQuestionType] = useState(
     question?.question_type || "MCQ"
@@ -86,7 +91,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
     <div className="edit-exam">
       <form className="edit-exam-form" onSubmit={handleSubmit}>
         <div className="question-text">
-          <label>Question Text</label>
+          <label style={ colorStyle}>Question Text</label>
           <input
             type="text"
             value={text}
@@ -96,19 +101,19 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
         </div>
 
         <div className="quesion-type">
-          <label>Question Type</label>
+          <label style={ colorStyle}>Question Type</label>
           <select
             value={questionType}
             onChange={(e) => setQuestionType(e.target.value)}
           >
-            <option value="MCQ">Multiple Choice</option>
-            <option value="DESC">Descriptive</option>
+            <option style={ colorStyle} value="MCQ">Multiple Choice</option>
+            <option style={ colorStyle} value="DESC">Descriptive</option>
           </select>
         </div>
 
         {questionType === "MCQ" && (
           <div className="option">
-            <label>Options</label>
+            <label style={ colorStyle} >Options</label>
             {options.map((option, index) => (
               <div
                 key={index}
@@ -123,7 +128,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
                   placeholder="Option text"
                   required
                 />
-                <label>
+                <label style={ colorStyle}>
                   <input
                     type="radio"
                     name="is_answer"
@@ -132,14 +137,14 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
                       handleOptionChange(index, "is_answer", true)
                     }
                   />
-                  Is Correct
+                  Is Answer
                 </label>
-                <button className="remove-buttn" type="button" onClick={() => handleRemoveOption(index)}>
+                <button style={ {color:darkMode ? 'white' : '#000'}}className="remove-buttn" type="button" onClick={() => handleRemoveOption(index)}>
                   Remove
                 </button>
               </div>
             ))}
-            <button className = 'add-button'type="button" onClick={handleAddOption}>
+            <button style={ {color:darkMode ? 'white' : '#000'}} className = 'add-button'type="button" onClick={handleAddOption}>
               Add Option
             </button>
           </div>
@@ -147,7 +152,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
 
         {questionType === "DESC" && (
           <div className="short-answer">
-            <label>Short Answer</label>
+            <label style={ colorStyle}>Short Answer</label>
             <input
               type="text"
               value={shortAnswer}
