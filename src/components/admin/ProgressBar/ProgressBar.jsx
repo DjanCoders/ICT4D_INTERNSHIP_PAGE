@@ -50,10 +50,11 @@ function ProgressBar() {
                         </PieChart>)}
                     </ResponsiveContainer>
                 </div>
-                <p>Total applications processed this period.</p>
-                <p className="applications">
+                <p>Total applications 
+                <span className="applications">
                     {reportData.numberOfApplicants}
-                </p>
+                    </span>
+                    </p>
             </div>
 
             <div className="bottom">
