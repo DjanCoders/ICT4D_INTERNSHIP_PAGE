@@ -68,6 +68,11 @@ export const login = async (data: { email: string, password: string }) => {
 export const register = (data: { email: string, password:string,username: string, first_name: string, last_name: string }) => api.post('/accounts/register/', data);
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
+export const getMCQs = () => api.get('/mcqquestions/');
+export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);
+export const getShortQ = (id: number) => api.get(`/shortanswerquestions/${id}/`);
+export const getShortQs = () => api.get('/shortanswerquestions/');
+export const getProfile = () => api.get('/accounts/profile/');
 export const applyForInternship = (id: number, data: any, token: string) => {
     return api.post(`/internships/${id}/apply/`, data, {
         headers: {
@@ -75,5 +80,45 @@ export const applyForInternship = (id: number, data: any, token: string) => {
         }
     });
 };
+
+export const createMCQQuestion = async (data: any) => {
+    try {
+        const response = await api.post('/mcqquestions/', data);
+        return response;
+    } catch (error) {
+        console.error('Error creating question:', error);
+        throw error;
+    }
+}
+
+export const createShortAnswerQuestion = async (data: any) => {
+    try {
+        const response = await api.post('shortanswerquestions/', data);
+        return response;
+    } catch(error) {
+        console.error('Error creating question:', error);
+        throw error;
+    }
+}
+
+export const updateMCQQuestion = async (id: number, data: any) => {
+    try {
+        const response = await api.put(`/mcqquestions/${id}/`, data);
+        return response;
+    } catch (error) {
+        console.error('Error updating question:', error);
+        throw error;
+    }
+}
+
+export const updateShortAnswerQuestion = async (id: number, data: any) => {
+    try {
+        const response = await api.put(`/shortanswerquestions/${id}/`, data);
+        return response;
+    } catch (error) {
+        console.error('Error updating question:', error);
+        throw error;
+    }
+}
 
 export default api;
