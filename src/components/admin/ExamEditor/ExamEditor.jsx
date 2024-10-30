@@ -1,109 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./editExam.scss";
+import { getMCQs, getShortQs } from "../../../api";
 
 function ExamEditor() {
-  const [questions, setQuestions] = useState([]);
-  const [questionText, setQuestionText] = useState("");
-  const [options, setOptions] = useState(["", "", "", ""]); // Default 4 options
-  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(null);
-  const [mcq,SetMcq]=useState(true)
+  const [mcqquestions, setMcqQuestions] = useState([]);
+  const [shortAnswerQs, setShortAnswerQs] = useState([]);
+  const [answers, setAnswers] = useState({});
 
-  // Function to add a new question with options
-  const addQuestion = () => {
-    const newQuestions = {
-      text: questionText,
-      options: mcq ? [...options] : [],
-      correctAnswerIndex: mcq ? correctAnswerIndex : null,
-      type: mcq ? "MCQ" : "Descriptive"
-    };
-    setQuestions([ ...questions, newQuestions]);
-    setQuestionText("");
-    setOptions(["", "", "", ""]);
-    setCorrectAnswerIndex(null);
-  };
+  useEffect(() => {
+    const fetchMcqQuestions = async () => {
+      const mcqresponse = await getMCQs();
+      setMcqQuestions(mcqresponse.data);
+    }
+    const fetchShortAnswerQs = async () => {
+      const response = await getShortQs();
+      setShortAnswerQs(response.data)
+    }
 
-  // Function to handle option text change
-  const handleOptionChange = (index, value) => {
-    const newOptions = [...options];
-    newOptions[index] = value;
-    setOptions(newOptions);
-  };
+    fetchMcqQuestions();
+    fetchShortAnswerQs();
+  }, []);
+
+  useEffect(() => {
+    const newAnswers = {};
+    mcqquestions.forEach((q) => {
+      if (q.question_type === "MCQ") {
+        q.options.forEach((option) => {
+          if (option.is_answer) {
+            newAnswers[q.text] = option.text;
+          }
+        });
+      }
+    });
+      setAnswers(newAnswers);
+    }, [mcqquestions]);
 
   return (
     <div className="edit-exam">
-      
-      <div className="choice-buttons">
-        <button onClick={()=>SetMcq(true) } className="mcq">MCQS</button>
-        <button onClick={()=>SetMcq(false) }className="shortAnswer">Descriptive</button>
-
-      </div>
-      {/* Question Input */}
-      {mcq ? (
-  <>
-    <input
-      className="question-text"
-      type="text"
-      value={questionText}
-      onChange={(e) => setQuestionText(e.target.value)}
-      placeholder="Enter question text"
-    />
-      
-    {/* Option Inputs */}
-    <h3>Options:</h3>
-    {options.map((option, index) => (
-      <div key={index}>
-        <input
-          className="option"
-          type="text"
-          value={option}
-          onChange={(e) => handleOptionChange(index, e.target.value)}
-          placeholder={`Option ${index + 1}`}
-        />
-        <label>
-          <input
-            type="radio"
-            name="correctAnswer"
-            checked={correctAnswerIndex === index}
-            onChange={() => setCorrectAnswerIndex(index)}
-          />
-          {'\u00A0'} Is It Answer?
-        </label>
-      </div>
-    ))}
-   <button className="submit" onClick={addQuestion}>Add </button>
-
-  </>
-      ) : (
-    <div className="text-area-continear">
-  <textarea
-    className="text-area"
-    value={questionText}
-    onChange={(e) => setQuestionText(e.target.value)}
-    placeholder="Enter question text"
-          >
-
-            </textarea>
-  <button className="add-button" onClick={addQuestion}>Add </button>
-
-         </div> 
-)}
-
-      
       {/* Display added questions */}
       <ul>
-        {questions.map((q, index) => (
+        {mcqquestions.concat(shortAnswerQs).map((q, index) => (
           <li key={index}>
-            <strong>{q.text}</strong>
-            {q.type === "MCQ" && (
+            <strong>{index + 1}. {q.text}</strong>
+            {q.question_type === "MCQ" && (
               <ul>
                 {q.options.map((option, optIndex) => (
                   <li key={optIndex}>
-                    {option} {optIndex === q.correctAnswerIndex && "(answer)"}
+                    {option.id}. {option.text}
                   </li>
                 ))}
-              </ul> )}
-              {q.type === "Descriptive" && <p>Answer: Free Text</p>}
-
+              </ul>
+            )}
+            <p><strong>Answer:</strong> {q.question_type === "MCQ" ? answers[q.text] : q.short_answer}</p>
           </li>
         ))}
       </ul>
