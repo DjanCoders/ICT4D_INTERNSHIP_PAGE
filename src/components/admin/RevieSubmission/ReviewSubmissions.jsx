@@ -1,12 +1,12 @@
 // ReviewSubmissions.js
 import React from "react";
-
+import './reviewSubmisin.scss'
 function ReviewSubmissions() {
   // Placeholder data; Replace with API call
   const submissions = [{ applicantName: "John Doe", answers: ["Answer 1", "Answer 2"] }];
 
   return (
-    <div>
+    <div className="review-submissions">
       <h2>Review Submissions</h2>
       {submissions.map((submission, index) => (
         <div key={index}>
