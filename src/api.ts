@@ -72,7 +72,7 @@ export const getMCQs = () => api.get('/mcqquestions/');
 export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);
 export const getShortQ = (id: number) => api.get(`/shortanswerquestions/${id}/`);
 export const getShortQs = () => api.get('/shortanswerquestions/');
-export const getProfile = () => api.get('/accounts/profile/');
+export const getProfile = () => api.get('/accounts/profiles/');
 export const applyForInternship = (id: number, data: any, token: string) => {
     return api.post(`/internships/${id}/apply/`, data, {
         headers: {

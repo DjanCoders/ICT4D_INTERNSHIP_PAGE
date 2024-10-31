@@ -5,8 +5,11 @@ import profile from "/assets/default.png";
 import SignInModal from "./modals/SignInModal";
 import SignUpModal from "./modals/SignUpModal";
 import { CloseSVGs, OpenSVGs } from "./SVGs";
-
+import { useUser } from "../contexts/UserContext";
+import { useAuth } from "../contexts/AuthContext";
 const Navbar = () => {
+    const { user, loading } = useUser();
+    const { token } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const [showSignInModal, setShowSignInModal] = useState(false);
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -23,8 +26,12 @@ const Navbar = () => {
 	};
 
 	const closeSignUpModal = () => setShowSignUpModal(false);
+	if (loading) {
+        return <div>Loading...</div>; 
+    }
 
 	return (
+		
 		<nav className="bg-gray-500 mb-20 z-50">
 			<div className="m7xl mx-auto px-2 sm:px-6 lg:px-8">
 				<div className="relative flex items-center justify-between h-16">
@@ -44,32 +51,40 @@ const Navbar = () => {
 						<div className="flex-shrink-0 text-white">
 							<Link to="/">ICT4D</Link>
 						</div>
-						<div className="flex-shrink-0 text-white">
-							<Link to="/admin">admin Panal</Link>
-						</div>
-						<div className="flex-shrink-0 text-white">
-							<Link to="/applicant/take-exam">Take Exam</Link>
-						</div>
+								{user && user.user.is_superuser && (
+								<div className="flex-shrink-0 text-white">
+								<Link to="/admin">Admin Panel</Link> 
+								</div>
+						)}
+						{user && !user.user.is_superuser && (
+							<div className="flex-shrink-0 text-white">
+								<Link to="/applicant/take-exam">Take Exam</Link>
+								</div>)
+						}
 					</div>
 					<div className="absolute hidden sm:flex inset-y-0 right-0 my-3 gap-5 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-						<div>
-							<a
-								href="#"
-								className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								onClick={openSignInModal}
-							>
-								Sign In
-							</a>
-						</div>
-						<div>
-							<a
-								href="#"
-								className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-								onClick={openSignUpModal}
-							>
-								Sign Up
-							</a>
-						</div>
+					{token && ( // Check if the user is not logged in
+                            <div>
+                                <a
+                                    href="#"
+                                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    onClick={openSignInModal}
+                                >
+                                    Sign In
+                                </a>
+                            </div>
+                        )}
+						{token && ( // Check if the user is not logged in
+                            <div>
+                                <a
+                                    href="#"
+                                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    onClick={openSignUpModal}
+                                >
+                                    Sign Up
+                                </a>
+                            </div>
+                        )}
 						<div className="mt-[6px]">
 							<Link
 								to="/profile"

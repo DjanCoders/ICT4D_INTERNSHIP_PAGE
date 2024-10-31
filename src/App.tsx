@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ApplicationForm from "./pages/applicationform";
-import Profile from "./components/profile/Profile";
+import UserProfile from "./components/profile/Profile";
 import Layout from "./components/Layout";
 import CreateExam from "./components/admin/CreateExam/CreateExam";
 import ExamSettings from "./components/admin/ExamSetting/ExamSettings";
@@ -20,10 +20,13 @@ import TakeExam from "./components/applicant/TakeExam";
 
 
 const App = () => {
-  const user = {
-    username: "johndoe",
-    email: "johndoe@example.com",
-    department: "Software Development",
+  const profile = {
+    user: {
+      username: "jhondoe",
+      email: "johndoe@example.com",
+      
+    },
+    avatar: "avatar",
   };
 
   return (
@@ -32,7 +35,7 @@ const App = () => {
         {/* User Routes */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile user={user} />} />
+          <Route path="/profile" element={<UserProfile profile={profile} />} />
           <Route path="/apply" element={<ApplicationForm />} />
           <Route path="/applicant/exam-start" element={<ExamStart />} />
           <Route path="/applicant/take-exam" element={<TakeExam />} />

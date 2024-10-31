@@ -21,6 +21,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
     question?.options || [{ text: "", is_answer: false }]
   );
   const [shortAnswer, setShortAnswer] = useState(question?.short_answer || "");
+  // const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (isEditMode && question) {
