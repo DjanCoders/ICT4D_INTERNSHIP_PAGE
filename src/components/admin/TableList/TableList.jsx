@@ -59,7 +59,7 @@ function TableList({ status }) {
     const selected = event.target.value;
     setSelectedInternship(selected);
 
-    const filteredData = selected
+    const filteredData = selected!=="All Internships"
       ? applicant.filter((item) => item.internship_title === selected)
       : applicant;
 
@@ -120,7 +120,7 @@ function TableList({ status }) {
                 onChange={handleInternshipFilterChange}
                 label="Filter by Internship"
               >
-                <MenuItem value="">
+                <MenuItem value="All Internships">
                   <em>All Internships</em>
                 </MenuItem>
                 {internshipOptions.map((internship, index) => (
