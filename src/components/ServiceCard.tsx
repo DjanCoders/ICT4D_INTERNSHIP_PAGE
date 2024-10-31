@@ -8,7 +8,7 @@ const ServiceCard = ({
 	const navigate = useNavigate();
 
 	const navigateToApplyForm = () => {
-		navigate("/apply");
+		navigate("/apply",{state:{title:service.title}});
 	};
 	return (
 		<div className="flex-1 relative cursor-pointer border-[2px] border-gray-400 rounded-lg  p-6 pb-24 bg-white transition-all transform hover:-translate-y-2">

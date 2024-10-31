@@ -10,10 +10,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Modal, Button } from '@mui/material'; 
 
 function TableList({ status }) {
   const [applicant, setApplicant] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
   const getData = async () => {
     const url = "http://127.0.0.1:8000/api/internship-application/";
     try {
@@ -49,121 +53,28 @@ function TableList({ status }) {
       console.error("Error updating status:", error);
     }
   };
-  
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setOpen(true); 
+};
+const handleClose = () => {
+    setOpen(false); // Close the modal without deleting
+  };
+  const handleDelete = async () => {
+  try {
+    await axios.delete(`http://127.0.0.1:8000/api/internship-application/${deleteId}/`);
+    
+    // Update local state to remove the deleted item
+    setApplicant(applicant.filter(item => item.id !== deleteId));
+  } catch (error) {
+    console.error("Error deleting work area:", error);
+  }
+  finally {
+      setOpen(false); // Close the modal after the operation
+    }
+    window.location.reload();
 
-  //     const applicants = [
-  //     {
-  //         _id: 12345,
-  //         category: 'Web Development',
-  //         first_name: 'Jemberu',
-  //         last_name: 'Kassie',
-  //         application_date: '3 October, 2022',
-  //         start_date: '3 October, 2022',
-  //         end_date: '3 January, 2023',
-  //         email: 'jemberu@gmail.com',
-  //         school: 'Bahir Dar University',
-  //         status: 'Approved',
-  //     },
-  //     {  _id: 12346,
-  //         category: 'Data Science',
-  //         first_name: 'Amanuel',
-  //         last_name: 'Tadesse',
-  //         application_date: '15 September, 2022',
-  //         start_date: '1 October, 2022',
-  //         end_date: '1 January, 2023',
-  //         email: 'amanuel.tadesse@gmail.com',
-  //         school: 'Addis Ababa University',
-  //         status: 'Pending',
-  //     },
-  //     {   _id:23456,
-  //         category: 'Cyber Security',
-  //         first_name: 'Hana',
-  //         last_name: 'Abebe',
-  //         application_date: '12 November, 2022',
-  //         start_date: '15 November, 2022',
-  //         end_date: '15 February, 2023',
-  //         email: 'hana.abebe@yahoo.com',
-  //         school: 'Hawassa University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:76543,
-  //         category: 'Mobile Development',
-  //         first_name: 'Yared',
-  //         last_name: 'Mulugeta',
-  //         application_date: '22 August, 2022',
-  //         start_date: '1 September, 2022',
-  //         end_date: '1 December, 2022',
-  //         email: 'yared.mulugeta@hotmail.com',
-  //         school: 'Jimma University',
-  //         status: 'Rejected',
-  //     },
-  //     {_id:876567,
-  //         category: 'Web Development',
-  //         first_name: 'Selam',
-  //         last_name: 'Girma',
-  //         application_date: '5 October, 2022',
-  //         start_date: '10 October, 2022',
-  //         end_date: '10 January, 2023',
-  //         email: 'selam.girma@gmail.com',
-  //         school: 'Mekelle University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:6543,
-  //         category: 'Artificial Intelligence',
-  //         first_name: 'Getnet',
-  //         last_name: 'Desalegn',
-  //         application_date: '9 October, 2022',
-  //         start_date: '15 October, 2022',
-  //         end_date: '15 January, 2023',
-  //         email: 'getnet.desalegn@gmail.com',
-  //         school: 'Gondar University',
-  //         status: 'Pending',
-  //     },
-  //     {_id:6543,
-  //         category: 'Software Engineering',
-  //         first_name: 'Mulu',
-  //         last_name: 'Belayneh',
-  //         application_date: '29 September, 2022',
-  //         start_date: '5 October, 2022',
-  //         end_date: '5 January, 2023',
-  //         email: 'mulu.belayneh@yahoo.com',
-  //         school: 'Wolaita Sodo University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:87654,
-  //         category: 'UI/UX Design',
-  //         first_name: 'Eden',
-  //         last_name: 'Tesfaye',
-  //         application_date: '15 October, 2022',
-  //         start_date: '20 October, 2022',
-  //         end_date: '20 January, 2023',
-  //         email: 'eden.tesfaye@gmail.com',
-  //         school: 'Dire Dawa University',
-  //         status: 'Rejected',
-  //     },
-  //     {_id:98765,
-  //         category: 'Project Management',
-  //         first_name: 'Fitsum',
-  //         last_name: 'Kebede',
-  //         application_date: '1 November, 2022',
-  //         start_date: '5 November, 2022',
-  //         end_date: '5 February, 2023',
-  //         email: 'fitsum.kebede@gmail.com',
-  //         school: 'Debre Tabor University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:87654,
-  //         category: 'Network Engineering',
-  //         first_name: 'Kalkidan',
-  //         last_name: 'Wolde',
-  //         application_date: '18 October, 2022',
-  //         start_date: '25 October, 2022',
-  //         end_date: '25 January, 2023',
-  //         email: 'kalkidan.wolde@gmail.com',
-  //         school: 'Arba Minch University',
-  //         status: 'Pending',
-  //     }
-  // ];
+};
 
   return (
     <>
@@ -185,6 +96,8 @@ function TableList({ status }) {
                 <TableCell className="table_cell">School</TableCell>
 
                 <TableCell className="table_cell">Status</TableCell>
+                  <TableCell className="table_cell" style={{ color: "red" }}>Delete</TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
@@ -211,7 +124,13 @@ function TableList({ status }) {
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Rejected</option>
-                  </select>                  </TableCell>
+                    </select>
+                  </TableCell>
+                  <TableCell className="table_cell">
+                  <button title='delete' onClick={() => handleDeleteClick(row.id)} style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+                    <DeleteIcon style={{ color: 'red' }} />
+                  </button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -221,6 +140,25 @@ function TableList({ status }) {
         <h1 style={{color:"red",marginLeft:"auto",marginRight:"auto",textAlign:"center"}}>There No any Data</h1>
       )
       }
+       <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="confirmation-modal-title"
+        aria-describedby="confirmation-modal-description"
+      >
+        <div style={{ padding: '20px', background: 'white', borderRadius: '8px', maxWidth: '400px', margin: '100px auto' }}>
+          <h2 id="confirmation-modal-title">Confirm Deletion</h2>
+          <p id="confirmation-modal-description">
+            Are you sure you want to delete this item? This action cannot be undone.
+          </p>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} style={{color:"red"}} color="secondary">
+            Delete
+          </Button>
+        </div>
+      </Modal>
     </>
   );
 }

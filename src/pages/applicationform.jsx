@@ -6,8 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import formSchema from "../validation";
 import coderLogo from "../components/Images/coder-logo.jpg";
 import "./styles.css";
+import { useLocation } from "react-router-dom";
 
 const ApplicationForm = () => {
+	const location = useLocation();
+	const title=location.state?.title;// Access the title from the state
 	const {
 		register,
 		handleSubmit,
@@ -23,18 +26,14 @@ const ApplicationForm = () => {
 	const onSubmit = async (data) => {
 		setIsSubmitting(true);
 		const formData = new FormData();
-
+		formData.append("applly_for", title);
 		// Check if files exist
 		if (data.resume && data.resume.length > 0) {
 			formData.append("resume", data.resume[0]);
-		} else {
-			console.error("No resume file selected");
-		}
+		} 
 
 		if (data.cover_letter && data.cover_letter.length > 0) {
 			formData.append("cover_letter", data.cover_letter[0]);
-		} else {
-			console.error("No cover letter file selected");
 		}
 
 		formData.append("duration", Number(data.duration));
@@ -46,7 +45,7 @@ const ApplicationForm = () => {
 		}
 
 		try {
-			await axios.post(
+			const response=await axios.post(
 				"http://127.0.0.1:8000/api/internship-application/",
 				formData,
 				{
@@ -55,9 +54,8 @@ const ApplicationForm = () => {
 					},
 				}
 			);
-			setSubmissionMessage("Your application has been submitted successfully!");
 
-			// setSubmissionMessage(response.data.message);
+			setSubmissionMessage(response.data.message);
 			setHasError(false);
 		} catch (error) {
 			console.error("Error Creating:", error.response.data); // Log error response data
@@ -81,6 +79,7 @@ const ApplicationForm = () => {
 
 				{/* Basic Info */}
 				<div className="info-section">
+				{title && <h1>You are applying for: <strong>{title}</strong></h1>}
 					<h3 className="font-bold text-lg">Eligibility Criteria</h3>
 					<p>Open to students currently enrolled in a degree program.</p>
 
