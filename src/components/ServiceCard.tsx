@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 const ServiceCard = ({
 	service,
 }: {
-	service: { title: string; description: string };
+	service: { title: string; description: string,id:number };
 }) => {
 	const navigate = useNavigate();
 
 	const navigateToApplyForm = () => {
-		navigate("/apply",{state:{title:service.title}});
+		navigate("/apply",{state:{title:service.title,id:service.id}});
 	};
 	return (
 		<div className="flex-1 relative cursor-pointer border-[2px] border-gray-400 rounded-lg  p-6 pb-24 bg-white transition-all transform hover:-translate-y-2">

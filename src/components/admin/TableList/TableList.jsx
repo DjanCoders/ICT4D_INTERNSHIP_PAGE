@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal, Button } from '@mui/material'; 
+import { formatDate } from "../../FormateDate";
 
 function TableList({ status }) {
   const [applicant, setApplicant] = useState([]);
@@ -91,7 +92,7 @@ const handleClose = () => {
                 <TableCell className="table_cell">Application Date</TableCell>
                 <TableCell className="table_cell">Start Date</TableCell>
                 <TableCell className="table_cell">Duration(Mon)</TableCell>
-                <TableCell className="table_cell">Category</TableCell>
+                <TableCell className="table_cell">Applay for</TableCell>
 
                 <TableCell className="table_cell">School</TableCell>
 
@@ -110,10 +111,10 @@ const handleClose = () => {
                     {row.first_name} {row.last_name}
                   </TableCell>
                   <TableCell className="table_cell">{row.email}</TableCell>
-                  <TableCell className="table_cell">{row.created_at}</TableCell>
-                  <TableCell className="table_cell">{row.start_date}</TableCell>
+                  <TableCell className="table_cell">{formatDate(row.created_at)}</TableCell>
+                  <TableCell className="table_cell">{formatDate(row.start_date)}</TableCell>
                   <TableCell className="table_cell">{row.duration}</TableCell>
-                  <TableCell className="table_cell">{row.department}</TableCell>
+                  <TableCell className="table_cell">{row.internship_title}</TableCell>
                   <TableCell className="table_cell">{row.school}</TableCell>
                   <TableCell className="table_cell">
                   <select
