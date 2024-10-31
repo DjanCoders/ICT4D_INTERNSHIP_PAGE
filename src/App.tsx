@@ -16,6 +16,8 @@ import InternshipForm from "./components/admin/Internship/InternshipAreaForm";
 import WorkAreaDetails from "./components/admin/Internship/WorkAreaDetial";
 import Reports from "./pages/ReportsPage";
 import { ApplicantContextProvider } from "./components/ApplicantContext/ApplicantContext";
+import TakeExam from "./components/applicant/TakeExam";
+
 
 const App = () => {
   const user = {
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="/profile" element={<Profile user={user} />} />
           <Route path="/apply" element={<ApplicationForm />} />
           <Route path="/applicant/exam-start" element={<ExamStart />} />
+          <Route path="/applicant/take-exam" element={<TakeExam />} />
+
           <Route path="/applicant/exam-question" element={<ExamQuestion />} />
           <Route path="/applicant/exam-submission" element={<ExamSubmission />} />
         </Route>
