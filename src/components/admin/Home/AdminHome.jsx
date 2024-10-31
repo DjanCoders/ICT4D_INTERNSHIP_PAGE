@@ -21,7 +21,6 @@ function AdminHome({status}) {
 
         <>
             <div className="table">
-                <div className="title" style={colorStyle}>Latest Applications</div>
                 <TableList status={status} />
             </div>
         </>
