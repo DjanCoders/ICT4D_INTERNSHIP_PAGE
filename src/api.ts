@@ -120,5 +120,24 @@ export const updateShortAnswerQuestion = async (id: number, data: any) => {
         throw error;
     }
 }
+// export const submitApplication = async (formData)=>{
+//     try {
+//         const response=await axios.post(
+//             "/internship-application/",
+//             formData,
+//             {
+//                 headers: {
+//                     "Content-Type": "multipart/form-data",
+//                     Authorization: `Bearer ${token}`,
+
+//                 },
+//             }
+//         );
+//         return response;
+//     } catch (error) {
+//         console.error('Error updating question:', error);
+//         throw error;
+//     }
+// }
 
 export default api;

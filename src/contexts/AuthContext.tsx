@@ -1,12 +1,12 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import api from '../api';
-
 interface AuthContextType {
     token: string | null;
     setToken: (token: string) => void;
     removeToken: () => void;
     setRefreshToken: (token: string) => void;
     refreshAccessToken: () => Promise<void>;
+    logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -53,6 +53,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const logout = () => {
+        removeToken();
+        // Optionally redirect to the homepage or login page after logging out
+        // navigate('/login'); // Uncomment if using react-router and you want redirection
+    };
+
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         const storedRefreshToken = localStorage.getItem('refreshToken');
@@ -65,7 +71,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     return (
-        <AuthContext.Provider value={{ token, setToken, removeToken, setRefreshToken, refreshAccessToken }}>
+        <AuthContext.Provider value={{ token, setToken, removeToken, setRefreshToken, refreshAccessToken, logout }}>
             {children}
         </AuthContext.Provider>
     );

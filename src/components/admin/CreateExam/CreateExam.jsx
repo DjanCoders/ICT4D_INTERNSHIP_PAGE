@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   updateMCQQuestion,
   createMCQQuestion,
@@ -7,12 +7,14 @@ import {
 } from "../../../api";
 import "./editExam.scss";
 import { ColorContext } from "../../ColorContext/DarkContext";
+import { getInternships } from "../../../api";
 
 const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
-    const {darkMode} = useContext(ColorContext);
-    const colorStyle={
-          color: darkMode ? 'green' : '#000'
-          }
+  const { darkMode } = useContext(ColorContext);
+  const colorStyle = {
+    color: darkMode ? "green" : "#000",
+  };
+
   const [text, setText] = useState(question?.text || "");
   const [questionType, setQuestionType] = useState(
     question?.question_type || "MCQ"
@@ -21,23 +23,33 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
     question?.options || [{ text: "", is_answer: false }]
   );
   const [shortAnswer, setShortAnswer] = useState(question?.short_answer || "");
-  // const [message, setMessage] = useState("");
+  const [internships, setInternships] = useState([]);
+  const [category, setCategory] = useState(question?.category || "");
 
   useEffect(() => {
     if (isEditMode && question) {
-      // Initialize with question data if editing
       setText(question.text);
       setQuestionType(question.question_type);
       setOptions(question.options || [{ text: "", is_answer: false }]);
       setShortAnswer(question.short_answer || "");
+      setCategory(question.category || "");
     }
   }, [question, isEditMode]);
+
+  useEffect(() => {
+    const fetchInternships = async () => {
+      const response = await getInternships();
+      setInternships(response.data);
+    };
+    fetchInternships();
+  }, []);
 
   const resetForm = () => {
     setText("");
     setQuestionType("MCQ");
     setOptions([{ text: "", is_answer: false }]);
     setShortAnswer("");
+    setCategory("");
   };
 
   const handleAddOption = () => {
@@ -51,7 +63,6 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
   const handleOptionChange = (index, field, value) => {
     const updatedOptions = [...options];
     if (field === "is_answer") {
-      // Reset all options to false except the selected one
       updatedOptions.forEach((option, idx) => {
         option.is_answer = idx === index ? value : false;
       });
@@ -65,6 +76,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
     const questionData = {
       text,
       question_type: questionType,
+      category,
       options: questionType === "MCQ" ? options : undefined,
       short_answer: questionType === "DESC" ? shortAnswer : undefined,
     };
@@ -82,7 +94,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
       }
 
       onSubmit(response.data);
-      resetForm(); // Reset the form after submission
+      resetForm();
     } catch (error) {
       console.error("Error submitting question:", error);
     }
@@ -92,7 +104,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
     <div className="edit-exam">
       <form className="edit-exam-form" onSubmit={handleSubmit}>
         <div className="question-text">
-          <label style={ colorStyle}>Question Text</label>
+          <label style={colorStyle}>Question Text</label>
           <input
             type="text"
             value={text}
@@ -101,25 +113,41 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
           />
         </div>
 
-        <div className="quesion-type">
-          <label style={ colorStyle}>Question Type</label>
+        <div className="question-type">
+          <label style={colorStyle}>Question Type</label>
           <select
             value={questionType}
             onChange={(e) => setQuestionType(e.target.value)}
           >
-            <option style={ colorStyle} value="MCQ">Multiple Choice</option>
-            <option style={ colorStyle} value="DESC">Descriptive</option>
+            <option style={colorStyle} value="MCQ">
+              Multiple Choice
+            </option>
+            <option style={colorStyle} value="DESC">
+              Descriptive
+            </option>
+          </select>
+        </div>
+
+        <div className="question-category">
+          <label style={colorStyle}>Question Category</label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="" disabled>Select a Category</option>
+            {internships.map((intern) => (
+              <option key={intern.id} style={colorStyle} value={intern.id}>
+                {intern.title}
+              </option>
+            ))}
           </select>
         </div>
 
         {questionType === "MCQ" && (
           <div className="option">
-            <label style={ colorStyle} >Options</label>
+            <label style={colorStyle}>Options</label>
             {options.map((option, index) => (
-              <div
-                key={index}
-               
-              >
+              <div key={index}>
                 <input
                   type="text"
                   value={option.text}
@@ -129,7 +157,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
                   placeholder="Option text"
                   required
                 />
-                <label style={ colorStyle}>
+                <label style={colorStyle}>
                   <input
                     type="radio"
                     name="is_answer"
@@ -140,12 +168,22 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
                   />
                   Is Answer
                 </label>
-                <button style={ {color:darkMode ? 'white' : '#000'}}className="remove-buttn" type="button" onClick={() => handleRemoveOption(index)}>
+                <button
+                  style={{ color: darkMode ? "white" : "#000" }}
+                  className="remove-button"
+                  type="button"
+                  onClick={() => handleRemoveOption(index)}
+                >
                   Remove
                 </button>
               </div>
             ))}
-            <button style={ {color:darkMode ? 'white' : '#000'}} className = 'add-button'type="button" onClick={handleAddOption}>
+            <button
+              style={{ color: darkMode ? "white" : "#000" }}
+              className="add-button"
+              type="button"
+              onClick={handleAddOption}
+            >
               Add Option
             </button>
           </div>
@@ -153,7 +191,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
 
         {questionType === "DESC" && (
           <div className="short-answer">
-            <label style={ colorStyle}>Short Answer</label>
+            <label style={colorStyle}>Short Answer</label>
             <input
               type="text"
               value={shortAnswer}

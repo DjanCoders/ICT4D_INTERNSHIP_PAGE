@@ -7,6 +7,7 @@ import formSchema from "../validation";
 import coderLogo from "../components/Images/coder-logo.jpg";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const ApplicationForm = () => {
 	const location = useLocation();
@@ -23,6 +24,8 @@ const ApplicationForm = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submissionMessage, setSubmissionMessage] = useState(" ");
 	const [hasError, setHasError] = useState(false);
+	const { token } = useAuth();
+
 
 	const onSubmit = async (data) => {
 		setIsSubmitting(true);
@@ -52,6 +55,7 @@ const ApplicationForm = () => {
 				{
 					headers: {
 						"Content-Type": "multipart/form-data",
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			);

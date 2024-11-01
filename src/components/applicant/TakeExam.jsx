@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./takeExam.scss";
-
+import { useAuth } from "../../contexts/AuthContext";
 const TakeExam = () => {
   const [mcqQuestions, setMcqQuestions] = useState([]);
   const [descQuestions, setDescQuestions] = useState([]);
@@ -10,11 +10,20 @@ const TakeExam = () => {
   const [message, setMessage] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errors, setErrors] = useState({});
+  const { token } = useAuth();
+
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/get-questions/");
+        const response = await axios.get("http://127.0.0.1:8000/api/get-questions/",
+          {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        );
+
         setMcqQuestions(response.data.mcq_questions);
         setDescQuestions(response.data.desc_questions);
         setLoading(false);
@@ -104,7 +113,7 @@ const TakeExam = () => {
     <div className="take-exam">
       <h1>Take Exam</h1>
       <form onSubmit={(e) => e.preventDefault()}>
-        {mcqQuestions.map((question) => (
+        {mcqQuestions?.map((question) => (
           <div key={question.id} className="question">
             <p>{question.text}</p>
             {question.options.map((option) => (
@@ -122,7 +131,7 @@ const TakeExam = () => {
           </div>
         ))}
 
-        {descQuestions.map((question) => (
+        {descQuestions?.map((question) => (
           <div key={question.id} className="question">
             <p>{question.text}</p>
             <textarea

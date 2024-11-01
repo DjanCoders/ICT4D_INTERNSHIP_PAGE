@@ -7,13 +7,20 @@ import SignUpModal from "./modals/SignUpModal";
 import { CloseSVGs, OpenSVGs } from "./SVGs";
 import { useUser } from "../contexts/UserContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
     const { user, loading } = useUser();
-    const { token } = useAuth();
+	const { token,logout } = useAuth();
 	const [isOpen, setIsOpen] = useState(false);
 	const [showSignInModal, setShowSignInModal] = useState(false);
 	const [showSignUpModal, setShowSignUpModal] = useState(false);
+	const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logout();
+		navigate("/")
+    };
 	const openSignInModal = () => {
 		setShowSignInModal(true);
 		setIsOpen(false); // Close mobile menu if open
@@ -26,9 +33,11 @@ const Navbar = () => {
 	};
 
 	const closeSignUpModal = () => setShowSignUpModal(false);
+	
 	if (loading) {
         return <div>Loading...</div>; 
-    }
+	}
+	
 
 	return (
 		
@@ -51,19 +60,19 @@ const Navbar = () => {
 						<div className="flex-shrink-0 text-white">
 							<Link to="/">ICT4D</Link>
 						</div>
-								{user && user.user.is_superuser && (
+							{token && user.user.is_superuser && (
 								<div className="flex-shrink-0 text-white">
 								<Link to="/admin">Admin Panel</Link> 
 								</div>
 						)}
-						{user && !user.user.is_superuser && (
+						{token && !user.user.is_superuser && (
 							<div className="flex-shrink-0 text-white">
 								<Link to="/applicant/take-exam">Take Exam</Link>
 								</div>)
 						}
 					</div>
 					<div className="absolute hidden sm:flex inset-y-0 right-0 my-3 gap-5 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-					{token && ( // Check if the user is not logged in
+					{!token && ( // Check if the user is not logged in
                             <div>
                                 <a
                                     href="#"
@@ -74,7 +83,7 @@ const Navbar = () => {
                                 </a>
                             </div>
                         )}
-						{token && ( // Check if the user is not logged in
+						{!token && ( 
                             <div>
                                 <a
                                     href="#"
@@ -84,20 +93,31 @@ const Navbar = () => {
                                     Sign Up
                                 </a>
                             </div>
-                        )}
-						<div className="mt-[6px]">
-							<Link
-								to="/profile"
-								type="button"
-								className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-							>
-								<img
-									className="h-8 w-8 rounded-full"
-									src={profile}
-									alt="profile"
-								/>
-							</Link>
-						</div>
+						)}
+							{token && (
+                            <div>
+                               
+                                  <button className="flex-shrink-0 text-white" onClick={handleLogout}>Logout</button>
+                               
+                            </div>
+						)}
+						{token&&(
+							<div className="mt-[6px]">
+								<Link
+									to="/profile"
+									type="button"
+									className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+								>
+									<img
+										className="h-8 w-8 rounded-full"
+										src={profile}
+										alt="profile"
+										title={user.user.username}
+
+									/>
+								</Link>
+							</div>
+							)}
 					</div>
 				</div>
 			</div>
