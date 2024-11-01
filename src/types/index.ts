@@ -1,12 +1,15 @@
-export type User = {
-  username: string;
-  email: string;
-  department: string;
+export type Profile = {
+  user: {
+    email: string,
+    username: string,
+    is_superuser:boolean,
+  },
+  avatar: string,
 };
 
-export type EditProfileModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  user: User;
-  onSave: (updatedUser: User) => void;
-};
+// export type EditProfileModalProps = {
+//   isOpen: boolean;
+//   onClose: () => void;
+//   Profile: Profile;
+//   onSave: (updatedUser: Profile) => void;
+// };

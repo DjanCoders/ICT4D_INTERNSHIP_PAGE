@@ -4,7 +4,7 @@ import { getInternships } from "../api";
 
 const Services = () => {
 	const [internships, setInternships] = useState<
-		{ title: string; description: string }[]
+		{ title: string; description: string; id: number }[]
 	>([]);
 
 	useEffect(() => {

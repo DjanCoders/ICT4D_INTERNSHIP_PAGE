@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditProfileModal from "./EditProfileModal";
-import { User } from "../../types";
+import { Profile } from "../../types";
+import { getProfile } from "../../api";
 
-const Profile = ({ user }: { user: User }) => {
+const UserProfile = ({ profile }: { profile: Profile }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [profile, setProfile] = useState(user);
+	const [profiles, setProfiles] = useState(profile);
+
+	useEffect(() => {
+		const fetchProfile = async () => {
+			const prof = await getProfile();
+			setProfiles(prof.data[0])
+			console.log(profiles)
+		}
+		
+		fetchProfile();
+	}, [])
 
 	const handleEditClick = () => {
 		setIsModalOpen(true);
@@ -14,8 +25,8 @@ const Profile = ({ user }: { user: User }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleSaveProfile = (updatedProfile: User) => {
-		setProfile(updatedProfile);
+	const handleSaveProfile = (updatedProfile: Profile) => {
+		setProfiles(updatedProfile);
 	};
 
 	return (
@@ -25,19 +36,26 @@ const Profile = ({ user }: { user: User }) => {
 				<label className="block text-gray-700 text-sm font-bold mb-2">
 					Username
 				</label>
-				<p className="text-gray-900">{profile.username}</p>
+				<p className="text-gray-900">{profiles.user?.username}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
 					Email
 				</label>
-				<p className="text-gray-900">{profile.email}</p>
+				<p className="text-gray-900">{profiles.user?.email}</p>
 			</div>
 			<div className="mb-4">
 				<label className="block text-gray-700 text-sm font-bold mb-2">
-					Area of Department
+					is admin
 				</label>
-				<p className="text-gray-900">{profile.department}</p>
+				<p className="text-gray-900">{profiles.user?.is_superuser ? 'Yes' : 'No'}</p>
+			</div>
+		
+			<div className="mb-4">
+				<label className="block text-gray-700 text-sm font-bold mb-2">
+					Avatar
+				</label>
+				<p className="text-gray-900">{profiles.avatar}</p>
 			</div>
 			<div>
 				<button
@@ -58,4 +76,4 @@ const Profile = ({ user }: { user: User }) => {
 	);
 };
 
-export default Profile;
+export default UserProfile;

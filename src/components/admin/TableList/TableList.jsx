@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Modal, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { formatDate } from "../../FormateDate";
 import { ColorContext } from '../../ColorContext/DarkContext';
+import { useAuth } from "../../../contexts/AuthContext";
 
 function TableList({ status }) {
   const [applicant, setApplicant] = useState([]);
@@ -24,6 +25,7 @@ function TableList({ status }) {
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const { darkMode } = useContext(ColorContext);
+  const { token } = useAuth();
 
   const colorStyle = {
     color: darkMode ? "#fff" : "#000"
@@ -34,7 +36,11 @@ function TableList({ status }) {
     try {
       const response = await axios.get(url, {
         params: status !== "all" ? { status } : {},
-      });
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      );
       const applicantData = response.data;
 
       setApplicant(applicantData);
@@ -59,7 +65,7 @@ function TableList({ status }) {
     const selected = event.target.value;
     setSelectedInternship(selected);
 
-    const filteredData = selected
+    const filteredData = selected!=="All Internships"
       ? applicant.filter((item) => item.internship_title === selected)
       : applicant;
 
@@ -120,7 +126,7 @@ function TableList({ status }) {
                 onChange={handleInternshipFilterChange}
                 label="Filter by Internship"
               >
-                <MenuItem value="">
+                <MenuItem value="All Internships">
                   <em>All Internships</em>
                 </MenuItem>
                 {internshipOptions.map((internship, index) => (
@@ -145,7 +151,9 @@ function TableList({ status }) {
                   <TableCell className="table_cell">Duration(Mon)</TableCell>
                   <TableCell className="table_cell">Apply for</TableCell>
                   <TableCell className="table_cell">School</TableCell>
-                  <TableCell className="table_cell">Status</TableCell>
+                    <TableCell className="table_cell">Status</TableCell>
+                    <TableCell className="table_cell">Applicant</TableCell>
+
                   <TableCell className="table_cell" style={{ color: "red" }}>Delete</TableCell>
                 </TableRow>
               </TableHead>
@@ -164,6 +172,7 @@ function TableList({ status }) {
                     <TableCell className="table_cell">{row.duration}</TableCell>
                     <TableCell className="table_cell">{row.internship_title}</TableCell>
                     <TableCell className="table_cell">{row.school}</TableCell>
+                    
                     <TableCell className="table_cell">
                       <select
                         value={row.status}
@@ -175,6 +184,8 @@ function TableList({ status }) {
                         <option value="Rejected">Rejected</option>
                       </select>
                     </TableCell>
+                    <TableCell className="table_cell">{row.applicant_username}</TableCell>
+
                     <TableCell className="table_cell">
                       <button title="delete" onClick={() => handleDeleteClick(row.id)} style={{ border: "none", background: "none", cursor: "pointer" }}>
                         <DeleteIcon style={{ color: "red" }} />

@@ -5,14 +5,17 @@ import "./index.css";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ColorContextProvider } from "./components/ColorContext/DarkContext.jsx";
+import { UserProvider } from "./contexts/UserContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
-   <ColorContextProvider>
+      <ColorContextProvider>
+        <UserProvider>
     <Router>
       <App />
-        </Router>
+          </Router>
+          </UserProvider>
        </ColorContextProvider>
     </AuthProvider>
   </React.StrictMode>

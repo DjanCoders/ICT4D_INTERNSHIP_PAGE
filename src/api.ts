@@ -72,7 +72,7 @@ export const getMCQs = () => api.get('/mcqquestions/');
 export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);
 export const getShortQ = (id: number) => api.get(`/shortanswerquestions/${id}/`);
 export const getShortQs = () => api.get('/shortanswerquestions/');
-export const getProfile = () => api.get('/accounts/profile/');
+export const getProfile = () => api.get('/accounts/profiles/');
 export const applyForInternship = (id: number, data: any, token: string) => {
     return api.post(`/internships/${id}/apply/`, data, {
         headers: {
@@ -120,5 +120,24 @@ export const updateShortAnswerQuestion = async (id: number, data: any) => {
         throw error;
     }
 }
+// export const submitApplication = async (formData)=>{
+//     try {
+//         const response=await axios.post(
+//             "/internship-application/",
+//             formData,
+//             {
+//                 headers: {
+//                     "Content-Type": "multipart/form-data",
+//                     Authorization: `Bearer ${token}`,
+
+//                 },
+//             }
+//         );
+//         return response;
+//     } catch (error) {
+//         console.error('Error updating question:', error);
+//         throw error;
+//     }
+// }
 
 export default api;
