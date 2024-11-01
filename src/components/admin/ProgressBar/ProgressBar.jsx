@@ -1,17 +1,21 @@
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Tooltip } from '@mui/material';
-import React, { useEffect,  useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import 'react-circular-progressbar/dist/styles.css';
 import { Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { useApplicantData } from '../../ApplicantContext/ApplicantContext';
+import { ColorContext } from '../../ColorContext/DarkContext';
 // Import CSS file
 import './progressBar.scss';
 
 function ProgressBar() {
     const  reportData  = useApplicantData()
     const [data, setData] = useState([]);
- 
+    const {darkMode} = useContext(ColorContext);
+    const colorStyle={
+          color: darkMode ? 'white' : '#000'
+          }
     useEffect(() => {
         if (reportData) {
             setData([
@@ -26,12 +30,12 @@ function ProgressBar() {
     return (
         <div className="progress_bar">
             <div className="top">
-                <p>Total Internship Applications</p>
+                <p style={colorStyle} >Total Internship Applications</p>
                 <MoreVertOutlinedIcon />
             </div>
 
             <div className="middle">
-                <div className="progress">
+                <div style={colorStyle} className="progress">
                     <ResponsiveContainer width="100%" height="100%">
                         {data.length === 0 ? (
                             <p>No data available</p>
@@ -50,31 +54,31 @@ function ProgressBar() {
                         </PieChart>)}
                     </ResponsiveContainer>
                 </div>
-                <p>Total applications 
-                <span className="applications">
+                <p style={colorStyle}>Total applications 
+                <span style={colorStyle} className="applications">
                     {reportData.numberOfApplicants}
                     </span>
                     </p>
             </div>
 
-            <div className="bottom">
-                <p>Data based on the latest submissions.</p>
+            <div className="bottom" style={colorStyle}>
+                <p style={colorStyle} >Data based on the latest submissions.</p>
 
                 <div className="botom_nested">
                     <div className="nested_nested">
-                        <p>Approved</p>
+                        <p style={colorStyle}>Approved</p>
                         <p className="applications">
                             <KeyboardArrowUpOutlinedIcon /> {reportData.approvedApplicants}
                         </p>
                     </div>
                     <div className="nested_nested">
-                        <p>Rejected</p>
+                        <p style={colorStyle}>Rejected</p>
                         <p className="applications decrese">
                             <KeyboardArrowUpOutlinedIcon /> {reportData.rejectedApplicants}
                         </p>
                     </div>
                     <div className="nested_nested">
-                        <p>Pending</p>
+                        <p style={colorStyle}>Pending</p>
                         <p className="applications">
                             <KeyboardArrowUpOutlinedIcon /> {reportData.pendingApplicants}
                         </p>

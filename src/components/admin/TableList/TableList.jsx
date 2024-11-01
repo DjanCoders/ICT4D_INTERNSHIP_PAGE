@@ -1,8 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { React, useState, useEffect } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./tableList.scss";
 import axios from "axios";
-// mui table
+// mui components
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,10 +10,25 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Modal, Button, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { formatDate } from "../../FormateDate";
+import { ColorContext } from '../../ColorContext/DarkContext';
 
 function TableList({ status }) {
   const [applicant, setApplicant] = useState([]);
+  const [filteredApplicant, setFilteredApplicant] = useState([]);
+  const [internshipOptions, setInternshipOptions] = useState([]);
+  const [selectedInternship, setSelectedInternship] = useState("");
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const { darkMode } = useContext(ColorContext);
+
+  const colorStyle = {
+    color: darkMode ? "#fff" : "#000"
+  };
+
   const getData = async () => {
     const url = "http://127.0.0.1:8000/api/internship-application/";
     try {
@@ -21,206 +36,172 @@ function TableList({ status }) {
         params: status !== "all" ? { status } : {},
       });
       const applicantData = response.data;
+
       setApplicant(applicantData);
+      setFilteredApplicant(applicantData);
+
+      // Extract unique internship titles
+      const uniqueInternships = [...new Set(applicantData.map((item) => item.internship_title))];
+      setInternshipOptions(uniqueInternships);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching  data", error);
+      console.error("Error fetching data", error);
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getData();
   }, [status]);
+
+  // Filter applicants based on the selected internship
+  const handleInternshipFilterChange = (event) => {
+    const selected = event.target.value;
+    setSelectedInternship(selected);
+
+    const filteredData = selected
+      ? applicant.filter((item) => item.internship_title === selected)
+      : applicant;
+
+    setFilteredApplicant(filteredData);
+  };
 
   const updateStatus = async (applicationId, newStatus) => {
     try {
       await axios.patch(`http://127.0.0.1:8000/api/internship-applications/${applicationId}/status/`, {
         status: newStatus,
       });
-  
+
       setApplicant((prevApplicants) =>
         prevApplicants.map((applicant) =>
           applicant.id === applicationId ? { ...applicant, status: newStatus } : applicant
         )
       );
-      // Reload the entire page after a successful update
-       window.location.reload();
+      window.location.reload();
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
-  
 
-  //     const applicants = [
-  //     {
-  //         _id: 12345,
-  //         category: 'Web Development',
-  //         first_name: 'Jemberu',
-  //         last_name: 'Kassie',
-  //         application_date: '3 October, 2022',
-  //         start_date: '3 October, 2022',
-  //         end_date: '3 January, 2023',
-  //         email: 'jemberu@gmail.com',
-  //         school: 'Bahir Dar University',
-  //         status: 'Approved',
-  //     },
-  //     {  _id: 12346,
-  //         category: 'Data Science',
-  //         first_name: 'Amanuel',
-  //         last_name: 'Tadesse',
-  //         application_date: '15 September, 2022',
-  //         start_date: '1 October, 2022',
-  //         end_date: '1 January, 2023',
-  //         email: 'amanuel.tadesse@gmail.com',
-  //         school: 'Addis Ababa University',
-  //         status: 'Pending',
-  //     },
-  //     {   _id:23456,
-  //         category: 'Cyber Security',
-  //         first_name: 'Hana',
-  //         last_name: 'Abebe',
-  //         application_date: '12 November, 2022',
-  //         start_date: '15 November, 2022',
-  //         end_date: '15 February, 2023',
-  //         email: 'hana.abebe@yahoo.com',
-  //         school: 'Hawassa University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:76543,
-  //         category: 'Mobile Development',
-  //         first_name: 'Yared',
-  //         last_name: 'Mulugeta',
-  //         application_date: '22 August, 2022',
-  //         start_date: '1 September, 2022',
-  //         end_date: '1 December, 2022',
-  //         email: 'yared.mulugeta@hotmail.com',
-  //         school: 'Jimma University',
-  //         status: 'Rejected',
-  //     },
-  //     {_id:876567,
-  //         category: 'Web Development',
-  //         first_name: 'Selam',
-  //         last_name: 'Girma',
-  //         application_date: '5 October, 2022',
-  //         start_date: '10 October, 2022',
-  //         end_date: '10 January, 2023',
-  //         email: 'selam.girma@gmail.com',
-  //         school: 'Mekelle University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:6543,
-  //         category: 'Artificial Intelligence',
-  //         first_name: 'Getnet',
-  //         last_name: 'Desalegn',
-  //         application_date: '9 October, 2022',
-  //         start_date: '15 October, 2022',
-  //         end_date: '15 January, 2023',
-  //         email: 'getnet.desalegn@gmail.com',
-  //         school: 'Gondar University',
-  //         status: 'Pending',
-  //     },
-  //     {_id:6543,
-  //         category: 'Software Engineering',
-  //         first_name: 'Mulu',
-  //         last_name: 'Belayneh',
-  //         application_date: '29 September, 2022',
-  //         start_date: '5 October, 2022',
-  //         end_date: '5 January, 2023',
-  //         email: 'mulu.belayneh@yahoo.com',
-  //         school: 'Wolaita Sodo University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:87654,
-  //         category: 'UI/UX Design',
-  //         first_name: 'Eden',
-  //         last_name: 'Tesfaye',
-  //         application_date: '15 October, 2022',
-  //         start_date: '20 October, 2022',
-  //         end_date: '20 January, 2023',
-  //         email: 'eden.tesfaye@gmail.com',
-  //         school: 'Dire Dawa University',
-  //         status: 'Rejected',
-  //     },
-  //     {_id:98765,
-  //         category: 'Project Management',
-  //         first_name: 'Fitsum',
-  //         last_name: 'Kebede',
-  //         application_date: '1 November, 2022',
-  //         start_date: '5 November, 2022',
-  //         end_date: '5 February, 2023',
-  //         email: 'fitsum.kebede@gmail.com',
-  //         school: 'Debre Tabor University',
-  //         status: 'Approved',
-  //     },
-  //     {_id:87654,
-  //         category: 'Network Engineering',
-  //         first_name: 'Kalkidan',
-  //         last_name: 'Wolde',
-  //         application_date: '18 October, 2022',
-  //         start_date: '25 October, 2022',
-  //         end_date: '25 January, 2023',
-  //         email: 'kalkidan.wolde@gmail.com',
-  //         school: 'Arba Minch University',
-  //         status: 'Pending',
-  //     }
-  // ];
+  const handleDeleteClick = (id) => {
+    setDeleteId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/internship-application/${deleteId}/`);
+
+      setApplicant(applicant.filter((item) => item.id !== deleteId));
+      setFilteredApplicant(filteredApplicant.filter((item) => item.id !== deleteId));
+    } catch (error) {
+      console.error("Error deleting work area:", error);
+    } finally {
+      setOpen(false);
+    }
+    window.location.reload();
+  };
 
   return (
     <>
       {loading ? (
         <p>Loading...</p>
-      ) :  applicant.length > 0 ? (
-        <TableContainer component={Paper} className="table_list">
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead className="table_head">
-              <TableRow>
-                <TableCell className="table_cell">Tracking Id</TableCell>
-                <TableCell className="table_cell">Name</TableCell>
-                <TableCell className="table_cell">Email</TableCell>
-                <TableCell className="table_cell">Application Date</TableCell>
-                <TableCell className="table_cell">Start Date</TableCell>
-                <TableCell className="table_cell">Duration(Mon)</TableCell>
-                <TableCell className="table_cell">Category</TableCell>
+      ) : applicant.length > 0 ? (
+        <>
+          <div className="filter">
+            <FormControl fullWidth variant="outlined" className="dropdown_filter">
+              <InputLabel>Filter by Internship</InputLabel>
+              <Select
+                value={selectedInternship}
+                onChange={handleInternshipFilterChange}
+                label="Filter by Internship"
+              >
+                <MenuItem value="">
+                  <em>All Internships</em>
+                </MenuItem>
+                {internshipOptions.map((internship, index) => (
+                  <MenuItem key={index} value={internship}>
+                    {internship}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
 
-                <TableCell className="table_cell">School</TableCell>
-
-                <TableCell className="table_cell">Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {applicant.map((row) => (
-                <TableRow key={row.id} className="table_row">
-                  <TableCell component="th" scope="row" className="table_cell">
-                    <div className="product_idd">{row.id}</div>
-                  </TableCell>
-                  <TableCell className="table_cell">
-                    {row.first_name} {row.last_name}
-                  </TableCell>
-                  <TableCell className="table_cell">{row.email}</TableCell>
-                  <TableCell className="table_cell">{row.created_at}</TableCell>
-                  <TableCell className="table_cell">{row.start_date}</TableCell>
-                  <TableCell className="table_cell">{row.duration}</TableCell>
-                  <TableCell className="table_cell">{row.department}</TableCell>
-                  <TableCell className="table_cell">{row.school}</TableCell>
-                  <TableCell className="table_cell">
-                  <select
-                    value={row.status}
-                    onChange={(e) => updateStatus(row.id, e.target.value)}
-                    className={`status ${row.status}`}
-                  >
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
-                  </select>                  </TableCell>
+          <div className="title" style={colorStyle}>Latest Applications</div>
+          <TableContainer component={Paper} className="table_list">
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead className="table_head">
+                <TableRow>
+                  <TableCell className="table_cell">Tracking Id</TableCell>
+                  <TableCell className="table_cell">Name</TableCell>
+                  <TableCell className="table_cell">Email</TableCell>
+                  <TableCell className="table_cell">Application Date</TableCell>
+                  <TableCell className="table_cell">Start Date</TableCell>
+                  <TableCell className="table_cell">Duration(Mon)</TableCell>
+                  <TableCell className="table_cell">Apply for</TableCell>
+                  <TableCell className="table_cell">School</TableCell>
+                  <TableCell className="table_cell">Status</TableCell>
+                  <TableCell className="table_cell" style={{ color: "red" }}>Delete</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {filteredApplicant.map((row) => (
+                  <TableRow key={row.id} className="table_row">
+                    <TableCell component="th" scope="row" className="table_cell">
+                      <div className="product_idd">{row.id}</div>
+                    </TableCell>
+                    <TableCell className="table_cell">
+                      {row.first_name} {row.last_name}
+                    </TableCell>
+                    <TableCell className="table_cell">{row.email}</TableCell>
+                    <TableCell className="table_cell">{formatDate(row.created_at)}</TableCell>
+                    <TableCell className="table_cell">{formatDate(row.start_date)}</TableCell>
+                    <TableCell className="table_cell">{row.duration}</TableCell>
+                    <TableCell className="table_cell">{row.internship_title}</TableCell>
+                    <TableCell className="table_cell">{row.school}</TableCell>
+                    <TableCell className="table_cell">
+                      <select
+                        value={row.status}
+                        onChange={(e) => updateStatus(row.id, e.target.value)}
+                        className={`status ${row.status}`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    </TableCell>
+                    <TableCell className="table_cell">
+                      <button title="delete" onClick={() => handleDeleteClick(row.id)} style={{ border: "none", background: "none", cursor: "pointer" }}>
+                        <DeleteIcon style={{ color: "red" }} />
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
       ) : (
-        <h1 style={{color:"red",marginLeft:"auto",marginRight:"auto",textAlign:"center"}}>There No any Data</h1>
-      )
-      }
+        <h1 style={{ color: "red", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>There is No Data</h1>
+      )}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="confirmation-modal-title"
+        aria-describedby="confirmation-modal-description"
+      >
+        <div style={{ padding: "20px", background: "white", borderRadius: "8px", maxWidth: "400px", margin: "100px auto" }}>
+          <h2 id="confirmation-modal-title">Confirm Deletion</h2>
+          <p id="confirmation-modal-description">Are you sure you want to delete this item? This action cannot be undone.</p>
+          <Button onClick={handleClose} color="primary">Cancel</Button>
+          <Button onClick={handleDelete} style={{ color: "red" }} color="secondary">Delete</Button>
+        </div>
+      </Modal>
     </>
   );
 }

@@ -1,13 +1,17 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect ,useContext} from 'react';
 import './reportsPge.scss';
 import Chart from '../components/admin/Chart/Chart';
 import ProgressBar from '../components/admin/ProgressBar/ProgressBar';
 import axios from 'axios';
 import './reportsPge.scss'
+import { ColorContext } from '../components/ColorContext/DarkContext';
 const Reports = () => {
     const [applicantData, setApplicantData] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const {darkMode} = useContext(ColorContext);
+    const colorStyle={
+          color: darkMode ? 'white' : '#000'
+          }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -25,10 +29,10 @@ const Reports = () => {
 
 
    
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p style={colorStyle}>Loading...</p>;
   return (
     <div>
-          <h1>Reports </h1>    
+          <h1 style={colorStyle}>Reports </h1>    
          
           <div className="chart_sec">
                     
