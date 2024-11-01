@@ -1,0 +1,42 @@
+.review-submissions {
+  padding: 20px;
+
+  .applicant-section {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+
+    h3 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .answers-group {
+      .mcq-group, .desc-group {
+        margin-bottom: 15px;
+
+        h4 {
+          margin-bottom: 10px;
+          color: #34495e;
+        }
+
+        .answer-card {
+          background-color: #f9f9f9;
+          border: 1px solid #e1e1e1;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 10px;
+
+          p {
+            margin: 5px 0;
+          }
+
+          strong {
+            color: #2980b9;
+          }
+        }
+      }
+    }
+  }
+}
