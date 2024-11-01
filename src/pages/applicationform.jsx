@@ -10,8 +10,8 @@ import { useLocation } from "react-router-dom";
 
 const ApplicationForm = () => {
 	const location = useLocation();
-	const title=location.state?.title;// Access the title from the state
-	const id=location.state?.id;
+	const title = location.state?.title; // Access the title from the state
+	const id = location.state?.id;
 	const {
 		register,
 		handleSubmit,
@@ -27,13 +27,14 @@ const ApplicationForm = () => {
 	const onSubmit = async (data) => {
 		setIsSubmitting(true);
 		const formData = new FormData();
-		formData.append("applly_for", id);		const duration = Number(data.duration);
+		formData.append("applly_for", id);
+		const duration = Number(data.duration);
 		const gpa = Number(data.gpa);
 
 		// Check if files exist
 		if (data.resume && data.resume.length > 0) {
 			formData.append("resume", data.resume[0]);
-		} 
+		}
 
 		if (data.cover_letter && data.cover_letter.length > 0) {
 			formData.append("cover_letter", data.cover_letter[0]);
@@ -48,7 +49,7 @@ const ApplicationForm = () => {
 		}
 
 		try {
-			const response=await axios.post(
+			const response = await axios.post(
 				"http://127.0.0.1:8000/api/internship-application/",
 				formData,
 				{
@@ -82,7 +83,11 @@ const ApplicationForm = () => {
 
 				{/* Basic Info */}
 				<div className="info-section">
-				{title && <h1>You are applying for: <strong>{title}</strong></h1>}
+					{title && (
+						<h1>
+							You are applying for: <strong>{title}</strong>
+						</h1>
+					)}
 					<h3 className="font-bold text-lg">Eligibility Criteria</h3>
 					<p>Open to students currently enrolled in a degree program.</p>
 
@@ -245,27 +250,16 @@ const ApplicationForm = () => {
 							/>
 							{renderError("start_date")}
 
-						<label className="text-sm font-medium text-gray-1000">
-							Duration (months):
-						</label>
-						<input
-							type="number"
-							{...register("duration")}
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("duration")}
-					</div>
-
-					<div>
-						<label className="text-sm font-medium text-gray-1000">
-							Department/Role Interested In:
-						</label>
-						<input
-							type="text"
-							{...register("department")}
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("department")}
+							<label className="text-sm font-medium text-gray-1000">
+								Duration (months):
+							</label>
+							<input
+								type="number"
+								{...register("duration")}
+								className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+							/>
+							{renderError("duration")}
+						</div>
 					</div>
 
 					<div>
