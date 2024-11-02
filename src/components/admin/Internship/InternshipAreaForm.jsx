@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
 import "./workArea.scss";
 import { ColorContext } from "../../ColorContext/DarkContext";
+import { addWorkArea } from "../../../api";
+import { useNavigate } from 'react-router-dom';
 const InternshipForm = () => {
   const { darkMode } = useContext(ColorContext);
+  const navigate = useNavigate();
   const colorStyle = {
     color: darkMode ? "#fff" : "#000",
   };
@@ -31,14 +33,11 @@ const InternshipForm = () => {
     setMessage("");
     setHasError(false)
     try {
-      await axios.post(
-        "http://127.0.0.1:8000/api/internships/",
-        internship
-      );
-     setMessage("Internship created Successfully");
-      // Reset the form or redirect as needed
+      await addWorkArea(internship);
+      setMessage("Internship created Successfully");
+      navigate('/admin/work-area-details')
     } catch (error) {
-      setMessage("Error creating internship:");
+      setMessage("Error creating internship:"+error.message);
       setHasError(true)
 
     }

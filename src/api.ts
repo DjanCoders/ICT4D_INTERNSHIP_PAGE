@@ -55,6 +55,71 @@ api.interceptors.response.use(
         return Promise.reject(error);
     }
 );
+export const getInternsData = async (status: string = 'all') => {
+    
+    try {
+        const response = await api.get('/internship-application/', {
+            params: status !== 'all' ? { status } : {},
+
+            
+        });
+        return response;
+    } catch (error) {
+        console.error("Error fetching interns data:", error);
+        throw error; // Rethrow error for handling in the component
+    }
+    
+}
+export const updateInternsStatus = async (applicationId:number, newStatus:string) => {
+    try {
+        const response = await api.patch(`/internship-applications/${applicationId}/status/`,
+            {
+                status: newStatus,
+                
+            }
+        );
+        return response;
+    }
+    catch (error) {
+        console.error("Error updating status:", error);
+        throw error;
+      }
+  
+};
+export const deleteInterns = async (deleteId:number) => {
+    try {
+        await api.delete(`/internship-application/${deleteId}/`);
+    }  catch (error) {
+        console.error("Error deleting work area:", error);
+        throw error;
+      }
+}
+export const addWorkArea = async (internship:any) => {
+    
+     const response=   await api.post('/internships/', internship);
+    return response.data;
+}
+
+export const getWorkAreaData = async ()=>{
+    const response = await api.get('/internships/');
+    return response;
+}
+export const deleteWorkArea = async (deleteId:number) => {
+    const response = await api.delete(`/internships/${deleteId}/`);
+    return response;
+}
+export const updateWorkStatus = async (id:number,isActive:boolean) => {
+    const response = await api.patch(`/internships/${id}/status/`, { is_active: isActive });
+    return response;
+}
+
+
+
+
+
+
+
+
 
 export const login = async (data: { email: string, password: string }) => {
     const response = await api.post('/token/', data);
@@ -64,6 +129,8 @@ export const login = async (data: { email: string, password: string }) => {
     localStorage.setItem('refreshToken', refresh);
     return response;
 };
+
+
 
 export const register = (data: { email: string, password:string,username: string, first_name: string, last_name: string }) => api.post('/accounts/register/', data);
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
