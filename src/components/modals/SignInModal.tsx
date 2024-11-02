@@ -30,7 +30,6 @@ const SignInModal = ({
             localStorage.setItem("refreshToken", refresh);
             setToken(access);
             setRefreshToken(refresh);
-            window.location.reload()
             navigate("/");
             onClose(false);
         } catch (error) {

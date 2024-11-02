@@ -22,6 +22,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         } else {
             localStorage.removeItem('token');
         }
+        window.dispatchEvent(new Event("tokenChange")); // Emit event
+
     };
 
     const setRefreshToken = (newToken: string) => {

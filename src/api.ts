@@ -137,20 +137,34 @@ export const register = async (data: {
     email: string;
     password: string;
     username: string;
-    first_name: string;
-    last_name: string;
+   
 }) => {
     try {
         const response = await api.post('/accounts/register/', data);
         return response.data;
     } catch (error) {
-        // Add error handling
         if (axios.isAxiosError(error)) {
-            throw new Error(error.response?.data?.detail || 'Registration failed');
+            const errors = error.response?.data || {};
+            // Collect error messages for all fields
+            const errorMessages = {};
+            if (errors.username) {
+                errorMessages.username = errors.username.join(', ');
+            }
+            if (errors.email) {
+                errorMessages.email = errors.email.join(', ');
+            }
+            if (errors.password) {
+                errorMessages.password = errors.password.join(', ');
+            }
+            throw errorMessages; // Throw the collected errors
         }
         throw new Error('An unexpected error occurred');
     }
-};
+    }
+
+
+
+
 
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
