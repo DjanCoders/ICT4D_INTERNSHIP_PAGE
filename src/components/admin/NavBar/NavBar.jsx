@@ -1,13 +1,13 @@
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import LanguageIcon from '@mui/icons-material/Language';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useContext, useEffect ,useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/DarkContext';
 import axios from 'axios'
 import { Modal, Button } from '@mui/material'; 
@@ -23,13 +23,13 @@ function Navbar() {
     const [unreadNotifications, setUnreadNotifications] = useState(0);
     const [notificationList, setNotificationList] = useState([]);
     const [open, setOpen] = useState(false);
-    const [toggle, setToggle] = useState(false);
+    // const [toggle, setToggle] = useState(false);
     // color state management using react context
     const { darkMode, dispatch } = useContext(ColorContext);
 
-    const handleToggle = () => {
-        setToggle(!toggle);
-    };
+    // const handleToggle = () => {
+    //     setToggle(!toggle);
+    // };
       // Fetch unread notifications count
       const fetchNotifications = async () => {
         try {
@@ -63,17 +63,7 @@ function Navbar() {
     return (
         <div className="navbar">
             <div className="navbar_main">
-                <div className="menu_logo">
-                    {toggle ? (
-                        <CloseIcon className="menu_icon" onClick={handleToggle} />
-                    ) : (
-                        <MenuIcon className="menu_icon" onClick={handleToggle} />
-                    )}
-
-                    <Link to="/" style={{ textDecoration: 'none' }}>
-                        <h3 className="text_none">Dashboard</h3>
-                    </Link>
-                </div>
+              
                 <div className="search">
                     <input type="text" placeholder="Search.." />
 
