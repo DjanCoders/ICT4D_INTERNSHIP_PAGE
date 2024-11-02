@@ -87,9 +87,9 @@ const TakeExam = () => {
       const answer = answers[question.id];
       if (answer) {
         formattedAnswers.push({
-          mcq_question: question.id, // ID of the MCQ question
-          mcq_answer: answer.mcq_answer || null, // Selected option ID or null if not answered
-          desc_answer: null, // No descriptive answer for MCQ questions
+          mcq_question: question.id, 
+          mcq_answer: answer.mcq_answer || null, 
+          desc_answer: null,
         });
       }
     });
@@ -99,15 +99,21 @@ const TakeExam = () => {
       if (answer) {
         formattedAnswers.push({
           descriptive_question: question.id, // ID of the descriptive question
-          desc_answer: answer.desc_answer || null, // Descriptive answer or null if not answered
-          mcq_answer: null, // No answer for MCQ questions
+          desc_answer: answer.desc_answer || null, 
+          mcq_answer: null, 
         });
       }
     });
   });
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/submit-answers/", formattedAnswers);
+      const response = await axios.post("http://127.0.0.1:8000/api/submit-answers/", formattedAnswers,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setMessage(response.data.message);
     } catch (error) {
       setMessage("An error occurred while submitting the exam.");

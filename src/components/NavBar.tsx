@@ -60,19 +60,19 @@ const Navbar = () => {
 						<div className="flex-shrink-0 text-white">
 							<Link to="/">ICT4D</Link>
 						</div>
-							{token && user.user.is_superuser && (
+							{token && user?.user.is_superuser && (
 								<div className="flex-shrink-0 text-white">
 								<Link to="/admin">Admin Panel</Link> 
 								</div>
 						)}
-						{token && !user.user.is_superuser && (
+						{token && !user?.user.is_superuser && (
 							<div className="flex-shrink-0 text-white">
 								<Link to="/applicant/take-exam">Take Exam</Link>
 								</div>)
 						}
 					</div>
 					<div className="absolute hidden sm:flex inset-y-0 right-0 my-3 gap-5 items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-					{!token && ( // Check if the user is not logged in
+					{!token && ( // Check if the user? is not logged in
                             <div>
                                 <a
                                     href="#"
@@ -112,7 +112,7 @@ const Navbar = () => {
 										className="h-8 w-8 rounded-full"
 										src={profile}
 										alt="profile"
-										title={user.user.username}
+										title={user?.user.username}
 
 									/>
 								</Link>
@@ -174,7 +174,7 @@ const Navbar = () => {
 			)}
 
 			{/* Sign In Modal */}
-			<SignInModal isOpen={showSignInModal} onClose={closeSignInModal} />
+			<SignInModal          setShowSignUpModal={setShowSignUpModal} isOpen={showSignInModal} onClose={closeSignInModal} />
 
 			{/* Sign Up Modal */}
 			<SignUpModal isOpen={showSignUpModal} onClose={closeSignUpModal} />

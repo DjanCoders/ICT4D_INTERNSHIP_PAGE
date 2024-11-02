@@ -9,7 +9,7 @@ import "./editExam.scss";
 import { ColorContext } from "../../ColorContext/DarkContext";
 import { getInternships } from "../../../api";
 
-const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
+const CreateExam = ({ question, isEditMode = false }) => {
   const { darkMode } = useContext(ColorContext);
   const colorStyle = {
     color: darkMode ? "green" : "#000",
@@ -25,6 +25,8 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
   const [shortAnswer, setShortAnswer] = useState(question?.short_answer || "");
   const [internships, setInternships] = useState([]);
   const [category, setCategory] = useState(question?.category || "");
+  const [message, setMessage] = useState('');
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (isEditMode && question) {
@@ -72,6 +74,8 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
   };
 
   const handleSubmit = async (e) => {
+    setMessage('');
+    setHasError(false)
     e.preventDefault();
     const questionData = {
       text,
@@ -93,10 +97,13 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
           : await createShortAnswerQuestion(questionData);
       }
 
-      onSubmit(response.data);
+      // onSubmit(response.data);
       resetForm();
-    } catch (error) {
+      setMessage(isEditMode?"Object is Updated Successfully":"Object is Created Successfully")
+    }catch (error) {
       console.error("Error submitting question:", error);
+      setMessage("Error submitting question");
+      setHasError(true);
     }
   };
 
@@ -205,6 +212,7 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
           {isEditMode ? "Update Question" : "Create Question"}
         </button>
       </form>
+      <p style={{color:hasError?'red':'green'}}>{ message}</p>
     </div>
   );
 };

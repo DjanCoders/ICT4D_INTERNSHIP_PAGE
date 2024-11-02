@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const SignInModal = ({
     isOpen,
     onClose,
-    setShowSignUpModal, // Add this prop
+    setShowSignUpModal, 
 }: {
     isOpen: boolean;
     onClose: (arg1: boolean) => void;
