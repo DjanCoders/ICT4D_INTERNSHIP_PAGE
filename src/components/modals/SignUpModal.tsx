@@ -2,14 +2,16 @@ import { useState } from "react";
 import { register,login } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { ErrorsType } from "../../types";
 const SignUpModal = ({
 	isOpen,
 	onClose,
 }: {
 	isOpen: boolean;
 	onClose: (arg1: boolean) => void;
-}) => {
+	}) => {
+	
+	
 	const handleClose = () => {
 		onClose(false);
 	};
@@ -18,7 +20,7 @@ const SignUpModal = ({
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState(""); // Password confirmation state
 	const [username, setUsername] = useState("");
-	const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<ErrorsType>({});
 	const { setToken, setRefreshToken } = useAuth();
 
 	const navigate = useNavigate();
@@ -48,7 +50,7 @@ const SignUpModal = ({
 			navigate("/");
 			onClose(false);
 		} catch (error) {
-			setErrors(error); // Set error messages
+            setErrors(error as ErrorsType); // Set error messages
 		}
 	};
 

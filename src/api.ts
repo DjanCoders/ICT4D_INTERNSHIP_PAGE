@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { ErrorsType } from "./types";
 const URL = "http://localhost:8000/api";
 
 const api = axios.create({
@@ -144,9 +144,9 @@ export const register = async (data: {
         return response.data;
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            const errors = error.response?.data || {};
+            const  errors = error.response?.data || {};
             // Collect error messages for all fields
-            const errorMessages = {};
+            const errorMessages: ErrorsType = {};
             if (errors.username) {
                 errorMessages.username = errors.username.join(', ');
             }

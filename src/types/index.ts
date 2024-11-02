@@ -7,9 +7,9 @@ export type Profile = {
 	avatar: string;
 };
 
-// export type EditProfileModalProps = {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   Profile: Profile;
-//   onSave: (updatedUser: Profile) => void;
-// };
+export type ErrorsType = {
+	username?: string;
+	email?: string;
+	password?: string;
+	passwordConfirm?: string;
+};
