@@ -10,7 +10,7 @@ const SignInModal = ({
 }: {
     isOpen: boolean;
     onClose: (arg1: boolean) => void;
-    setShowSignUpModal: (arg1: boolean) => void; // Prop to control Sign Up modal visibility
+    setShowSignUpModal: (arg1: boolean) => void; 
 }) => {
     const handleClose = () => {
         onClose(false);
