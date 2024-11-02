@@ -132,17 +132,29 @@ export const login = async (data: { email: string; password: string }) => {
   return response;
 };
 
-export const register = (data: {
-  email: string;
-  password: string;
-  username: string;
-  first_name: string;
-  last_name: string;
-}) => api.post("/accounts/register/", data);
-export const refreshToken = (refreshToken: string) =>
-  api.post("/token/refresh/", { refresh: refreshToken });
-export const getInternships = () => api.get("/internships/");
-export const getMCQs = () => api.get("/mcqquestions/");
+// Define the register function
+export const register = async (data: {
+    email: string;
+    password: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+}) => {
+    try {
+        const response = await api.post('/accounts/register/', data);
+        return response.data;
+    } catch (error) {
+        // Add error handling
+        if (axios.isAxiosError(error)) {
+            throw new Error(error.response?.data?.detail || 'Registration failed');
+        }
+        throw new Error('An unexpected error occurred');
+    }
+};
+
+export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
+export const getInternships = () => api.get('/internships/');
+export const getMCQs = () => api.get('/mcqquestions/');
 export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);
 export const getShortQ = (id: number) =>
   api.get(`/shortanswerquestions/${id}/`);
