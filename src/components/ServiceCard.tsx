@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import SignInModal from "./modals/SignInModal";
 import SignUpModal from "./modals/SignUpModal";
 import { useState } from "react";
+import { useUser } from "../contexts/UserContext";
 
 const ServiceCard = ({
   service,
@@ -13,6 +14,7 @@ const ServiceCard = ({
   const { token } = useAuth();
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const { user, loading } = useUser();
 
   const navigateToApplyForm = () => {
     if (!token) {
@@ -32,13 +34,15 @@ const ServiceCard = ({
           {service.title}
         </h2>
         <p>{service.description}</p>
-        <button
-          onClick={navigateToApplyForm}
-          type="button"
-          className="absolute bottom-2 left-1/3 px-8 z-50 py-3 flex bg-gradient-to-r from-blue-500 to-indigo-400 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-transform hover:scale-105"
-        >
-          Apply Now
-        </button>
+        {!user?.user.is_superuser && (
+          <button
+            onClick={navigateToApplyForm}
+            type="button"
+            className="absolute bottom-2 left-1/3 px-8 z-50 py-3 flex bg-gradient-to-r from-blue-500 to-indigo-400 text-white font-semibold rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-75 transition-transform hover:scale-105"
+          >
+            Apply Now
+          </button>
+        )}
       </div>
       {/* Sign In Modal */}
       <SignInModal
