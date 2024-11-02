@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal, Button } from '@mui/material'; 
+import { getWorkAreaData,deleteWorkArea ,updateWorkStatus} from '../../../api';
 const WorkAreaDetails = () => {
     const [workAreaInfo, setWorkAreaInfo] = useState(null);
     const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ const WorkAreaDetails = () => {
     useEffect(() => {
         const fetchWorkAreaInfo = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/internships/'); 
+                const response = await getWorkAreaData(); 
                 setWorkAreaInfo(response.data);
             } catch (error) {
                 console.error('Error fetching work area info:', error);
@@ -37,8 +37,7 @@ const WorkAreaDetails = () => {
 
     const handleDelete = async () => {
         try {
-          await axios.delete(`http://127.0.0.1:8000/api/internships/${deleteId}/`);
-          
+          deleteWorkArea(deleteId);       
           // Update local state to remove the deleted item
           setWorkAreaInfo(workAreaInfo.filter(item => item.id !== deleteId));
         } catch (error) {
@@ -50,8 +49,7 @@ const WorkAreaDetails = () => {
       };
     const handleUpdateStatus = async (id, isActive) => {
       try {
-         await axios.patch(`http://127.0.0.1:8000/api/internships/${id}/status/`,
-                                           { is_active: isActive }); 
+        updateWorkStatus(id,isActive)
           // Update local state to reflect the change
           setWorkAreaInfo(prev => 
               prev.map(item => (item.id === id ? { ...item, is_active: isActive } : item))
