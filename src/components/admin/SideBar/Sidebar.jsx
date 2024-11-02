@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/DarkContext';
 import './Sidebar.scss';
 
-function Sidebar() {
+function Sidebar({ onLinkClick }) {
     // color state management using react context
     //destruct the object and get only darkMode object
     const {darkMode} = useContext(ColorContext);
@@ -33,7 +33,7 @@ function Sidebar() {
     return (
         <div className="sidebar" style={colorStyle}>
             <div className="logo">
-                <Link to="/admin" style={{ textDecoration: 'none' }}>
+                <Link to="/admin" style={{ textDecoration: 'none' }} onClick={onLinkClick}>
                     <h3 style={colorStyle} className="text_none">AdminDashboard</h3>
                 </Link>
             </div>
@@ -41,67 +41,67 @@ function Sidebar() {
             <div className="links" style={colorStyle} >
                 <ul>
                     <p className="spann" style={colorStyle} >Main</p>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <DashboardIcon className="icon" /> Home
                         </li>
                     </Link>
 
                     <p className="spann" style={colorStyle} >lists</p>
-                    <Link to="/admin" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <GroupIcon className="icon" /> All Applicants
                         </li>
                     </Link>
 
-                    <Link to="/admin/applicants/approved" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin/applicants/approved" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <HowToRegIcon className="icon" /> Approved 
                         </li>
                     </Link>
-                    <Link to="/admin/applicants/pending" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin/applicants/pending" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <PendingActionsIcon className="icon" /> Pending 
                         </li>
                     </Link>
-                    <Link to="/admin/applicants/rejected" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin/applicants/rejected" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <HighlightOffIcon className="icon" /> Rejected 
                         </li>
                     </Link>
                     <p className="spann" style={colorStyle} >Exams</p>
-                    <Link to="admin/exam-create" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="admin/exam-create" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <EditIcon className="icon" /> Create Exam
                         </li>
                     </Link>
 
-                    <Link to="/admin/exam-settings" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin/exam-settings" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <SettingsApplicationsIcon className="icon" /> Exam Settings
                         </li>
                     </Link>
 
-                    <Link to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
+                    <Link  onClick={onLinkClick} to="/admin/review-submissions" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <RateReviewIcon className="icon" /> Review 
                         </li>
                     </Link>                    
 
                     <p className="spann" style={colorStyle} >Internship Area</p>
-                    <Link to="admin/internship-form" style={{ textDecoration: 'none' }}>
+                    <Link onClick={onLinkClick} to="admin/internship-form" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <CreateIcon className="icon" /> Add Work Area
                         </li>
                     </Link>
-                    <Link to="admin/work-area-details" style={{ textDecoration: 'none' }}>
+                    <Link onClick={onLinkClick} to="admin/work-area-details" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <DetailsIcon className="icon" />  Work Area Detial
                         </li>
                     </Link>
                     
                     <p className="spann" style={colorStyle} >Reports</p>
-                    <Link to="admin/reports" style={{ textDecoration: 'none' }}>
+                    <Link onClick={onLinkClick} to="admin/reports" style={{ textDecoration: 'none' }}>
                         <li style={colorStyle} >
                             <AssessmentIcon className="icon" /> Reports
                         </li>

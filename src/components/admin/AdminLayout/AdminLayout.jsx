@@ -1,60 +1,69 @@
-import { React ,useState,useContext} from 'react';
-// import Chart from '../Chart/Chart';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import Navbar from '../NavBar/NavBar';
-// import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../SideBar/Sidebar';
 import { Outlet } from 'react-router-dom';
 import ItemLists from '../ItemLists/ItemLists';
 import './adminlayout.scss';
 import { ColorContext } from '../../ColorContext/DarkContext';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
 
 function AdminLayout() {
-
+    const sidebarRef = useRef(null);
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-
     const { darkMode } = useContext(ColorContext);
+
+    // Toggle sidebar visibility
     const handleToggleSidebar = () => {
-        setIsSidebarVisible(!isSidebarVisible);
+        setIsSidebarVisible(prev => !prev);
     };
+
+    useEffect(() => {
+        // Function to close sidebar if clicked outside
+        const handleClickOutside = (event) => {
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+                setIsSidebarVisible(false);
+            }
+        };
+
+        // Add click event listener to the entire document
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Cleanup function to remove the event listener when component unmounts
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="home" style={{
-                    background: darkMode ? '#333' : '#fff',
-                    color: darkMode ? '#fff' : '#000'
-        }}>
-            <div className={`home_sidebar ${isSidebarVisible ? 'visible' : ''}`}>
-            <Sidebar />
+        <div
+            className="home"
+            style={{
+                background: darkMode ? '#333' : '#fff',
+                color: darkMode ? '#fff' : '#000',
+            }}
+        >
+            {/* Sidebar that overlays content when visible */}
+            <div
+                ref={sidebarRef}
+                className={`home_sidebar ${isSidebarVisible ? 'visible' : ''}`}
+            >
+                <Sidebar onLinkClick={() => setIsSidebarVisible(false)} />
             </div>
 
+            {/* Main content */}
             <div className="home_main">
-          
-                    <Navbar />
-                    <div className="menu_logo">
-                    
-                    
-                    <MenuIcon className="menu_icon" onClick={handleToggleSidebar} />
-                          
-      
-                          <Link to="/" style={{ textDecoration: 'none' }}>
-                              <h3 className="text_none">Dashboard</h3>
-                          </Link>
-                </div> 
+                <Navbar onToggleSidebar={handleToggleSidebar} />
                 <div className="bg_color" />
-                
-                    <div className="home_items">
-                        <ItemLists  type="totalApplicants" />
-                        <ItemLists type="approvedApplicants" />
-                        <ItemLists type="pendingApplicants" />
-                        <ItemLists  type="rejectedApplicants" />
-                    </div>
-                
-                <main>
-                  {/* Outlet is used as a placeholder for rendering child 
-                  routes within a parent route. */}  
-                <Outlet /> {/* Renders child routes */}
-               </main>
 
+                <div className="home_items">
+                    <ItemLists type="totalApplicants" />
+                    <ItemLists type="approvedApplicants" />
+                    <ItemLists type="pendingApplicants" />
+                    <ItemLists type="rejectedApplicants" />
+                </div>
+
+                <main>
+                    <Outlet />
+                </main>
             </div>
         </div>
     );

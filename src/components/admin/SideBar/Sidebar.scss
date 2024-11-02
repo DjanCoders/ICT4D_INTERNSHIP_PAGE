@@ -89,3 +89,12 @@ $text_color: #3d3c42;
 		}
 	}
 }
+
+
+@media screen and (max-width: 992px) {
+	.sidebar {
+		.logo{
+			display: none;
+		}
+	}	
+}
