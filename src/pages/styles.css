@@ -34,8 +34,7 @@ form {
 .contact-address {
 	margin-bottom: 10px;
 }
-.school-info .school-info-child,
-.contact-address div {
+.school-info .school-info-child {
 	display: grid;
 	gap: 10px;
 	grid-template: 40px 40px / auto auto auto auto;

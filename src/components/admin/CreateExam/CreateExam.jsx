@@ -9,7 +9,7 @@ import "./editExam.scss";
 import { ColorContext } from "../../ColorContext/DarkContext";
 import { getInternships } from "../../../api";
 
-const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
+const CreateExam = ({ question, isEditMode = false }) => {
   const { darkMode } = useContext(ColorContext);
   const colorStyle = {
     color: darkMode ? "green" : "#000",
@@ -97,12 +97,12 @@ const CreateExam = ({ question, onSubmit, isEditMode = false }) => {
           : await createShortAnswerQuestion(questionData);
       }
 
-      onSubmit(response.data);
+      // onSubmit(response.data);
       resetForm();
       setMessage(isEditMode?"Object is Updated Successfully":"Object is Created Successfully")
     }catch (error) {
       console.error("Error submitting question:", error);
-      setMessage("Error submitting question:", error);
+      setMessage("Error submitting question");
       setHasError(true);
     }
   };

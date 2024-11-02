@@ -24,7 +24,7 @@ const App = () => {
     user: {
       username: "jhondoe",
       email: "johndoe@example.com",
-      
+      is_superuser: false,
     },
     avatar: "avatar",
   };
@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/admin/applicants/rejected" element={<AdminHome status="Rejected"/>} />
           <Route path="/admin/work-area-details" element={<WorkAreaDetails/>} />
           <Route path="/admin/reports" element={<Reports />} />
-          <Route path="/admin/exam-create" element={<CreateExam question={null} isEditMode={false} onSubmit={null}/>} />
+          <Route path="/admin/exam-create" element={<CreateExam question={null} isEditMode={false}/>} />
           <Route path="/admin/exam-settings" element={<ExamSettings />} />
           <Route path="/admin/review-submissions" element={<ReviewSubmissions />} />
           <Route path="/admin/internship-form" element={<InternshipForm/>}/>

@@ -33,16 +33,22 @@ const EditProfileModal = ({
 		onSave(formData);
 		onClose();
 	};
+	const handleAvatarChange = (e: FormEvent<HTMLInputElement>) => {
+		const file = (e.target as HTMLInputElement).files?.[0];
+		if (file) {
+			// setFormData({ ...formData, avatar: file });
+		}
+	};
 
 	if (!isOpen) return null;
 
 	return (
 		<div className="fixed inset-0 bg-slate-200 bg-opacity-50 flex flex-col justify-center items-center z-50">
-			<div className="bg-white mx-auto w-[60%] md:w-1/4 p-6 rounded-lg shadow-lg">
+			<div className="bg-white mx-auto w-3/5  lg:w-1/4 p-6 rounded-lg shadow-lg">
 				<h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
 				<form
 					onSubmit={handleSubmit}
-					className="mx-auto max-w-full bg-transparent text-left"
+					className="mx-auto max-w-3xl bg-transparent text-left"
 				>
 					<div>
 						<div className="mb-4">
@@ -81,19 +87,17 @@ const EditProfileModal = ({
 						</div>
 						<div className="mb-4">
 							<label
-								htmlFor="department"
+								htmlFor="avatar"
 								className="block text-gray-700 text-sm font-bold mb-2"
 							>
-								Area of Department
+								Profile Image
 							</label>
 							<input
 								className="border w-full py-2 px-3 text-gray-700 border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-								type="text"
-								name="department"
-								title="department"
-								value={formData.department}
-								onChange={handleChange}
-								required
+								type="file"
+								name="avatar"
+								accept="image/*"
+								onChange={handleAvatarChange}
 							/>
 						</div>
 						<div className="flex justify-end space-x-4">

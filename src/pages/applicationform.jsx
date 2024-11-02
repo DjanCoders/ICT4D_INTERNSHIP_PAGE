@@ -11,8 +11,8 @@ import { useAuth } from "../contexts/AuthContext";
 
 const ApplicationForm = () => {
 	const location = useLocation();
-	const title=location.state?.title;// Access the title from the state
-	const id=location.state?.id;
+	const title = location.state?.title; // Access the title from the state
+	const id = location.state?.id;
 	const {
 		register,
 		handleSubmit,
@@ -31,17 +31,20 @@ const ApplicationForm = () => {
 		setIsSubmitting(true);
 		const formData = new FormData();
 		formData.append("applly_for", id);
+		const duration = Number(data.duration);
+		const gpa = Number(data.gpa);
+
 		// Check if files exist
 		if (data.resume && data.resume.length > 0) {
 			formData.append("resume", data.resume[0]);
-		} 
+		}
 
 		if (data.cover_letter && data.cover_letter.length > 0) {
 			formData.append("cover_letter", data.cover_letter[0]);
 		}
 
-		formData.append("duration", Number(data.duration));
-		formData.append("gpa", Number(data.gpa));
+		formData.append("duration", duration);
+		formData.append("gpa", gpa);
 		for (const [key, value] of Object.entries(data)) {
 			if (key !== "resume" && key !== "cover_letter") {
 				formData.append(key, value);
@@ -49,7 +52,7 @@ const ApplicationForm = () => {
 		}
 
 		try {
-			const response=await axios.post(
+			const response = await axios.post(
 				"http://127.0.0.1:8000/api/internship-application/",
 				formData,
 				{
@@ -84,7 +87,11 @@ const ApplicationForm = () => {
 
 				{/* Basic Info */}
 				<div className="info-section">
-				{title && <h1>You are applying for: <strong>{title}</strong></h1>}
+					{title && (
+						<h1>
+							You are applying for: <strong>{title}</strong>
+						</h1>
+					)}
 					<h3 className="font-bold text-lg">Eligibility Criteria</h3>
 					<p>Open to students currently enrolled in a degree program.</p>
 
@@ -112,69 +119,78 @@ const ApplicationForm = () => {
 				</div>
 			</div>
 
-			<div className="Apply-form w-[85%] md:w-[55%] mx-auto md:mx-0">
-				<h1>Internship Application </h1>
-				<h2>Please complete the form below to apply for Internship with us.</h2>
-				<form onSubmit={handleSubmit(onSubmit)} className="w-full">
-					<div className="full-name">
+			<div className="Apply-form w-[85%] md:w-[50%] mx-auto md:mx-0 py-6 bg-stone-200">
+				<h2 className="pb-3">
+					Please complete the form below to apply for Internship with us.
+				</h2>
+				<form onSubmit={handleSubmit(onSubmit)} className="w-full bg-stone-200">
+					<div className="full-name lg:h-20 mb-0">
 						<span>Full Name</span>
 						<br />
-						<label className="text-sm font-medium text-gray-1000">
-							First Name:
-						</label>
-						<input
-							type="text"
-							{...register("first_name")}
-							required
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("first_name")}
-						<label className="text-sm font-medium text-gray-1000">
-							Last Name:
-						</label>
-						<input
-							type="text"
-							{...register("last_name")}
-							required
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("last_name")}
+						<div className="flex flex-col md:flex-row ml-6 justify-between">
+							<div>
+								<label className="text-sm font-medium text-gray-1000 md:pr-12">
+									First Name:
+								</label>
+								<input
+									type="text"
+									{...register("first_name")}
+									required
+									className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+								/>
+								{renderError("first_name")}
+							</div>
+							<div>
+								<label className="text-sm font-medium pr-2">Last Name:</label>
+								<input
+									type="text"
+									{...register("last_name")}
+									required
+									className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+								/>
+								{renderError("last_name")}
+							</div>
+						</div>
 					</div>
 
-					<div className="contact-address">
+					<div className="contact-address lg:h-32">
 						<span>Contact Address</span>
 						<br />
-						<div>
-							<label className="text-sm font-medium text-gray-1000">
-								Email:
-							</label>
-							<input
-								type="email"
-								{...register("email")}
-								required
-								className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-							/>
-							{renderError("email")}
-
-							<label className="text-sm font-medium text-gray-1000">
-								Phone:
-							</label>
-							<input
-								type="tel"
-								{...register("phone")}
-								className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-							/>
-							{renderError("phone")}
-
-							<label className="text-sm font-medium text-gray-1000">
-								Address:
-							</label>
-							<input
-								type="text"
-								{...register("address")}
-								className="appearance-none adress-input px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-							/>
-							{renderError("address")}
+						<div className="flex flex-wrap ml-6 justify-between">
+							<div>
+								<label className="text-sm font-medium text-gray-1000 md:pr-20">
+									Email:
+								</label>
+								<input
+									type="email"
+									{...register("email")}
+									required
+									className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+								/>
+								{renderError("email")}
+							</div>
+							<div className="">
+								<label className="text-sm font-medium text-gray-1000 pr-4">
+									Phone:
+								</label>
+								<input
+									type="tel"
+									{...register("phone")}
+									className="appearance-none  px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+								/>
+								{renderError("phone")}
+							</div>
+							<div>
+								<label className="text-sm font-medium text-gray-1000 md:pr-16">
+									Address:
+								</label>
+								<input
+									type="text"
+									{...register("address")}
+									className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+								/>
+								{renderError("address")}
+							</div>
 						</div>
 					</div>
 
@@ -226,29 +242,29 @@ const ApplicationForm = () => {
 					<div className="date-info">
 						<span>Date Information</span>
 						<br />
-						<label className="text-sm font-medium text-gray-1000">
-							Start Date:
-						</label>
-						<input
-							type="date"
-							{...register("start_date")}
-							required
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("start_date")}
+						<div className="flex ml-6 justify-between">
+							<label className="text-sm font-medium text-gray-1000 lg:pr-8">
+								Start Date:
+							</label>
+							<input
+								type="date"
+								{...register("start_date")}
+								required
+								className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+							/>
+							{renderError("start_date")}
 
-						<label className="text-sm font-medium text-gray-1000">
-							Duration (months):
-						</label>
-						<input
-							type="number"
-							{...register("duration")}
-							className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-						/>
-						{renderError("duration")}
+							<label className="text-sm font-medium text-gray-1000">
+								Duration (months):
+							</label>
+							<input
+								type="number"
+								{...register("duration")}
+								className="appearance-none px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
+							/>
+							{renderError("duration")}
+						</div>
 					</div>
-
-					
 
 					<div>
 						<label className="text-sm font-medium text-gray-1000">
