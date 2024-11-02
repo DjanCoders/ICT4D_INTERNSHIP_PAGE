@@ -1,9 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./takeExam.scss";
-import { useAuth } from "../../contexts/AuthContext";
-
+import { getQuestions,submitQuesionsAnswer } from "../../api";
 const TakeExam = () => {
   const [questionsByCategory, setQuestionsByCategory] = useState([]);
   const [answers, setAnswers] = useState({});
@@ -11,16 +9,11 @@ const TakeExam = () => {
   const [message, setMessage] = useState("");
   const [hasError, setHasError] = useState(false);
   const [errors, setErrors] = useState({});
-  const { token } = useAuth();
 
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/get-questions/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await getQuestions();
         setQuestionsByCategory(response.data);
         setLoading(false);
       } catch (error) {
@@ -29,7 +22,7 @@ const TakeExam = () => {
       }
     };
     fetchQuestions();
-  }, [token]);
+  }, []);
 
   const handleMCQChange = (questionId, optionId) => {
     setAnswers((prevAnswers) => ({
@@ -107,13 +100,7 @@ const TakeExam = () => {
   });
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/submit-answers/", formattedAnswers,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = submitQuesionsAnswer(formattedAnswers);
       setMessage(response.data.message);
     } catch (error) {
       setMessage("An error occurred while submitting the exam.");
