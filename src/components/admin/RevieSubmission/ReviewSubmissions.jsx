@@ -1,18 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { useAuth } from "../../../contexts/AuthContext";
 import './reviewSubmissions.scss';
 
 function ReviewSubmissions() {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { token } = useAuth();
+  const [editingFeedback, setEditingFeedback] = useState({});
 
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/review-answers/');
+        const response = await axios.get("http://127.0.0.1:8000/api/review-answers/");
         setSubmissions(response.data);
-        console.log(submissions);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -23,6 +38,56 @@ function ReviewSubmissions() {
     fetchSubmissions();
   }, []);
 
+  const handleFeedbackChange = (id, newFeedback) => {
+    setEditingFeedback((prev) => ({
+      ...prev,
+      [id]: newFeedback,
+    }));
+  };
+
+  const handleUpdateFeedback = async (id) => {
+    const answerToUpdate = submissions.find((answer) => answer.id === id);
+
+    if (answerToUpdate) {
+      try {
+        await axios.patch(
+          `http://127.0.0.1:8000/api/review-answers/${id}/`,
+          { admin_feedback: editingFeedback[id] || answerToUpdate.admin_feedback },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        setSubmissions((prevSubmissions) =>
+          prevSubmissions.map((submission) =>
+            submission.id === id
+              ? { ...submission, admin_feedback: editingFeedback[id] || answerToUpdate.admin_feedback }
+              : submission
+          )
+        );
+        setEditingFeedback((prev) => ({ ...prev, [id]: undefined }));
+      } catch (err) {
+        console.error("Error updating feedback:", err);
+      }
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await axios.patch(
+        `http://127.0.0.1:8000/api/review-answers/${id}/`,
+        { review_status: newStatus },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setSubmissions((prevSubmissions) =>
+        prevSubmissions.map((submission) =>
+          submission.id === id ? { ...submission, review_status: newStatus } : submission
+        )
+      );
+    } catch (err) {
+      console.error("Error updating status:", err);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -31,87 +96,67 @@ function ReviewSubmissions() {
     return <div>Error fetching submissions: {error}</div>;
   }
 
-  // Grouping submissions by applicant name
-  const groupedSubmissions = submissions.reduce((acc, submission) => {
-    const { applicant_name, mcq_answer_text, desc_answer, review_status, admin_feedback } = submission;
-    
-    if (!acc[applicant_name]) {
-      acc[applicant_name] = { mcq: [], descriptive: [] };
-    }
-
-    if (mcq_answer_text) {
-      acc[applicant_name].mcq.push({
-        question_text: submission.mcq_question_text, // Assuming you have this in your data
-        answer_text: mcq_answer_text,
-        review_status,
-        admin_feedback,
-      });
-    }
-
-    if (desc_answer) {
-      acc[applicant_name].descriptive.push({
-        question_text: submission.desc_question_text, // Assuming you have this in your data
-        answer_text: desc_answer,
-        review_status,
-        admin_feedback,
-      });
-    }
-
-    return acc;
-  }, {});
-
   return (
-    <div className="review-submissions">
-      <h2>Review Submissions</h2>
-      {Object.keys(groupedSubmissions).length > 0 ? (
-        Object.keys(groupedSubmissions).map((applicantName, idx) => (
-          <div key={idx} className="applicant-section">
-            <h3>{applicantName}</h3>
-            <div className="answers-group">
-              {/* MCQ Questions */}
-              <div className="mcq-group">
-                <h4>MCQ Answers</h4>
-                {groupedSubmissions[applicantName].mcq.length > 0 ? (
-                  groupedSubmissions[applicantName].mcq.map((answer, index) => (
-                    <div key={index} className="answer-card">
-                      <p><strong>Question:</strong> {answer.question_text}</p>
-                      <p><strong>Answer:</strong> {answer.answer_text}</p>
-                      <p><strong>Review Status:</strong> {answer.review_status}</p>
-                      {answer.admin_feedback && (
-                        <p><strong>Admin Feedback:</strong> {answer.admin_feedback}</p>
-                      )}
-                    </div>
-                  ))
+    <TableContainer component={Paper} className="review-submissions">
+      <h2>Review Answer Submissions</h2>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Applicant</TableCell>
+            <TableCell>Question Type</TableCell>
+            <TableCell>Question</TableCell>
+            <TableCell>Answer</TableCell>
+            <TableCell>Review Status</TableCell>
+            <TableCell>Feedback</TableCell>
+            <TableCell>Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {submissions.map((submission) => (
+            <TableRow className="table-row" key={submission.id}>
+              <TableCell>{submission.applicant_name}</TableCell>
+              <TableCell>{submission.mcq_answer_text ? "MCQ" : "Descriptive"}</TableCell>
+              <TableCell>{submission.mcq_answer_text ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
+              <TableCell>{submission.mcq_answer_text || submission.desc_answer}</TableCell>
+              <TableCell>
+                <Select
+                  value={submission.review_status}
+                  onChange={(e) => handleStatusChange(submission.id, e.target.value)}
+                >
+                  <MenuItem value="PENDING">Pending Review</MenuItem>
+                  <MenuItem value="APPROVED">Approved</MenuItem>
+                  <MenuItem value="REJECTED">Rejected</MenuItem>
+                </Select>
+              </TableCell>
+              <TableCell>
+                {editingFeedback[submission.id] !== undefined ? (
+                  <TextField
+                    value={editingFeedback[submission.id]}
+                    onChange={(e) => handleFeedbackChange(submission.id, e.target.value)}
+                    multiline
+                    rows={3}
+                    variant="outlined"
+                  />
                 ) : (
-                  <p>No MCQ answers submitted.</p>
+                  submission.admin_feedback
                 )}
-              </div>
-              
-              {/* Descriptive Questions */}
-              <div className="desc-group">
-                <h4>Descriptive Answers</h4>
-                {groupedSubmissions[applicantName].descriptive.length > 0 ? (
-                  groupedSubmissions[applicantName].descriptive.map((answer, index) => (
-                    <div key={index} className="answer-card">
-                      <p><strong>Question:</strong> {answer.question_text}</p>
-                      <p><strong>Answer:</strong> {answer.answer_text}</p>
-                      <p><strong>Review Status:</strong> {answer.review_status}</p>
-                      {answer.admin_feedback && (
-                        <p><strong>Admin Feedback:</strong> {answer.admin_feedback}</p>
-                      )}
-                    </div>
-                  ))
+              </TableCell>
+              <TableCell>
+                {editingFeedback[submission.id] !== undefined ? (
+                  <Button onClick={() => handleUpdateFeedback(submission.id)} variant="contained" color="primary">
+                    Submit
+                  </Button>
                 ) : (
-                  <p>No descriptive answers submitted.</p>
+                  <Button onClick={() => setEditingFeedback({ ...editingFeedback, [submission.id]: submission.admin_feedback || "" })} variant="outlined">
+                    Edit
+                  </Button>
                 )}
-              </div>
-            </div>
-          </div>
-        ))
-      ) : (
-        <p>No submissions to review.</p>
-      )}
-    </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
