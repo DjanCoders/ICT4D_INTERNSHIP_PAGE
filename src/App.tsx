@@ -24,7 +24,7 @@ const App = () => {
     user: {
       username: "jhondoe",
       email: "johndoe@example.com",
-      
+      is_superuser: false,
     },
     avatar: "avatar",
   };
