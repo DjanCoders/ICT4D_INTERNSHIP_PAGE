@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from "react";
 import "./takeExam.scss";
-import { getQuestions,submitQuesionsAnswer } from "../../api";
+import { getQuestions, submitQuesionsAnswer } from "../../api";
+
 const TakeExam = () => {
   const [questionsByCategory, setQuestionsByCategory] = useState([]);
   const [answers, setAnswers] = useState({});
@@ -75,32 +75,42 @@ const TakeExam = () => {
 
     const formattedAnswers = [];
 
-  questionsByCategory.forEach((category) => {
-    category.mcq_questions.forEach((question) => {
-      const answer = answers[question.id];
-      if (answer) {
-        formattedAnswers.push({
-          mcq_question: question.id, 
-          mcq_answer: answer.mcq_answer || null, 
-          desc_answer: null,
-        });
-      }
-    });
+    questionsByCategory.forEach((category) => {
+      category.mcq_questions.forEach((question) => {
+        const answer = answers[question.id];
+        if (answer) {
+          const selectedOption = question.options.find(
+            (option) => option.id === answer.mcq_answer
+          );
+          formattedAnswers.push({
+            mcq_question: question.id,
+            mcq_question_text: question.text,
+            descriptive_question: null,
+            desc_question_text: null,
+            desc_answer: null,
+            mcq_answer: selectedOption ? selectedOption.id : null,
+          });
+        }
+      });
 
-    category.desc_questions.forEach((question) => {
-      const answer = answers[question.id];
-      if (answer) {
-        formattedAnswers.push({
-          descriptive_question: question.id, // ID of the descriptive question
-          desc_answer: answer.desc_answer || null, 
-          mcq_answer: null, 
-        });
-      }
+      category.desc_questions.forEach((question) => {
+        const answer = answers[question.id];
+        if (answer) {
+          formattedAnswers.push({
+            mcq_question: null,
+            mcq_question_text: null,
+            descriptive_question: question.id,
+            desc_question_text: question.text,
+            desc_answer: answer.desc_answer || null,
+            mcq_answer: null,
+          });
+        }
+      });
     });
-  });
 
     try {
-      const response = submitQuesionsAnswer(formattedAnswers);
+      const response = await submitQuesionsAnswer(formattedAnswers);
+      console.log(formattedAnswers);
       setMessage(response.data.message);
     } catch (error) {
       setMessage("An error occurred while submitting the exam.");
