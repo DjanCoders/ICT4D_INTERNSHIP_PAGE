@@ -131,6 +131,13 @@ export const login = async (data: { email: string; password: string }) => {
   localStorage.setItem("refreshToken", refresh);
   return response;
 };
+export const updatePassword = async ( email:string, newPassword:string ) => {
+  const response = await api.post('/accounts/reset-password/', {
+      email,
+      new_password: newPassword,
+  });
+  return response.data;
+};
 
 // Define the register function
 export const register = async (data: {
