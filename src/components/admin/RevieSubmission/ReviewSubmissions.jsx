@@ -117,12 +117,12 @@ function ReviewSubmissions() {
           {submissions.map((submission) => (
             <TableRow className="table-row" key={submission.id}>
               <TableCell>{submission.applicant_name}</TableCell>
-              <TableCell>{submission.mcq_answer_text ? "MCQ" : "Descriptive"}</TableCell>
-              <TableCell>{submission.mcq_answer_text ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
+              <TableCell>{submission.mcq_answer ? "MCQ" : "Descriptive"}</TableCell>
+              <TableCell>{submission.mcq_answer ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
               <TableCell>
-                  {submission.mcq_answer_text || submission.desc_answer}
+                  {submission.mcq_answer || submission.desc_answer}
                   {" "}
-                  {submission.mcq_answer_text ? (
+                  {submission.mcq_answer ? (
                     submission.is_correct ? (
                       <CheckCircle sx={{ color: green[500], marginLeft: 1 }} />
                     ) : (
