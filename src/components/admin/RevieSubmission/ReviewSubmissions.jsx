@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { useAuth } from "../../../contexts/AuthContext";
 import './reviewSubmissions.scss';
+import { CheckCircle, Cancel, HelpOutline } from "@mui/icons-material";
+import { green, red, grey } from "@mui/material/colors";
 
 function ReviewSubmissions() {
   const [submissions, setSubmissions] = useState([]);
@@ -117,7 +119,19 @@ function ReviewSubmissions() {
               <TableCell>{submission.applicant_name}</TableCell>
               <TableCell>{submission.mcq_answer_text ? "MCQ" : "Descriptive"}</TableCell>
               <TableCell>{submission.mcq_answer_text ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
-              <TableCell>{submission.mcq_answer_text || submission.desc_answer}</TableCell>
+              <TableCell>
+                  {submission.mcq_answer_text || submission.desc_answer}
+                  {" "}
+                  {submission.mcq_answer_text ? (
+                    submission.is_correct ? (
+                      <CheckCircle sx={{ color: green[500], marginLeft: 1 }} />
+                    ) : (
+                      <Cancel sx={{ color: red[500], marginLeft: 1 }} />
+                    )
+                  ) : (
+                    <HelpOutline sx={{ color: grey[500], marginLeft: 1 }} />
+                  )}
+                </TableCell>
               <TableCell>
                 <Select
                   value={submission.review_status}
