@@ -6,23 +6,24 @@ import { useNavigate } from "react-router-dom";
 const SignInModal = ({
     isOpen,
     onClose,
-    setShowSignUpModal, 
+    setShowSignUpModal,
+    setShowForgotPasswordModal,
 }: {
     isOpen: boolean;
     onClose: (arg1: boolean) => void;
-    setShowSignUpModal: (arg1: boolean) => void; 
+    setShowSignUpModal: (arg1: boolean) => void;
+    setShowForgotPasswordModal: (arg1: boolean) => void;
 }) => {
-    const handleClose = () => {
-        onClose(false);
-    };
-
+    const handleClose = () => onClose(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { setToken, setRefreshToken } = useAuth();
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setMessage("");
         try {
             const response = await login({ email, password });
             const { access, refresh } = response.data;
@@ -34,12 +35,18 @@ const SignInModal = ({
             onClose(false);
         } catch (error) {
             console.error("Error logging in:", error);
+            setMessage("Password or email doesn’t match");
         }
     };
 
     const openSignUp = () => {
-        onClose(false); // Close the Sign In modal
-        setShowSignUpModal(true); // Open the Sign Up modal
+        onClose(false);
+        setShowSignUpModal(true);
+    };
+
+    const openForgotPassword = () => {
+        onClose(false);
+        setShowForgotPasswordModal(true);
     };
 
     return (
@@ -68,6 +75,7 @@ const SignInModal = ({
                                 </button>
                                 <div className="mt-3 text-center sm:mt-5">
                                     <h3 className="text-lg leading-6 font-medium text-gray-900">Sign In</h3>
+                                    <h3 style={{ color: "red" }}>{message}</h3>
                                     <form onSubmit={handleLogin} className="mt-4 space-y-4">
                                         <input
                                             type="email"
@@ -91,11 +99,13 @@ const SignInModal = ({
                                     </form>
                                     <p className="mt-4 text-sm text-gray-600">
                                         Don’t have an account?{" "}
-                                        <span
-                                            className="text-green-600 cursor-pointer hover:underline"
-                                            onClick={openSignUp}
-                                        >
+                                        <span className="text-green-600 cursor-pointer hover:underline" onClick={openSignUp}>
                                             Sign Up
+                                        </span>
+                                    </p>
+                                    <p className="mt-2 text-sm text-gray-600">
+                                        <span className="text-green-600 cursor-pointer hover:underline" onClick={openForgotPassword}>
+                                            Forgot Password?
                                         </span>
                                     </p>
                                 </div>

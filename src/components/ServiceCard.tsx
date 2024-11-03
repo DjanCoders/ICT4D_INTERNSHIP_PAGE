@@ -16,6 +16,7 @@ const ServiceCard = ({
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { user, loading } = useUser();
 
+
   const navigateToApplyForm = () => {
     if (!token) {
       setShowSignInModal(true);

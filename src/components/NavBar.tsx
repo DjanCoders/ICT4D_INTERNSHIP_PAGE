@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import profile from "/assets/default.png";
 import SignInModal from "./modals/SignInModal";
 import SignUpModal from "./modals/SignUpModal";
+import ForgotPasswordModal from "./modals/ForgotPasswordModal";
 import { CloseSVGs, OpenSVGs } from "./SVGs";
 import { useUser } from "../contexts/UserContext";
 import { useAuth } from "../contexts/AuthContext";
@@ -14,6 +15,10 @@ const Navbar = () => {
     const [showSignInModal, setShowSignInModal] = useState(false);
     const [showSignUpModal, setShowSignUpModal] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);  // New state for rerender
+    const [isForgotPasswordOpen, setShowForgotPasswordModal] = useState(false);
+   
+   
+
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -173,9 +178,13 @@ const Navbar = () => {
                 </div>
             )}
             {/* Sign In Modal */}
-            <SignInModal setShowSignUpModal={setShowSignUpModal} isOpen={showSignInModal} onClose={closeSignInModal} />
+            <SignInModal setShowForgotPasswordModal={setShowForgotPasswordModal} setShowSignUpModal={setShowSignUpModal} isOpen={showSignInModal} onClose={closeSignInModal} />
             {/* Sign Up Modal */}
             <SignUpModal isOpen={showSignUpModal} onClose={closeSignUpModal} />
+            <ForgotPasswordModal
+                isOpen={isForgotPasswordOpen}
+                onClose={() => setShowForgotPasswordModal(false)}
+            />
         </nav>
     );
 };
