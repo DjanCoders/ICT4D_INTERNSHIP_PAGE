@@ -7,6 +7,7 @@ import ForgotPasswordModal from "./modals/ForgotPasswordModal";
 import { CloseSVGs, OpenSVGs } from "./SVGs";
 import { useUser } from "../contexts/UserContext";
 import { useAuth } from "../contexts/AuthContext";
+import { Console } from "console";
 
 const Navbar = () => {
     const { user, loading } = useUser();
@@ -17,8 +18,6 @@ const Navbar = () => {
     const [isUpdated, setIsUpdated] = useState(false);  // New state for rerender
     const [isForgotPasswordOpen, setShowForgotPasswordModal] = useState(false);
    
-   
-
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -48,6 +47,7 @@ const Navbar = () => {
     if (loading) {
         return <div>Loading...</div>; 
     }
+    const canTakeExam = token && !user?.user.is_superuser && user?.is_internee;
 
     return (
         <nav className="bg-gray-500 mb-20 z-50">
@@ -74,9 +74,9 @@ const Navbar = () => {
                                 <Link to="/admin">Admin Panel</Link> 
                             </div>
                         )}
-                        {token && !user?.user.is_superuser && (
+                        {canTakeExam && (
                             <div className="flex-shrink-0 text-white">
-                                <Link to="/applicant/take-exam">Take Exam</Link>
+                                <Link to="/applicant/take-exam">Take Exam </Link>
                             </div>
                         )}
                     </div>

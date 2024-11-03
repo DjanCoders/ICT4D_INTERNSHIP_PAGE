@@ -119,7 +119,25 @@ const TakeExam = () => {
   };
 
   if (loading) return <p>Loading questions...</p>;
-
+  if (questionsByCategory.length === 0) {
+    return (
+      <div style={{
+        textAlign: "center",
+        padding: "20px",
+        backgroundColor: "#f9f9f9",
+        borderRadius: "8px",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)"
+      }}>
+        <h1 style={{ color: "#555", fontSize: "1.5rem" }}><b>No Questions Available</b></h1>
+        <p style={{ color: "#777", fontSize: "1rem" }}>
+          Currently, there are no questions available for this category. <br/>
+          Please check back later or explore other categories.
+        </p>
+      
+      </div>
+    );
+  }
+  
   return (
     <div className="take-exam">
       <h1>Take Exam</h1>

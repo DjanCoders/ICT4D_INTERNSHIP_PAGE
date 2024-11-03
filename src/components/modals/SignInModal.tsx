@@ -24,6 +24,7 @@ const SignInModal = ({
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setMessage("");
+    
         try {
             const response = await login({ email, password });
             const { access, refresh } = response.data;
@@ -31,13 +32,22 @@ const SignInModal = ({
             localStorage.setItem("refreshToken", refresh);
             setToken(access);
             setRefreshToken(refresh);
-            navigate("/");
-            onClose(false);
+    
+            // Check for a stored redirect path
+            const redirectPath = localStorage.getItem('redirectPath');
+            if (redirectPath) {
+                localStorage.removeItem('redirectPath'); // Clear the stored path after using it
+                navigate(redirectPath); // Navigate to the stored path
+            } else {
+                navigate("/"); // Default to home page if no path is stored
+            }
+    
+            onClose(false); // Close the sign-in modal
         } catch (error) {
-            console.error("Error logging in:", error);
             setMessage("Password or email doesn’t match");
         }
     };
+    
 
     const openSignUp = () => {
         onClose(false);

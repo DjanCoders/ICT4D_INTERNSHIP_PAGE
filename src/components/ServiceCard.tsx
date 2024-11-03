@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import SignInModal from "./modals/SignInModal";
 import SignUpModal from "./modals/SignUpModal";
+import ForgotPasswordModal from "./modals/ForgotPasswordModal";
 import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
 
@@ -15,11 +16,15 @@ const ServiceCard = ({
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { user, loading } = useUser();
+  const [isForgotPasswordOpen, setShowForgotPasswordModal] = useState(false);
+
 
 
   const navigateToApplyForm = () => {
     if (!token) {
+      localStorage.setItem('redirectPath', '/apply');
       setShowSignInModal(true);
+      
     } else {
       navigate("/apply", { state: { title: service.title, id: service.id } });
     }
@@ -50,10 +55,15 @@ const ServiceCard = ({
         isOpen={showSignInModal}
         onClose={closeSignInModal}
         setShowSignUpModal={setShowSignUpModal}
+        setShowForgotPasswordModal={setShowForgotPasswordModal} 
       />
 
       {/* Sign Up Modal */}
       <SignUpModal isOpen={showSignUpModal} onClose={closeSignUpModal} />
+      <ForgotPasswordModal
+                isOpen={isForgotPasswordOpen}
+                onClose={() => setShowForgotPasswordModal(false)}
+            />
     </>
   );
 };

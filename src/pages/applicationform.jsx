@@ -1,13 +1,12 @@
 // src/ApplicationForm.js
 import React, { useState } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import formSchema from "../validation";
 import coderLogo from "../components/Images/coder-logo.jpg";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { applayForInternship } from "../api";
 
 const ApplicationForm = () => {
 	const location = useLocation();
@@ -24,17 +23,16 @@ const ApplicationForm = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [submissionMessage, setSubmissionMessage] = useState(" ");
 	const [hasError, setHasError] = useState(false);
-	const { token } = useAuth();
-
-
 	const onSubmit = async (data) => {
 		setIsSubmitting(true);
 		const formData = new FormData();
+		
+		// Append the internship ID
 		formData.append("applly_for", id);
-		const duration = Number(data.duration);
-		const gpa = Number(data.gpa);
+		formData.append("duration", data.duration);
+		formData.append("gpa", data.gpa);
 
-		// Check if files exist
+		// Append files if they exist
 		if (data.resume && data.resume.length > 0) {
 			formData.append("resume", data.resume[0]);
 		}
@@ -43,31 +41,20 @@ const ApplicationForm = () => {
 			formData.append("cover_letter", data.cover_letter[0]);
 		}
 
-		formData.append("duration", duration);
-		formData.append("gpa", gpa);
-		for (const [key, value] of Object.entries(data)) {
-			if (key !== "resume" && key !== "cover_letter") {
-				formData.append(key, value);
+		// Append other form fields
+		for (const key of Object.keys(data)) {
+			if (key !== "resume" && key !== "cover_letter" && key !== "duration" && key !== "gpa") {
+				formData.append(key, data[key]);
 			}
 		}
 
 		try {
-			const response = await axios.post(
-				"http://127.0.0.1:8000/api/internship-application/",
-				formData,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-
+			const response = await applayForInternship(formData);
 			setSubmissionMessage(response.data.message);
 			setHasError(false);
 		} catch (error) {
-			console.error("Error Creating:", error.response.data); // Log error response data
-			setSubmissionMessage("Please correct the highlighted fields.");
+			console.error("Error Creating:", error.response?.data || error); // Log error response data if it exists
+			setSubmissionMessage("Error Creating Application: " + (error.response?.data?.message || error.message));
 			setHasError(true);
 		} finally {
 			setIsSubmitting(false);
