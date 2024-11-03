@@ -99,7 +99,7 @@ const CreateExam = ({ question, isEditMode = false }) => {
 
       // onSubmit(response.data);
       resetForm();
-      setMessage(isEditMode?"Object is Updated Successfully":"Object is Created Successfully")
+      setMessage(isEditMode?"Question is Updated Successfully":"Question is Created Successfully")
     }catch (error) {
       console.error("Error submitting question:", error);
       setMessage("Error submitting question");
@@ -125,6 +125,7 @@ const CreateExam = ({ question, isEditMode = false }) => {
           <select
             value={questionType}
             onChange={(e) => setQuestionType(e.target.value)}
+            defaultValue={questionType}
           >
             <option style={colorStyle} value="MCQ">
               Multiple Choice
@@ -136,10 +137,10 @@ const CreateExam = ({ question, isEditMode = false }) => {
         </div>
 
         <div className="question-category">
-          <label style={colorStyle}>Question Category</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            defaultValue={category}
           >
             <option value="" disabled>Select a Category</option>
             {internships.map((intern) => (
