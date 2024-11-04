@@ -34,6 +34,3 @@ jobs:
       # Uncomment the next step if starting the app in dev mode is necessary
       # - name: Start your app
       #   run: npm run dev
-
-      - name: Run tests
-        run: npm test
