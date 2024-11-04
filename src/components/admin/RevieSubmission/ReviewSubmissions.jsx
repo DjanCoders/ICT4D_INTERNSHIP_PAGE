@@ -120,7 +120,7 @@ function ReviewSubmissions() {
               <TableCell>{submission.mcq_answer ? "MCQ" : "Descriptive"}</TableCell>
               <TableCell>{submission.mcq_answer ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
               <TableCell>
-                  {submission.mcq_answer || submission.desc_answer}
+                  {submission.mcq_answer_text || submission.desc_answer}
                   {" "}
                   {submission.mcq_answer ? (
                     submission.is_correct ? (
