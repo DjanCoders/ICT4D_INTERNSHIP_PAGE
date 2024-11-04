@@ -19,6 +19,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setTokenState(newToken);
         if (newToken) {
             localStorage.setItem('token', newToken);
+            window.location.reload();
         } else {
             localStorage.removeItem('token');
         }
@@ -57,8 +58,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const logout = () => {
         removeToken();
-        // Optionally redirect to the homepage or login page after logging out
-        // navigate('/login'); // Uncomment if using react-router and you want redirection
+        window.location.reload();
     };
 
     useEffect(() => {
