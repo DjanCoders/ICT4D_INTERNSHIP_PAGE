@@ -100,6 +100,7 @@ export const updateInternsStatus = async (
 export const deleteInterns = async (deleteId: number) => {
   try {
     await api.delete(`/internship-application/${deleteId}/`);
+   
   } catch (error) {
     console.error("Error deleting work area:", error);
     throw error;
