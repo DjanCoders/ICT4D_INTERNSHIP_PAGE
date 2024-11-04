@@ -10,16 +10,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20.15.1"
+          node-version: "20"
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
-      - name: Start your app
-        run: npm run dev
+
+      # Uncomment the next step if starting the app in dev mode is necessary
+      # - name: Start your app
+      #   run: npm run dev
+
       - name: Run tests
         run: npm test
