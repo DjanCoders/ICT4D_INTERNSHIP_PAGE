@@ -208,10 +208,10 @@ const TakeExam = () => {
 
 							<div
 								key={category.category_name}
-								className={`category ${categoryClass}`}
+								className={`category ${categoryClass} flex flex-col justify-center lg:flex-row`}
 							>
 								{hasMCQ && (
-									<div className="mcq-question">
+									<div className="flex-1 max-W-5xl">
 										<h2>Multiple Choice Questions</h2>
 										{category.mcq_questions.map((question) => (
 											<div key={question.id} className="question">
@@ -241,7 +241,7 @@ const TakeExam = () => {
 								)}
 
 								{hasDesc && (
-									<div className="desc-question">
+									<div className="flex-1">
 										<h2>Descriptive Questions</h2>
 										{category.desc_questions.map((question) => (
 											<div key={question.id} className="question">
