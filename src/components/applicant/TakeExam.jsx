@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./takeExam.scss";
 import { getQuestions, submitQuesionsAnswer } from "../../api";
+import MessageModal from "../modals/MessageModal";
 
 const TakeExam = () => {
 	const [questionsByCategory, setQuestionsByCategory] = useState([]);
@@ -11,6 +12,7 @@ const TakeExam = () => {
 	const [errors, setErrors] = useState({});
 	const [examStarted, setExamStarted] = useState(false);
 	const [timeRemaining, setTimeRemaining] = useState(0);
+	const [isModalOpen, setIsModalOpen] = useState(true);
 	const [isTimerFinished, setIsTimerFinished] = useState(false);
 
 	const startExam = () => {
@@ -87,7 +89,6 @@ const TakeExam = () => {
 		setErrors(validationErrors);
 		return isValid;
 	};
-
 	const handleSubmit = async () => {
 		setMessage("");
 		setHasError(false);
@@ -146,9 +147,11 @@ const TakeExam = () => {
 	if (loading) return <p>Loading questions...</p>;
 	if (isTimerFinished) {
 		return (
-			<p className="text-orange-400 text-lg text-center mt-5 font-sans">
-				Thank you for your time. The allotted time has now ended.
-			</p>
+			<MessageModal
+				isOpen={isModalOpen}
+				message="Thank you for your time. The allotted time has now ended."
+				onClose={() => setIsModalOpen(false)}
+			/>
 		);
 	}
 	if (!examStarted) {
@@ -188,7 +191,7 @@ const TakeExam = () => {
 	return (
 		<div className="take-exam">
 			<h1>Take Exam</h1>
-			<form onSubmit={(e) => e.preventDefault()}>
+			<form onSubmit={(e) => e.preventDefault()} className="z-50">
 				{questionsByCategory.map((category) => {
 					const hasMCQ = category.mcq_questions.length > 0;
 					const hasDesc = category.desc_questions.length > 0;
@@ -199,7 +202,10 @@ const TakeExam = () => {
 						: "";
 
 					return (
-						<div key={crypto.randomUUID()} className="take-exam-info relative">
+						<div
+							key={category.category_name}
+							className="take-exam-info relative"
+						>
 							<div className="timer text-2xl font-mono tracking-wide py-2 absolute top-1 right-3 border-2 border-gray-300 rounded-lg bg-gradient-to-r from-blue-500 to-blue-400 shadow-lg text-white font-bold text-center w-32 flex items-center justify-center">
 								{Math.floor(timeRemaining / 60)}:
 								{String(timeRemaining % 60).padStart(2, "0")}
