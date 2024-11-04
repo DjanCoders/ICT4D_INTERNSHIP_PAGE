@@ -5,6 +5,7 @@ import SignUpModal from "./modals/SignUpModal";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal";
 import { useState } from "react";
 import { useUser } from "../contexts/UserContext";
+import MessageModal from "./modals/MessageModal";
 
 const ServiceCard = ({
   service,
@@ -17,6 +18,8 @@ const ServiceCard = ({
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { user, loading } = useUser();
   const [isForgotPasswordOpen, setShowForgotPasswordModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
 
 
@@ -24,9 +27,13 @@ const ServiceCard = ({
     if (!token) {
       localStorage.setItem('redirectPath', '/apply');
       setShowSignInModal(true);
-      
     } else {
-      navigate("/apply", { state: { title: service.title, id: service.id } });
+      if (user?.is_internee) {
+        setMessage("You have already applied for another internship.");
+        setIsModalOpen(true);
+      } else {
+        navigate("/apply", { state: { title: service.title, id: service.id } });
+      }
     }
   };
 
@@ -64,6 +71,11 @@ const ServiceCard = ({
                 isOpen={isForgotPasswordOpen}
                 onClose={() => setShowForgotPasswordModal(false)}
             />
+      <MessageModal
+        message={message}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };
