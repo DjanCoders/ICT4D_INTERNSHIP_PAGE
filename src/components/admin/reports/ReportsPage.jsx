@@ -5,6 +5,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import axios from "axios";
 import "./reportsPge.scss";
 import { ColorContext } from "../../ColorContext/DarkContext";
+import TopScorersChart from "../Chart/TopScorerChart";
 const Reports = () => {
   const [applicantData, setApplicantData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,8 +37,10 @@ const Reports = () => {
 
       <div className="chart_sec">
         <ProgressBar />
-
+         <div className="charts">
         <Chart data={applicantData} title="Internship Application Counts" />
+          <TopScorersChart />
+          </div>
       </div>
     </div>
   );

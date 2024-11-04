@@ -134,6 +134,27 @@ export const submitQuesionsAnswer = async (answers: any) => {
   const response = await api.post("/submit-answers/", answers);
   return response;
 };
+export const getAnswerSubmissions = async () => {
+  
+  const response = api.get("/review-answers/");
+  return response
+}
+export const UpdateAnswerFeedback = async (id:number,feedback:string) => {
+  const response = api.patch(`/review-answers/${id}/`,
+    { admin_feedback: feedback},
+  );
+  return response
+}
+export const answerStatusChange = async (id: number, newStatus: string) => {
+  const response = api.patch(`/review-answers/${id}/`,
+    { review_status: newStatus },
+  );
+  return response
+}
+export const getTopScorers = async () => {
+  return await api.get('/top-scorers/');
+};
+
 
 export const login = async (data: { email: string; password: string }) => {
   const response = await api.post("/token/", data);

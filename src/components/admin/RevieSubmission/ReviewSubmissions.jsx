@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  getAnswerSubmissions,
+  UpdateAnswerFeedback,
+  answerStatusChange
+  
+ } from "../../../api";
+import {
   Table,
   TableBody,
   TableCell,
@@ -28,7 +34,7 @@ function ReviewSubmissions() {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/review-answers/");
+        const response = await getAnswerSubmissions();
         setSubmissions(response.data);
       } catch (err) {
         setError(err.message);
@@ -49,14 +55,11 @@ function ReviewSubmissions() {
 
   const handleUpdateFeedback = async (id) => {
     const answerToUpdate = submissions.find((answer) => answer.id === id);
+    const feedback = editingFeedback[id] || answerToUpdate?.admin_feedback;
 
     if (answerToUpdate) {
       try {
-        await axios.patch(
-          `http://127.0.0.1:8000/api/review-answers/${id}/`,
-          { admin_feedback: editingFeedback[id] || answerToUpdate.admin_feedback },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await UpdateAnswerFeedback(id, feedback);
 
         setSubmissions((prevSubmissions) =>
           prevSubmissions.map((submission) =>
@@ -74,11 +77,7 @@ function ReviewSubmissions() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.patch(
-        `http://127.0.0.1:8000/api/review-answers/${id}/`,
-        { review_status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await answerStatusChange(id, newStatus);
 
       setSubmissions((prevSubmissions) =>
         prevSubmissions.map((submission) =>
@@ -120,18 +119,20 @@ function ReviewSubmissions() {
               <TableCell>{submission.mcq_answer ? "MCQ" : "Descriptive"}</TableCell>
               <TableCell>{submission.mcq_answer ? submission.mcq_question_text : submission.desc_question_text}</TableCell>
               <TableCell>
-                  {submission.mcq_answer_text || submission.desc_answer}
-                  {" "}
-                  {submission.mcq_answer ? (
-                    submission.is_correct ? (
-                      <CheckCircle sx={{ color: green[500], marginLeft: 1 }} />
-                    ) : (
-                      <Cancel sx={{ color: red[500], marginLeft: 1 }} />
-                    )
+                {submission.mcq_answer_text || submission.desc_answer}{" "}
+                {submission.mcq_answer ? (
+                  submission.is_correct ? (
+                    <CheckCircle sx={{ color: green[500], marginLeft: 1 }} />
                   ) : (
-                    <HelpOutline sx={{ color: grey[500], marginLeft: 1 }} />
-                  )}
-                </TableCell>
+                    <Cancel sx={{ color: red[500], marginLeft: 1 }} />
+                  )
+                ) : submission.desc_answer && submission.review_status === 'APPROVED' ? (
+                  <CheckCircle sx={{ color: green[500], marginLeft: 1 }} />
+                ) : (
+                  <HelpOutline sx={{ color: grey[500], marginLeft: 1 }} />
+                )}
+              </TableCell>
+
               <TableCell>
                 <Select
                   value={submission.review_status}
