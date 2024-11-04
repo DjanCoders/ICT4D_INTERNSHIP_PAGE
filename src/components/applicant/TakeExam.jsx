@@ -140,47 +140,73 @@ const TakeExam = () => {
   
   return (
     <div className="take-exam">
-      <h1>Take Exam</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
-        {questionsByCategory.map((category) => (
-          <div key={category.category_name} className="category">
-            <h2>{category.category_name}</h2>
-            {category.mcq_questions.map((question) => (
-              <div key={question.id} className="question">
-                <p>{question.text}</p>
-                {question.options.map((option) => (
-                  <label key={option.id}>
-                    <input
-                      type="radio"
-                      name={`mcq-${question.id}`}
-                      checked={answers[question.id]?.mcq_answer === option.id}
-                      onChange={() => handleMCQChange(question.id, option.id)}
-                    />
-                    {option.text}
-                  </label>
+    <h1>Take Exam</h1>
+    <form onSubmit={(e) => e.preventDefault()}>
+      {questionsByCategory.map((category) => {
+        const hasMCQ = category.mcq_questions.length > 0;
+        const hasDesc = category.desc_questions.length > 0;
+        const categoryClass = !hasMCQ ? 'full-width-desc' : !hasDesc ? 'full-width-mcq' : '';
+  
+        return (
+          <div className="take-exam-info">
+            <h1>{category.category_name}</h1>
+
+          <div key={category.category_name} className={`category ${categoryClass}`}>
+  
+            {hasMCQ && (
+              <div className="mcq-question">
+                <h2>Multiple Choice Questions</h2>
+                {category.mcq_questions.map((question) => (
+                  <div key={question.id} className="question">
+                    <p>{question.text}</p>
+                    {question.options.map((option) => (
+                      <label key={option.id}>
+                        <input
+                          className="option"
+                          type="radio"
+                          name={`mcq-${question.id}`}
+                          checked={answers[question.id]?.mcq_answer === option.id}
+                          onChange={() => handleMCQChange(question.id, option.id)}
+                        />
+                        {option.text}
+                      </label>
+                    ))}
+                    {errors[question.id] && (
+                      <p style={{ color: 'red' }}>{errors[question.id]}</p>
+                    )}
+                  </div>
                 ))}
-                {errors[question.id] && <p style={{ color: "red" }}>{errors[question.id]}</p>}
               </div>
-            ))}
-            {category.desc_questions.map((question) => (
-              <div key={question.id} className="question">
-                <p>{question.text}</p>
-                <textarea
-                  placeholder="Write your answer here"
-                  rows="3"
-                  value={answers[question.id]?.desc_answer || ""}
-                  onChange={(e) => handleDescChange(question.id, e.target.value)}
-                />
-                {errors[question.id] && <p style={{ color: "red" }}>{errors[question.id]}</p>}
+            )}
+  
+            {hasDesc && (
+              <div className="desc-question">
+                <h2>Descriptive Questions</h2>
+                {category.desc_questions.map((question) => (
+                  <div key={question.id} className="question">
+                    <p>{question.text}</p>
+                    <textarea
+                      placeholder="Write your answer here"
+                      rows="3"
+                      value={answers[question.id]?.desc_answer || ''}
+                      onChange={(e) => handleDescChange(question.id, e.target.value)}
+                    />
+                    {errors[question.id] && (
+                      <p style={{ color: 'red' }}>{errors[question.id]}</p>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ))}
-        <button type="button" onClick={handleSubmit}>Submit Exam</button>
-      </form>
-      {message && <h2 style={{ color: hasError ? "red" : "green" }}>{message}</h2>}
-    </div>
-  );
+            )}
+            </div>
+            </div>
+        );
+      })}
+      <button type="button" onClick={handleSubmit}>Submit Exam</button>
+    </form>
+    {message && <h2 style={{ color: hasError ? 'red' : 'green' }}>{message}</h2>}
+  </div>
+  )  
 };
 
 export default TakeExam;
