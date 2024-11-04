@@ -214,6 +214,15 @@ export const getShortQ = (id: number) =>
   api.get(`/shortanswerquestions/${id}/`);
 export const getShortQs = () => api.get("/shortanswerquestions/");
 export const getProfile = () => api.get("/accounts/profiles/");
+export const updateProfile = async (data: any) => {
+  try {
+    const response = await api.put("/accounts/profiles/", data);
+    return response;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw error;
+  }
+};
 export const applyForInternship = (id: number, data: any, token: string) => {
   return api.post(`/internships/${id}/apply/`, data, {
     headers: {
