@@ -22,14 +22,15 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ColorContext } from '../../ColorContext/DarkContext';
 import './Sidebar.scss';
-
+import { useAuth } from '../../../contexts/AuthContext';
 function Sidebar({ onLinkClick }) {
     // color state management using react context
     //destruct the object and get only darkMode object
     const {darkMode} = useContext(ColorContext);
     const colorStyle={
           color: darkMode ? '#fff' : '#000'
-          }
+    }
+    const {logout}=useAuth()
     return (
         <div className="sidebar" style={colorStyle}>
             <div className="logo">
@@ -115,8 +116,8 @@ function Sidebar({ onLinkClick }) {
                     <li style={colorStyle} >
                         <SettingsRoundedIcon className="icon" /> Setting
                     </li>
-                    <li style={colorStyle} >
-                        <LogoutIcon className="icon" /> Log Out
+                    <li onClick={()=>logout()} style={colorStyle} >
+                        <LogoutIcon className="icon"  /> Log Out
                     </li>
                 </ul>
             </div>

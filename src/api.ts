@@ -58,7 +58,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 export const applayForInternship = async (data: any) => {
   try {
     const response = await api.post("/internship-application/", data)
@@ -214,13 +213,13 @@ export const getShortQ = (id: number) =>
   api.get(`/shortanswerquestions/${id}/`);
 export const getShortQs = () => api.get("/shortanswerquestions/");
 export const getProfile = () => api.get("/accounts/profiles/");
-export const applyForInternship = (id: number, data: any, token: string) => {
-  return api.post(`/internships/${id}/apply/`, data, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
+// export const applyForInternship = (id: number, data: any, token: string) => {
+//   return api.post(`/internships/${id}/apply/`, data, {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+// };
 
 export const createMCQQuestion = async (data: any) => {
   try {
