@@ -119,7 +119,7 @@ const TakeExam = () => {
   };
 
   if (loading) return <p>Loading questions...</p>;
-  if (questionsByCategory.length === 0) {
+  if (questionsByCategory.length=== 0) {
     return (
       <div style={{
         textAlign: "center",

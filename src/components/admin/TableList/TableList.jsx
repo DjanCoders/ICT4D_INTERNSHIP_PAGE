@@ -99,13 +99,16 @@ function TableList({ status }) {
 
   const handleDelete = async () => {
     try {
-      deleteInterns(deleteId);
+       await deleteInterns(deleteId);
+
     } catch (error) {
       console.error("Error deleting work area:", error);
     } finally {
       setOpen(false);
+
     }
     window.location.reload();
+
   };
 
   return (
