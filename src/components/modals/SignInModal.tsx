@@ -28,8 +28,7 @@ const SignInModal = ({
         try {
             const response = await login({ email, password });
             const { access, refresh } = response.data;
-            localStorage.setItem("accessToken", access);
-            localStorage.setItem("refreshToken", refresh);
+           
             setToken(access);
             setRefreshToken(refresh);
     

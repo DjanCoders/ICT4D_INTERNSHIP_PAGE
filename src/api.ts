@@ -58,7 +58,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 export const applayForInternship = async (data: any) => {
   try {
     const response = await api.post("/internship-application/", data)
