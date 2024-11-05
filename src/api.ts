@@ -141,6 +141,9 @@ export const updateExamSetting = async (id: number, updatedSetting: {
   const response = await api.patch(`/exam-settings/${id}/`,updatedSetting);
   return response
 }
+export const resetTimeToZero = async () => {
+  await api.post("/end_exam_duration/");
+}
 export const submitQuesionsAnswer = async (answers: any) => {
   const response = await api.post("/submit-answers/", answers);
   return response;

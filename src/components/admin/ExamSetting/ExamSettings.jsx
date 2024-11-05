@@ -80,7 +80,7 @@ function ExamSettings() {
     <div className="exam-setting-wrapper">
     <div className="exam-setting">
 
-      <h1>Add Timeing For an Internship</h1><br/>
+      <h1>Add Timing For an Internship</h1><br/>
       <h2 style={{ color: hasError ? "red" : "green" }} >{message }</h2>
       <div className="exam-setting-inputs">
         <label>Category:</label>

@@ -6,6 +6,10 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     .take-exam-info{
+      .no-quesion{
+       margin: 10px auto;
+
+      }
      align-items: center;
      justify-content: center;
      h1{
@@ -45,6 +49,7 @@
       text-align: center;
       color: #333;
       text-decoration: underline;
+      margin-bottom: 10px;
     }
   
     .question {
