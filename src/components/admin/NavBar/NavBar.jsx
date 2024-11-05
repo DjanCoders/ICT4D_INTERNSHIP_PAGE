@@ -4,7 +4,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import SearchIcon from '@mui/icons-material/Search';
+// import SearchIcon from '@mui/icons-material/Search';
 import React, { useContext, useEffect ,useState } from 'react';
 import { ColorContext } from '../../ColorContext/DarkContext';
 import axios from 'axios'
@@ -66,9 +66,9 @@ function Navbar({ onToggleSidebar }) {
 
                 </div>
                 <div className="search">
-                    <input type="text" placeholder="Search.." />
+                    {/* <input type="text" placeholder="Search.." />
 
-                    <SearchIcon className="search_icon" />
+                    <SearchIcon className="search_icon" /> */}
                 </div>
 
                 <div className="item_lists">

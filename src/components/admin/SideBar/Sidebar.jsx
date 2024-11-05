@@ -109,13 +109,13 @@ function Sidebar({ onLinkClick }) {
                     </Link>
                    
 
-                    <p className="spann" style={colorStyle} >Seetings</p>
+                    {/* <p className="spann" style={colorStyle} >Seetings</p>
                     <li style={colorStyle} >
                         <AccountCircleIcon className="icon" /> Profile
                     </li>
                     <li style={colorStyle} >
                         <SettingsRoundedIcon className="icon" /> Setting
-                    </li>
+                    </li> */}
                     <li onClick={()=>logout()} style={colorStyle} >
                         <LogoutIcon className="icon"  /> Log Out
                     </li>

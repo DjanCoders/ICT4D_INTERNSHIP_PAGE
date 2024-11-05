@@ -222,6 +222,15 @@ export const register = async (data: {
 
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
+export const updateWorkArea = async (id:number, data:any) => {
+  try {
+    const response = await api.put(`/internships/${id}/`, data);
+    return response.data; // Return the updated work area data
+  } catch (error) {
+    console.error("Error updating work area:", error);
+    throw error;
+  }
+};
 
 export const getMCQs = () => api.get('/mcqquestions/');
 export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);

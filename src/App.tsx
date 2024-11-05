@@ -7,9 +7,7 @@ import Layout from "./components/Layout";
 import CreateExam from "./components/admin/CreateExam/CreateExam";
 import ExamSettings from "./components/admin/ExamSetting/ExamSettings";
 import ReviewSubmissions from "./components/admin/RevieSubmission/ReviewSubmissions";
-import ExamStart from "./components/applicant/ExamStart";
-import ExamQuestion from "./components/applicant/ExamQuestion";
-import ExamSubmission from "./components/applicant/ExamSubmission";
+
 import AdminHome from "./components/admin/Home/AdminHome";
 import AdminLayout from "./components/admin/AdminLayout/AdminLayout";
 import Home from "./pages/Home";
@@ -39,10 +37,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<UserProfile profile={profile} />} />
           <Route path="/apply" element={<ApplicationForm />} />
-          <Route path="/applicant/exam-start" element={<ExamStart />} />
           <Route path="/applicant/take-exam" element={<TakeExam />} />
-          <Route path="/applicant/exam-question" element={<ExamQuestion />} />
-          <Route path="/applicant/exam-submission" element={<ExamSubmission />} />
+          
         </Route>
 
         {/* Protected Admin Routes */}

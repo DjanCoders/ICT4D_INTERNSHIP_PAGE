@@ -1,5 +1,6 @@
 import { FormEvent, useState, useEffect } from "react";
 import { EditProfileModalProps } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 const EditProfileModal = ({
 	isOpen,
@@ -51,11 +52,15 @@ const EditProfileModal = ({
 			setFormData({ ...formData, [name]: value });
 		}
 	};
-
+    const navigete=useNavigate()
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		onSave({ ...formData, avatar: formData.avatar || new File([], "") });
 		onClose();
+		window.location.reload
+		navigete('/')
+
+
 	};
 	const handleAvatarChange = (e: FormEvent<HTMLInputElement>) => {
 		const file = (e.target as HTMLInputElement).files?.[0];
@@ -162,7 +167,10 @@ const EditProfileModal = ({
 							<button
 								type="button"
 								className="bg-gray-500 hover:bg-gray-700 text-white px-4 py-2 rounded"
-								onClick={onClose}
+								onClick={() => {
+									onClose
+									navigete('/')
+								}}
 							>
 								Cancel
 							</button>
