@@ -7,13 +7,12 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [profiles, setProfiles] = useState(profile);
 
-	useEffect(() => {
-		const fetchProfile = async () => {
-			const prof = await getProfile();
-			setProfiles(prof.data[0]);
-			console.log(prof.data[0]);
-		};
+	const fetchProfile = async () => {
+		const prof = await getProfile();
+		setProfiles(prof.data[0]);
+	};
 
+	useEffect(() => {
 		fetchProfile();
 	}, []);
 
@@ -25,16 +24,16 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 		setIsModalOpen(false);
 	};
 
-	const handleSaveProfile = (updatedProfile: {
+	const handleSaveProfile = async (updatedProfile: {
 		user: {
 			username: string;
 			first_name: string;
 			last_name: string;
 		};
 		bio: string;
-		avatar: string;
+		avatar: File;
 	}) => {
-		updateProfile({
+		await updateProfile({
 			id: profiles.id,
 			full_name: updatedProfile.user.first_name + " " + updatedProfile.user.last_name,
 			user: {
@@ -48,21 +47,10 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 			bio: updatedProfile.bio,
 			avatar: updatedProfile.avatar,
 		});
-		
-		setProfiles({
-			id: profiles.id,
-			full_name: updatedProfile.user.first_name + " " + updatedProfile.user.last_name,
-			user: {
-				id: profiles.user.id,
-				email: profiles.user.email,
-				username: updatedProfile.user.username,
-				first_name: updatedProfile.user.first_name,
-				last_name: updatedProfile.user.last_name,
-				is_superuser: profiles.user.is_superuser,
-			},
-			bio: updatedProfile.bio,
-			avatar: updatedProfile.avatar,
-		});
+
+		await fetchProfile();
+
+		setIsModalOpen(false);
 	};
 
 	return (
@@ -102,8 +90,9 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 					<div className="avatar w-44 h-44 mx-auto">
 						<img
 							src={
-								profiles?.avatar ||
-								"http://localhost:8000/media/default_avatar.png"
+								typeof profiles.avatar === "string"
+									? profiles.avatar
+									: "http://localhost:8000/media/default_avatar.png"
 							}
 							alt="profile avatar"
 						/>

@@ -14,7 +14,7 @@ const EditProfileModal = ({
 			last_name: "",
 		},
 		bio: "",
-		avatar: "",
+		avatar: null as File | null,
 	});
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ const EditProfileModal = ({
 					last_name: profile.user.last_name,
 				},
 				bio: profile.bio,
-				avatar: profile.avatar,
+				avatar: typeof profile.avatar === 'string' ? null : profile.avatar,
 			});
 		}
 	setFormData({
@@ -36,7 +36,7 @@ const EditProfileModal = ({
 			last_name: profile.user.last_name,
 		},
 		bio: profile.bio,
-		avatar: profile.avatar,
+		avatar: typeof profile.avatar === 'string' ? null : profile.avatar,
 	});
 	}, [profile]);
 
@@ -54,13 +54,13 @@ const EditProfileModal = ({
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		onSave(formData);
+		onSave({ ...formData, avatar: formData.avatar || new File([], "") });
 		onClose();
 	};
 	const handleAvatarChange = (e: FormEvent<HTMLInputElement>) => {
 		const file = (e.target as HTMLInputElement).files?.[0];
 		if (file) {
-			setFormData({ ...formData, avatar: file.name });
+			setFormData({ ...formData, avatar: file });
 		}
 	};
 

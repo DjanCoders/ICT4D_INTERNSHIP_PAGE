@@ -12,7 +12,7 @@ export type Profile = {
 		is_superuser: boolean;
 	};
 	bio: string;
-	avatar: string;
+	avatar: File;
 };
 
 export type ErrorsType = {
@@ -32,7 +32,7 @@ export interface EditProfileModalProps {
 			last_name: string;
 		}
 		bio: string;
-		avatar: string;
+		avatar: File;
 	};
 	onSave: (formData: {
 		user: {
@@ -41,6 +41,6 @@ export interface EditProfileModalProps {
 			last_name: string;
 		};
 		bio: string;
-		avatar: string;
+		avatar: File;
 	}) => void;
 }

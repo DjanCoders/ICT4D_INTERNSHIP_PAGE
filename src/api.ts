@@ -232,11 +232,23 @@ import axios from "axios";
 export const updateProfile = async (updatedProfile: Profile) => {
     try {
         // Update Profile fields
-        await api.patch(`/accounts/profiles/${updatedProfile.id}/`, {
-            bio: updatedProfile.bio,
-            // avatar: updatedProfile.avatar,
-        });
+        if (updatedProfile.avatar) {
+          const formData = new FormData();
+          formData.append("bio", updatedProfile.bio);
+          formData.append("avatar", updatedProfile.avatar); // Append the file to FormData
 
+          // Update Profile fields including avatar
+          await api.patch(`/accounts/profiles/${updatedProfile.id}/`, formData, {
+              headers: {
+                  "Content-Type": "multipart/form-data",
+              },
+          });
+      } else {
+          // Update Profile fields without avatar
+          await api.patch(`/accounts/profiles/${updatedProfile.id}/`, {
+              bio: updatedProfile.bio,
+          });
+      }
         console.log(updatedProfile.bio);
 
         // Update User fields separately (if needed)
