@@ -115,8 +115,8 @@ const Navbar = () => {
                                     className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                                 >
                                     <img
-                                        className="h-8 w-8 rounded-full"
-                                        src={profile}
+                                        className="h-8 w-8 object-cover rounded-full"
+                                        src={user?.avatar || profile}
                                         alt="profile"
                                         title={user?.user.username}
                                     />

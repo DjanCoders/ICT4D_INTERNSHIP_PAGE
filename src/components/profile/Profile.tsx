@@ -87,8 +87,9 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 					<label className="block text-gray-700 text-sm font-bold mb-2">
 						Avatar
 					</label>
-					<div className="avatar w-44 h-44 mx-auto">
+					<div className="avatar w-44 h-44 rounded-full overflow-hidden mx-auto">
 						<img
+						className="w-full h-full object-cover"
 							src={
 								typeof profiles.avatar === "string"
 									? profiles.avatar
