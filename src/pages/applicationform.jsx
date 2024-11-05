@@ -23,51 +23,47 @@ const ApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState(" ");
   const [hasError, setHasError] = useState(false);
+  
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     const formData = new FormData();
-
-    // Append the internship ID
+  
+    // Append the internship ID and other fields
     formData.append("applly_for", id);
     formData.append("duration", data.duration);
     formData.append("gpa", data.gpa);
-
+  
     // Append files if they exist
-    if (data.resume && data.resume.length > 0) {
+    if (data.resume?.[0]) {
       formData.append("resume", data.resume[0]);
     }
-
-    if (data.cover_letter && data.cover_letter.length > 0) {
+  
+    if (data.cover_letter?.[0]) {
       formData.append("cover_letter", data.cover_letter[0]);
     }
-
+  
     // Append other form fields
     for (const key of Object.keys(data)) {
-      if (
-        key !== "resume" &&
-        key !== "cover_letter" &&
-        key !== "duration" &&
-        key !== "gpa"
-      ) {
+      if (!["resume", "cover_letter", "duration", "gpa"].includes(key)) {
         formData.append(key, data[key]);
       }
     }
-
+  
     try {
       const response = await applayForInternship(formData);
       setSubmissionMessage(response.data.message);
       setHasError(false);
     } catch (error) {
-      console.error("Error Creating:", error.response?.data || error); // Log error response data if it exists
+      console.error("Error Creating:", error.response?.data || error);
       setSubmissionMessage(
-        "Error Creating Application: " +
-          (error.response?.data?.message || error.message)
+        "Error Creating Application: " + (error.response?.data?.message || error.message)
       );
       setHasError(true);
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   const renderError = (fieldName) => {
     return errors[fieldName] ? (

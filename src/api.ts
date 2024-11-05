@@ -60,7 +60,12 @@ api.interceptors.response.use(
 );
 export const applayForInternship = async (data: any) => {
   try {
-    const response = await api.post("/internship-application/", data)
+    const response = await api.post("/internship-application/", data,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+)
   
     return response
   } catch(error) {
