@@ -241,7 +241,7 @@ const TakeExam = () => {
 								)}
 
 								{hasDesc && (
-									<div className="flex-1">
+									<div className="f">
 										<h2>Descriptive Questions</h2>
 										{category.desc_questions.map((question) => (
 											<div key={question.id} className="question">

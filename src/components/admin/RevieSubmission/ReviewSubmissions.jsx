@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import {
   getAnswerSubmissions,
   UpdateAnswerFeedback,
@@ -19,7 +18,6 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { useAuth } from "../../../contexts/AuthContext";
 import './reviewSubmissions.scss';
 import { CheckCircle, Cancel, HelpOutline } from "@mui/icons-material";
 import { green, red, grey } from "@mui/material/colors";
@@ -28,7 +26,6 @@ function ReviewSubmissions() {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { token } = useAuth();
   const [editingFeedback, setEditingFeedback] = useState({});
 
   useEffect(() => {

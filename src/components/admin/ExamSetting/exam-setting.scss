@@ -1,8 +1,12 @@
+
+.exam-setting-wrapper{
+  display: flex;
+  width: 100%;
+  padding: 10px;
 .exam-setting {
 background-color: antiquewhite; 
-width: 90%; 
-max-width: 600px; 
-margin: 20px auto; 
+max-width: 40%; 
+margin: 20px ; 
 padding: 20px; 
 border-radius: 8px; 
 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
@@ -46,7 +50,7 @@ margin-bottom: 20px;
     color: white; 
     border-radius: 5px; 
     padding: 10px 20px; 
-    width: 100%; 
+    width: 40%; 
     font-size: 16px; 
     cursor: pointer; 
     transition: background-color 0.3s; 
@@ -56,11 +60,24 @@ margin-bottom: 20px;
     }
   }
 }
+.exam-setting-detail{
+  width:60%;
+}
+}
 
 // Responsive styles
-@media (max-width: 600px) {
+@media (max-width: 950px) {
+  .exam-setting-wrapper{
+    display: block;
+    .exam-setting-detail{
+      width:100%;
+    }
+
   .exam-setting {
+  max-width: 80%;
     padding: 15px; 
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .exam-setting-inputs {
@@ -70,4 +87,5 @@ margin-bottom: 20px;
   button {
     width: 100%; 
   }
+}
 }
