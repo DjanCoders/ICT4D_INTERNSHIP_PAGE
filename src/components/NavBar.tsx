@@ -163,7 +163,7 @@ const Navbar = () => {
                             <div>
                                 <button className="flex-shrink-0 text-white" onClick={handleLogout}>Logout</button>
                             </div>
-                        )}
+                        ) && 
                         <Link
                              onClick={()=>setIsOpen(false)}
                             className="flex flex-col items-center justify-center"
@@ -176,12 +176,15 @@ const Navbar = () => {
                             >
                                 <span className="sr-only">Open user menu</span>
                                 <img
-                                    className="h-8 w-8 rounded-full"
-                                    alt="profile"
-                                />
+                                        className="h-8 w-8 object-cover rounded-full"
+                                        src={user?.avatar || profile}
+                                        alt="profile"
+                                        title={user?.user.username}
+                                    />
                             </button>
                             <small className="text-gray-200">Profile</small>
                         </Link>
+                        }
                     </div>
                 </div>
             )}
