@@ -72,7 +72,7 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 						<h3 className="text-xl font-semibold">Personal Information</h3>
 						<div className="mb-4">
 							<img
-								className="w-32 h-32 rounded-full border-4 border-blue-500"
+								className="w-32 h-32 object-cover rounded-full border-4 border-blue-500"
 								src={
 									typeof profiles.avatar === "string"
 										? profiles.avatar
