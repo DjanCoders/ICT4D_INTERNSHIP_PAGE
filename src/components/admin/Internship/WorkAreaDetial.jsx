@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Modal, Button } from '@mui/material'; 
-import { getWorkAreaData,deleteWorkArea ,updateWorkStatus} from '../../../api';
+import { getInternships,deleteWorkArea ,updateWorkStatus} from '../../../api';
 const WorkAreaDetails = () => {
     const [workAreaInfo, setWorkAreaInfo] = useState(null);
     const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ const WorkAreaDetails = () => {
     useEffect(() => {
         const fetchWorkAreaInfo = async () => {
             try {
-                const response = await getWorkAreaData(); 
+                const response = await getInternships(); 
                 setWorkAreaInfo(response.data);
             } catch (error) {
                 console.error('Error fetching work area info:', error);

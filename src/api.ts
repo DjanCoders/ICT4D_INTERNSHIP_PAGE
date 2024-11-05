@@ -110,10 +110,7 @@ export const addWorkArea = async (internship: any) => {
   return response.data;
 };
 
-export const getWorkAreaData = async () => {
-  const response = await api.get("/internships/");
-  return response;
-};
+
 export const deleteWorkArea = async (deleteId: number) => {
   const response = await api.delete(`/internships/${deleteId}/`);
   return response;
@@ -129,6 +126,21 @@ export const getQuestions = async () => {
   const response = await api.get("/get-questions/");
   return response;
 };
+export const addExamEsttings = async (settingsData:any) => {
+  const response = await api.post("/exam-settings/", settingsData)
+  return response
+}
+export const getExamSettings = async () => {
+  const response = await api.get("/exam-settings/");
+  return response
+}
+export const updateExamSetting = async (id: number, updatedSetting: {
+  start_time: string;
+  duration: string;
+}) => {
+  const response = await api.patch(`/exam-settings/${id}/`,updatedSetting);
+  return response
+}
 export const submitQuesionsAnswer = async (answers: any) => {
   const response = await api.post("/submit-answers/", answers);
   return response;
@@ -207,6 +219,7 @@ export const register = async (data: {
 
 export const refreshToken = (refreshToken: string) => api.post('/token/refresh/', { refresh: refreshToken });
 export const getInternships = () => api.get('/internships/');
+
 export const getMCQs = () => api.get('/mcqquestions/');
 export const getMCQ = (id: number) => api.get(`/mcqquestions/${id}/`);
 export const getShortQ = (id: number) =>
