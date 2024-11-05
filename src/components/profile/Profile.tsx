@@ -34,19 +34,35 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 		bio: string;
 		avatar: string;
 	}) => {
-		setProfiles({
+		updateProfile({
+			id: profiles.id,
 			full_name: updatedProfile.user.first_name + " " + updatedProfile.user.last_name,
 			user: {
-				email: profiles.user?.email,
+				id: profiles.user.id,
+				email: profiles.user.email,
 				username: updatedProfile.user.username,
 				first_name: updatedProfile.user.first_name,
 				last_name: updatedProfile.user.last_name,
-				is_superuser: profiles.user?.is_superuser,
+				is_superuser: profiles.user.is_superuser,
 			},
 			bio: updatedProfile.bio,
 			avatar: updatedProfile.avatar,
 		});
-		updateProfile(updatedProfile);
+		
+		setProfiles({
+			id: profiles.id,
+			full_name: updatedProfile.user.first_name + " " + updatedProfile.user.last_name,
+			user: {
+				id: profiles.user.id,
+				email: profiles.user.email,
+				username: updatedProfile.user.username,
+				first_name: updatedProfile.user.first_name,
+				last_name: updatedProfile.user.last_name,
+				is_superuser: profiles.user.is_superuser,
+			},
+			bio: updatedProfile.bio,
+			avatar: updatedProfile.avatar,
+		});
 	};
 
 	return (

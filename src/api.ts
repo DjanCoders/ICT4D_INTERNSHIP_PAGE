@@ -1,5 +1,5 @@
-import axios from "axios";
-import { ErrorsType } from "./types";
+import { ErrorsType, Profile } from "./types";
+
 const URL = "http://localhost:8000/api";
 
 const api = axios.create({
@@ -213,15 +213,32 @@ export const getShortQ = (id: number) =>
   api.get(`/shortanswerquestions/${id}/`);
 export const getShortQs = () => api.get("/shortanswerquestions/");
 export const getProfile = () => api.get("/accounts/profiles/");
-export const updateProfile = async (data: any) => {
-  try {
-    const response = await api.put("/accounts/profiles/", data);
-    return response;
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    throw error;
-  }
+import axios from "axios";
+
+// Assuming updatedProfile contains the updated fields for both user and profile
+export const updateProfile = async (updatedProfile: Profile) => {
+    try {
+        // Update Profile fields
+        await api.patch(`/accounts/profiles/${updatedProfile.id}/`, {
+            bio: updatedProfile.bio,
+            // avatar: updatedProfile.avatar,
+        });
+
+        console.log(updatedProfile.bio);
+
+        // Update User fields separately (if needed)
+        await api.patch(`/accounts/users/${updatedProfile.user.id}/`, {
+            username: updatedProfile.user.username,
+            first_name: updatedProfile.user.first_name,
+            last_name: updatedProfile.user.last_name,
+        });
+
+        console.log("Profile and User updated successfully.");
+    } catch (error) {
+        console.error("Error updating profile and user");
+    }
 };
+
 export const applyForInternship = (id: number, data: any, token: string) => {
   return api.post(`/internships/${id}/apply/`, data, {
     headers: {
