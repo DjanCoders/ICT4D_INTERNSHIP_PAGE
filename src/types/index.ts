@@ -1,8 +1,10 @@
 
 
 export type Profile = {
+	id: number;
 	full_name: string;
 	user: {
+		id: number;
 		email: string;
 		username: string;
 		first_name: string;
@@ -10,7 +12,7 @@ export type Profile = {
 		is_superuser: boolean;
 	};
 	bio: string;
-	avatar: string;
+	avatar: File;
 };
 
 export type ErrorsType = {
@@ -30,17 +32,15 @@ export interface EditProfileModalProps {
 			last_name: string;
 		}
 		bio: string;
-		avatar: string;
+		avatar: File;
 	};
 	onSave: (formData: {
 		user: {
-			email: string;
 			username: string;
 			first_name: string;
 			last_name: string;
-			is_superuser: boolean;
 		};
 		bio: string;
-		avatar: string;
+		avatar: File;
 	}) => void;
 }
