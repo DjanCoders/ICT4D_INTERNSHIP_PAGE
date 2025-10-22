@@ -5,18 +5,18 @@ import "./index.css";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ColorContextProvider } from "./components/ColorContext/DarkContext.jsx";
-import { UserProvider } from "./contexts/UserContext.jsx";
+import { UserProvider } from "./contexts/UserContextt.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
       <ColorContextProvider>
         <UserProvider>
-    <Router>
-      <App />
+          <Router>
+            <App />
           </Router>
-          </UserProvider>
-       </ColorContextProvider>
+        </UserProvider>
+      </ColorContextProvider>
     </AuthProvider>
   </React.StrictMode>
 );

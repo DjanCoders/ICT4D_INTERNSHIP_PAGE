@@ -4,7 +4,7 @@ import SignInModal from "./modals/SignInModal";
 import SignUpModal from "./modals/SignUpModal";
 import ForgotPasswordModal from "./modals/ForgotPasswordModal";
 import { useState } from "react";
-import { useUser } from "../contexts/UserContext";
+import { useUser } from "../contexts/UserContextt.tsx";
 import MessageModal from "./modals/MessageModal";
 
 const ServiceCard = ({
@@ -16,16 +16,14 @@ const ServiceCard = ({
   const { token } = useAuth();
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const [isForgotPasswordOpen, setShowForgotPasswordModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-
-
   const navigateToApplyForm = () => {
     if (!token) {
-      localStorage.setItem('redirectPath', '/apply');
+      localStorage.setItem("redirectPath", "/apply");
       setShowSignInModal(true);
     } else {
       if (user?.is_internee) {
@@ -62,15 +60,15 @@ const ServiceCard = ({
         isOpen={showSignInModal}
         onClose={closeSignInModal}
         setShowSignUpModal={setShowSignUpModal}
-        setShowForgotPasswordModal={setShowForgotPasswordModal} 
+        setShowForgotPasswordModal={setShowForgotPasswordModal}
       />
 
       {/* Sign Up Modal */}
       <SignUpModal isOpen={showSignUpModal} onClose={closeSignUpModal} />
       <ForgotPasswordModal
-                isOpen={isForgotPasswordOpen}
-                onClose={() => setShowForgotPasswordModal(false)}
-            />
+        isOpen={isForgotPasswordOpen}
+        onClose={() => setShowForgotPasswordModal(false)}
+      />
       <MessageModal
         message={message}
         isOpen={isModalOpen}

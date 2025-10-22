@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import ApplicationForm from "./pages/applicationform";
@@ -16,18 +15,28 @@ import WorkAreaDetails from "./components/admin/Internship/WorkAreaDetial";
 import Reports from "./components/admin/reports/ReportsPage";
 import { ApplicantContextProvider } from "./components/ApplicantContext/ApplicantContext";
 import TakeExam from "./components/applicant/TakeExam";
+import { Profile } from "./types";
 
 const App = () => {
   const { token } = useAuth();
 
-  const profile = {
-    user: {
-      username: "jhondoe",
-      email: "johndoe@example.com",
-      is_superuser: false,
-    },
-    avatar: "avatar",
-  };
+const profile: Profile = {
+  id: 1,
+  full_name: "John Doe",
+  bio: "Hello!",
+  is_internee: false,
+  avatar: new File([], "avatar.jpg"), // must be File
+  user: {
+    id: 123,
+    username: "johndoe",
+    email: "john@example.com",
+    first_name: "John",
+    last_name: "Doe",
+    is_superuser: false,
+  },
+};
+
+
 
   return (
     <div className="my-8 text-center">

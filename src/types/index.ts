@@ -3,6 +3,7 @@
 export type Profile = {
 	id: number;
 	full_name: string;
+	is_internee:boolean,
 	user: {
 		id: number;
 		email: string;
