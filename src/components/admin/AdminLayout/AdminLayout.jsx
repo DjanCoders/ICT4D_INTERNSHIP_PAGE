@@ -52,20 +52,20 @@ function AdminLayout() {
             {/* Main content */}
             <div className="home_main">
                 <Navbar onToggleSidebar={handleToggleSidebar} />
-                <div className="bg_color" />
+                        <div className="bg_color" />
 
-                <div className="home_items">
-                    <ItemLists type="totalApplicants" />
-                    <ItemLists type="approvedApplicants" />
-                    <ItemLists type="pendingApplicants" />
-                    <ItemLists type="rejectedApplicants" />
-                </div>
+                                <div className="home_items">
+                                    <ItemLists type="totalApplicants" />
+                                    <ItemLists type="approvedApplicants" />
+                                    <ItemLists type="pendingApplicants" />
+                                    <ItemLists type="rejectedApplicants" />
+                                </div>
 
-                <main>
-                    <Outlet />
-                </main>
+                        <main>
+                            <Outlet />
+                        </main>
+                    </div>
             </div>
-        </div>
     );
 }
 

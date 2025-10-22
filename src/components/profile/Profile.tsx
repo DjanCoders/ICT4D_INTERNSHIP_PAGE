@@ -76,7 +76,7 @@ const UserProfile = ({ profile }: { profile: Profile }) => {
 								src={
 									typeof profiles.avatar === "string"
 										? profiles.avatar
-										: "http://localhost:8000/media/default_avatar.png"
+										: "https://ict4d-internship-api.onrender.com/media/default_avatar.png"
 								}
 								alt="Profile Avatar"
 							/>

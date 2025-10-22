@@ -14,6 +14,7 @@ const Services = () => {
 		};
 
 		fetchInternships();
+		console.log('internships',internships)
 	}, []);
 
 	const internService = internships.map((internship, index) => (

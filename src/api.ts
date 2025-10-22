@@ -1,7 +1,7 @@
+
 import { ErrorsType, Profile } from "./types";
 
-const URL = "http://localhost:8000/api";
-
+const URL = "https://ict4d-internship-api.onrender.com/api";
 const api = axios.create({
   baseURL: URL,
   headers: {
@@ -40,7 +40,7 @@ api.interceptors.response.use(
 
         // Refresh token request
         const refreshResponse = await axios.post(
-          "http://localhost:8000/api/token/refresh/",
+          "https://ict4d-internship-api.onrender.com/api/token/refresh/",
           { refresh: refreshToken }
         );
         const { access } = refreshResponse.data;

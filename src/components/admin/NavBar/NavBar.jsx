@@ -10,7 +10,7 @@ import { ColorContext } from '../../ColorContext/DarkContext';
 import axios from 'axios'
 import { Modal, Button } from '@mui/material'; 
 
-
+import { useUser } from '../../../contexts/UserContext';
 // import sass file
 import './navbar.scss';
 
@@ -26,6 +26,8 @@ function Navbar({ onToggleSidebar }) {
     const handleToggle = () => {
         onToggleSidebar(); // Call the prop function to toggle sidebar visibility
     };
+    const { user } = useUser();
+
       // Fetch unread notifications count
       const fetchNotifications = async () => {
         try {
@@ -101,7 +103,8 @@ function Navbar({ onToggleSidebar }) {
                         </div>
 
                     <div className="item">
-                        <img className="admin_pic" src={admin} alt="admin" />
+                   
+                    <img className="admin_pic"  src={user?.avatar || admin} alt="admin" title={user?.user.username} />
                     </div>
                 </div>
             </div>
