@@ -1,12 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { getProfile } from "../api"; 
+import { Profile } from "../types";
 
+interface UserContextType {
+  user: Profile | null;
+  loading: boolean;
+}
 // Create a Context
-const UserContext = createContext(null);
+const UserContext = createContext<UserContextType | null>(null);
+
 
 // Create a Provider Component
-export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
     
 
@@ -33,6 +39,10 @@ export const UserProvider = ({ children }) => {
 };
 
 // Create a custom hook to use the UserContext
-export const useUser = () => {
-    return useContext(UserContext);
+export const useUser = (): UserContextType => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 };
